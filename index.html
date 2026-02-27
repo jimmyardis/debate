@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Arena — Dialogues Across Time</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cormorant+Upright:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --void:        #0A090C;
+      --deep:        #111018;
+      --surface:     #1A1825;
+      --surface-mid: #232135;
+      --amber:       #C49A3C;
+      --amber-dim:   #7A5E20;
+      --amber-pale:  #E8C96A;
+      --brass:       #8B7035;
+      --ivory:       #EDE8D8;
+      --ivory-dim:   #A09880;
+      --steel:       #4A5568;
+      --text:        #D4CEB8;
+      --text-dim:    #6B6455;
+      --left-glow:   rgba(196,154,60,0.15);
+      --right-glow:  rgba(196,154,60,0.15);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--void);
+      color: var(--text);
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* Grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.06'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ── HEADER ── */
+    header {
+      padding: 1.2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(196,154,60,0.2);
+      animation: fadeDown 0.8s ease both;
+    }
+
+    .header-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.58rem;
+      letter-spacing: 0.4em;
+      color: var(--amber);
+      text-transform: uppercase;
+      opacity: 0.7;
+    }
+
+    .header-nav {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .header-nav a {
+      font-family: 'Cinzel', serif;
+      font-size: 0.55rem;
+      letter-spacing: 0.3em;
+      color: var(--text-dim);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .header-nav a:hover { color: var(--amber); }
+
+    /* ── HERO / SETUP SCREEN ── */
+    #setup-screen {
+      min-height: calc(100vh - 60px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Background stage curtain effect */
+    #setup-screen::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(196,154,60,0.04) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 50%, rgba(196,154,60,0.04) 0%, transparent 60%),
+        radial-gradient(ellipse at 50% 100%, rgba(196,154,60,0.06) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    /* Stage floor line */
+    #setup-screen::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(196,154,60,0.3), transparent);
+    }
+
+    .arena-title {
+      text-align: center;
+      margin-bottom: 1rem;
+      animation: fadeIn 1s ease 0.2s both;
+    }
+
+    .arena-title .overline {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.5em;
+      color: var(--amber);
+      opacity: 0.6;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 1.2rem;
+    }
+
+    .arena-title h1 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 900;
+      color: var(--ivory);
+      letter-spacing: 0.08em;
+      line-height: 1;
+    }
+
+    .arena-title h1 span {
+      color: var(--amber);
+    }
+
+    .arena-title .subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1rem, 2vw, 1.3rem);
+      color: var(--text-dim);
+      margin-top: 1rem;
+      font-weight: 300;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── DIVIDER ORNAMENT ── */
+    .ornament {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 2.5rem 0;
+      width: 100%;
+      max-width: 700px;
+      animation: fadeIn 1s ease 0.4s both;
+    }
+
+    .ornament::before,
+    .ornament::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(196,154,60,0.3), transparent);
+    }
+
+    .ornament span {
+      font-size: 1rem;
+      color: var(--amber);
+      opacity: 0.4;
+    }
+
+    /* ── SETUP PANEL ── */
+    .setup-panel {
+      width: 100%;
+      max-width: 860px;
+      animation: fadeIn 1s ease 0.5s both;
+    }
+
+    /* Figure selector */
+    .figure-selector {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 1.5rem;
+      align-items: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .figure-slot {
+      border: 1px solid rgba(196,154,60,0.2);
+      background: var(--surface);
+      padding: 1.8rem;
+      position: relative;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .figure-slot:hover {
+      border-color: rgba(196,154,60,0.4);
+      box-shadow: 0 0 20px rgba(196,154,60,0.05);
+    }
+
+    .figure-slot::before {
+      content: '';
+      position: absolute;
+      inset: 4px;
+      border: 1px solid rgba(196,154,60,0.06);
+      pointer-events: none;
+    }
+
+    .slot-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.55rem;
+      letter-spacing: 0.35em;
+      color: var(--amber);
+      opacity: 0.5;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .slot-select {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(196,154,60,0.3);
+      color: var(--ivory);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-style: italic;
+      padding: 0.5rem 0;
+      cursor: pointer;
+      outline: none;
+      appearance: none;
+    }
+
+    .slot-select option {
+      background: var(--deep);
+      color: var(--ivory);
+      font-style: normal;
+    }
+
+    .slot-select:focus {
+      border-bottom-color: var(--amber);
+    }
+
+    .vs-divider {
+      text-align: center;
+    }
+
+    .vs-divider span {
+      font-family: 'Cinzel', serif;
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: var(--amber);
+      opacity: 0.4;
+      letter-spacing: 0.2em;
+    }
+
+    /* Topic section */
+    .topic-section {
+      margin-bottom: 2.5rem;
+    }
+
+    .topic-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.58rem;
+      letter-spacing: 0.35em;
+      color: var(--amber);
+      opacity: 0.6;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 1rem;
+    }
+
+    .topic-input-wrap {
+      position: relative;
+      border: 1px solid rgba(196,154,60,0.25);
+      background: var(--surface);
+      margin-bottom: 1.2rem;
+    }
+
+    .topic-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      color: var(--ivory);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-style: italic;
+      padding: 1rem 1.2rem;
+      outline: none;
+    }
+
+    .topic-input::placeholder {
+      color: var(--text-dim);
+      opacity: 0.5;
+    }
+
+    /* Suggested topics */
+    .suggested-topics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .topic-chip {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.82rem;
+      font-style: italic;
+      color: var(--text-dim);
+      border: 1px solid rgba(196,154,60,0.15);
+      padding: 0.4rem 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: transparent;
+    }
+
+    .topic-chip:hover,
+    .topic-chip.active {
+      border-color: var(--amber);
+      color: var(--amber-pale);
+      background: rgba(196,154,60,0.05);
+    }
+
+    /* Begin button */
+    .begin-btn {
+      width: 100%;
+      padding: 1.2rem;
+      background: transparent;
+      border: 1px solid var(--amber);
+      color: var(--amber-pale);
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .begin-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--amber);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+      z-index: 0;
+    }
+
+    .begin-btn:hover::before { transform: scaleX(1); }
+    .begin-btn:hover { color: var(--void); }
+    .begin-btn span { position: relative; z-index: 1; }
+
+    .begin-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .begin-btn:disabled::before { display: none; }
+
+    /* ── DEBATE ARENA (hidden until started) ── */
+    #debate-screen {
+      display: none;
+      min-height: calc(100vh - 60px);
+      flex-direction: column;
+    }
+
+    #debate-screen.active { display: flex; }
+
+    /* Stage header */
+    .stage-header {
+      padding: 1.5rem 3rem;
+      border-bottom: 1px solid rgba(196,154,60,0.15);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--deep);
+    }
+
+    .stage-topic {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1rem;
+      color: var(--text-dim);
+    }
+
+    .stage-topic strong {
+      color: var(--ivory);
+      font-style: normal;
+      font-weight: 400;
+    }
+
+    .stage-controls {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .btn-small {
+      font-family: 'Cinzel', serif;
+      font-size: 0.5rem;
+      letter-spacing: 0.3em;
+      padding: 0.5rem 1rem;
+      border: 1px solid rgba(196,154,60,0.3);
+      color: var(--text-dim);
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-transform: uppercase;
+    }
+
+    .btn-small:hover {
+      border-color: var(--amber);
+      color: var(--amber);
+    }
+
+    /* Split stage */
+    .split-stage {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      flex: 1;
+      min-height: 0;
+    }
+
+    /* Individual podium */
+    .podium {
+      display: flex;
+      flex-direction: column;
+      padding: 2.5rem 2rem;
+      border-right: 1px solid rgba(196,154,60,0.1);
+      transition: background 0.5s ease, opacity 0.5s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .podium:last-child { border-right: none; }
+
+    /* Active / inactive states */
+    .podium.speaking {
+      background: rgba(196,154,60,0.04);
+    }
+
+    .podium.speaking::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--amber), transparent);
+      animation: scanline 2s ease infinite;
+    }
+
+    .podium.dormant {
+      opacity: 0.45;
+    }
+
+    @keyframes scanline {
+      0%   { opacity: 0; transform: scaleX(0); }
+      50%  { opacity: 1; transform: scaleX(1); }
+      100% { opacity: 0; transform: scaleX(1); }
+    }
+
+    /* Figure nameplate */
+    .nameplate {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid rgba(196,154,60,0.12);
+    }
+
+    .portrait-circle {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: 1px solid rgba(196,154,60,0.3);
+      overflow: hidden;
+      flex-shrink: 0;
+      background: var(--surface-mid);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cinzel', serif;
+      font-size: 1.2rem;
+      color: var(--amber);
+      opacity: 0.6;
+    }
+
+    .portrait-circle img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(100%) contrast(1.1);
+    }
+
+    .nameplate-text {}
+
+    .figure-name {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--ivory);
+      letter-spacing: 0.05em;
+    }
+
+    .figure-years {
+      font-family: 'Cormorant Upright', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      color: var(--amber);
+      opacity: 0.5;
+      margin-top: 0.2rem;
+    }
+
+    .speaking-indicator {
+      margin-left: auto;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--amber);
+      opacity: 0;
+      transition: opacity 0.3s;
+      box-shadow: 0 0 8px var(--amber);
+    }
+
+    .podium.speaking .speaking-indicator {
+      opacity: 1;
+      animation: pulse 1.5s ease infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
+    }
+
+    /* Response area */
+    .response-area {
+      flex: 1;
+      overflow-y: auto;
+      padding-right: 0.5rem;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(196,154,60,0.2) transparent;
+    }
+
+    .response-area::-webkit-scrollbar { width: 3px; }
+    .response-area::-webkit-scrollbar-track { background: transparent; }
+    .response-area::-webkit-scrollbar-thumb { background: rgba(196,154,60,0.2); }
+
+    .exchange {
+      margin-bottom: 2rem;
+      animation: fadeIn 0.6s ease both;
+    }
+
+    .exchange-number {
+      font-family: 'Cinzel', serif;
+      font-size: 0.5rem;
+      letter-spacing: 0.3em;
+      color: var(--amber);
+      opacity: 0.3;
+      margin-bottom: 0.6rem;
+    }
+
+    .exchange-text {
+      font-size: 1rem;
+      line-height: 1.85;
+      color: var(--text);
+      font-weight: 300;
+    }
+
+    /* Typewriter cursor */
+    .typing::after {
+      content: '|';
+      animation: blink 0.7s step-end infinite;
+      color: var(--amber);
+      opacity: 0.7;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 0.7; }
+      50% { opacity: 0; }
+    }
+
+    /* ── BOTTOM BAR ── */
+    .debate-footer {
+      border-top: 1px solid rgba(196,154,60,0.12);
+      padding: 1.2rem 2rem;
+      background: var(--deep);
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .moderator-input {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid rgba(196,154,60,0.2);
+      color: var(--ivory);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.95rem;
+      font-style: italic;
+      padding: 0.7rem 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .moderator-input::placeholder {
+      color: var(--text-dim);
+      opacity: 0.4;
+    }
+
+    .moderator-input:focus {
+      border-color: rgba(196,154,60,0.4);
+    }
+
+    .continue-btn {
+      font-family: 'Cinzel', serif;
+      font-size: 0.58rem;
+      letter-spacing: 0.3em;
+      padding: 0.75rem 1.8rem;
+      border: 1px solid var(--amber);
+      color: var(--amber-pale);
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-transform: uppercase;
+      white-space: nowrap;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .continue-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--amber);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s;
+      z-index: 0;
+    }
+
+    .continue-btn:hover::before { transform: scaleX(1); }
+    .continue-btn:hover { color: var(--void); }
+    .continue-btn span { position: relative; z-index: 1; }
+
+    .continue-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .continue-btn:disabled::before { display: none; }
+
+    /* Loading state */
+    .loading-dots {
+      display: none;
+      gap: 4px;
+      align-items: center;
+    }
+
+    .loading-dots.active { display: flex; }
+
+    .loading-dots span {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--amber);
+      animation: dotPulse 1.2s ease infinite;
+    }
+
+    .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes dotPulse {
+      0%, 100% { opacity: 0.2; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    /* ── EXCHANGE COUNT ── */
+    .exchange-counter {
+      font-family: 'Cinzel', serif;
+      font-size: 0.52rem;
+      letter-spacing: 0.2em;
+      color: var(--text-dim);
+      white-space: nowrap;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      header { padding: 1rem 1.2rem; }
+      #setup-screen { padding: 2rem 1.2rem; }
+      .figure-selector { grid-template-columns: 1fr; }
+      .vs-divider { padding: 0.5rem 0; }
+      .split-stage { grid-template-columns: 1fr; }
+      .podium { border-right: none; border-bottom: 1px solid rgba(196,154,60,0.1); }
+      .debate-footer { flex-wrap: wrap; }
+      .moderator-input { min-width: 0; }
+      .stage-header { flex-direction: column; gap: 1rem; padding: 1rem 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <span class="header-label">The Museum &nbsp;·&nbsp; Debate Arena</span>
+    <nav class="header-nav">
+      <a href="#">Jane Jacobs</a>
+      <a href="#">Carl Jung</a>
+      <a href="#">Thomas Jefferson</a>
+      <a href="#">Alexander Hamilton</a>
+    </nav>
+  </header>
+
+  <!-- ══ SETUP SCREEN ══ -->
+  <div id="setup-screen">
+
+    <div class="arena-title">
+      <span class="overline">Dialogues Across Time</span>
+      <h1>The <span>Arena</span></h1>
+      <p class="subtitle">Summon two minds. Choose the ground. Let them speak.</p>
+    </div>
+
+    <div class="ornament">
+      <span>⚔</span>
+    </div>
+
+    <div class="setup-panel">
+
+      <!-- Figure Selector -->
+      <div class="figure-selector">
+        <div class="figure-slot">
+          <span class="slot-label">First Mind</span>
+          <select class="slot-select" id="figure-a">
+            <option value="">— Select a figure —</option>
+            <option value="jane-jacobs">Jane Jacobs</option>
+            <option value="carl-jung">Carl Jung</option>
+            <option value="thomas-jefferson">Thomas Jefferson</option>
+            <option value="alexander-hamilton">Alexander Hamilton</option>
+          </select>
+        </div>
+
+        <div class="vs-divider">
+          <span>VS</span>
+        </div>
+
+        <div class="figure-slot">
+          <span class="slot-label">Second Mind</span>
+          <select class="slot-select" id="figure-b">
+            <option value="">— Select a figure —</option>
+            <option value="jane-jacobs">Jane Jacobs</option>
+            <option value="carl-jung">Carl Jung</option>
+            <option value="thomas-jefferson">Thomas Jefferson</option>
+            <option value="alexander-hamilton">Alexander Hamilton</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Topic -->
+      <div class="topic-section">
+        <span class="topic-label">The Question Before Them</span>
+        <div class="topic-input-wrap">
+          <input
+            type="text"
+            class="topic-input"
+            id="topic-input"
+            placeholder="Enter a topic or choose below..."
+          />
+        </div>
+        <div class="suggested-topics">
+          <button class="topic-chip" onclick="selectTopic(this, 'What does America keep getting wrong?')">What does America keep getting wrong?</button>
+          <button class="topic-chip" onclick="selectTopic(this, 'The role of the individual versus the collective')">The individual vs. the collective</button>
+          <button class="topic-chip" onclick="selectTopic(this, 'What makes a city truly livable?')">What makes a city livable?</button>
+          <button class="topic-chip" onclick="selectTopic(this, 'The nature of the unconscious mind')">The unconscious mind</button>
+          <button class="topic-chip" onclick="selectTopic(this, 'Democracy and its discontents in 2026')">Democracy in 2026</button>
+          <button class="topic-chip" onclick="selectTopic(this, 'The relationship between reason and intuition')">Reason vs. intuition</button>
+          <button class="topic-chip" onclick="selectTopic(this, 'The role of federal power in the economy')">Federal power and the economy</button>
+          <button class="topic-chip" onclick="selectTopic(this, 'What does a good society look like?')">What is a good society?</button>
+          <button class="topic-chip" onclick="selectTopic(this, 'Technology and its effect on human nature')">Technology and human nature</button>
+          <button class="topic-chip" onclick="selectTopic(this, 'The meaning of liberty')">The meaning of liberty</button>
+        </div>
+      </div>
+
+      <!-- Begin -->
+      <button class="begin-btn" id="begin-btn" onclick="beginDebate()" disabled>
+        <span>Open the Arena</span>
+      </button>
+
+    </div>
+  </div>
+
+  <!-- ══ DEBATE SCREEN ══ -->
+  <div id="debate-screen">
+
+    <!-- Stage header -->
+    <div class="stage-header">
+      <div class="stage-topic">
+        On the question of: <strong id="stage-topic-display"></strong>
+      </div>
+      <div class="stage-controls">
+        <div class="loading-dots" id="loading-dots">
+          <span></span><span></span><span></span>
+        </div>
+        <span class="exchange-counter" id="exchange-counter">Exchange 0</span>
+        <button class="btn-small" onclick="resetArena()">New Debate</button>
+      </div>
+    </div>
+
+    <!-- Split stage -->
+    <div class="split-stage">
+
+      <!-- Left podium -->
+      <div class="podium dormant" id="podium-a">
+        <div class="nameplate">
+          <div class="portrait-circle" id="portrait-a">A</div>
+          <div class="nameplate-text">
+            <div class="figure-name" id="name-a">—</div>
+            <div class="figure-years" id="years-a"></div>
+          </div>
+          <div class="speaking-indicator"></div>
+        </div>
+        <div class="response-area" id="responses-a"></div>
+      </div>
+
+      <!-- Right podium -->
+      <div class="podium dormant" id="podium-b">
+        <div class="nameplate">
+          <div class="portrait-circle" id="portrait-b">B</div>
+          <div class="nameplate-text">
+            <div class="figure-name" id="name-b">—</div>
+            <div class="figure-years" id="years-b"></div>
+          </div>
+          <div class="speaking-indicator"></div>
+        </div>
+        <div class="response-area" id="responses-b"></div>
+      </div>
+
+    </div>
+
+    <!-- Footer controls -->
+    <div class="debate-footer">
+      <input
+        type="text"
+        class="moderator-input"
+        id="moderator-input"
+        placeholder="Steer the debate... (e.g. 'Challenge them on the role of religion' or leave blank to continue)"
+      />
+      <button class="continue-btn" id="continue-btn" onclick="continueDebate()">
+        <span>Continue →</span>
+      </button>
+    </div>
+
+  </div>
+
+  <script>
+    // ── PERSONA DATA ──
+    const PERSONAS = {
+      'jane-jacobs': {
+        name: 'Jane Jacobs',
+        years: '1916 —',
+        initial: 'JJ',
+        portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Jane_Jacobs.jpg/1920px-Jane_Jacobs.jpg'
+      },
+      'carl-jung': {
+        name: 'Carl Jung',
+        years: '1875 — 1961',
+        initial: 'CJ',
+        portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/ETH-BIB-Jung%2C_Carl_Gustav_%281875-1961%29-Portrait-Portr_14163_%28cropped%29.tif/lossy-page1-1280px-ETH-BIB-Jung%2C_Carl_Gustav_%281875-1961%29-Portrait-Portr_14163_%28cropped%29.tif.jpg'
+      },
+      'thomas-jefferson': {
+        name: 'Thomas Jefferson',
+        years: '1743 — 1826',
+        initial: 'TJ',
+        portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Thomas_Jefferson_by_Rembrandt_Peale%2C_1800.jpg/800px-Thomas_Jefferson_by_Rembrandt_Peale%2C_1800.jpg'
+      },
+      'alexander-hamilton': {
+        name: 'Alexander Hamilton',
+        years: '1755 — 1804',
+        initial: 'AH',
+        portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Alexander_Hamilton_portrait_by_John_Trumbull_1806.jpg/800px-Alexander_Hamilton_portrait_by_John_Trumbull_1806.jpg'
+      }
+    };
+
+    // ── STATE ──
+    let state = {
+      figureA: null,
+      figureB: null,
+      topic: '',
+      history: [],
+      exchangeCount: 0,
+      isLoading: false
+    };
+
+    // API URL — update this to your Railway deployment
+    const API_URL = 'https://jane-jacobs-bot-production.up.railway.app';
+
+    // ── SETUP VALIDATION ──
+    document.getElementById('figure-a').addEventListener('change', validateSetup);
+    document.getElementById('figure-b').addEventListener('change', validateSetup);
+    document.getElementById('topic-input').addEventListener('input', validateSetup);
+
+    function validateSetup() {
+      const a = document.getElementById('figure-a').value;
+      const b = document.getElementById('figure-b').value;
+      const t = document.getElementById('topic-input').value.trim();
+      const btn = document.getElementById('begin-btn');
+      btn.disabled = !(a && b && a !== b && t);
+    }
+
+    function selectTopic(el, topic) {
+      document.querySelectorAll('.topic-chip').forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+      document.getElementById('topic-input').value = topic;
+      validateSetup();
+    }
+
+    // ── BEGIN DEBATE ──
+    function beginDebate() {
+      state.figureA = document.getElementById('figure-a').value;
+      state.figureB = document.getElementById('figure-b').value;
+      state.topic   = document.getElementById('topic-input').value.trim();
+      state.history = [];
+      state.exchangeCount = 0;
+
+      // Populate stage
+      const pA = PERSONAS[state.figureA];
+      const pB = PERSONAS[state.figureB];
+
+      document.getElementById('stage-topic-display').textContent = state.topic;
+      document.getElementById('name-a').textContent  = pA.name;
+      document.getElementById('years-a').textContent = pA.years;
+      document.getElementById('name-b').textContent  = pB.name;
+      document.getElementById('years-b').textContent = pB.years;
+
+      // Set portraits
+      setPortrait('portrait-a', pA);
+      setPortrait('portrait-b', pB);
+
+      // Clear responses
+      document.getElementById('responses-a').innerHTML = '';
+      document.getElementById('responses-b').innerHTML = '';
+
+      // Switch screens
+      document.getElementById('setup-screen').style.display = 'none';
+      document.getElementById('debate-screen').classList.add('active');
+
+      // Fire first exchange
+      runExchange();
+    }
+
+    function setPortrait(id, persona) {
+      const el = document.getElementById(id);
+      if (persona.portrait) {
+        const img = document.createElement('img');
+        img.src = persona.portrait;
+        img.onerror = () => { el.innerHTML = persona.initial; };
+        el.innerHTML = '';
+        el.appendChild(img);
+      } else {
+        el.textContent = persona.initial;
+      }
+    }
+
+    // ── RUN EXCHANGE ──
+    async function runExchange() {
+      if (state.isLoading) return;
+      state.isLoading = true;
+      state.exchangeCount++;
+
+      const continueBtn = document.getElementById('continue-btn');
+      const loadingDots = document.getElementById('loading-dots');
+      const modInput    = document.getElementById('moderator-input');
+      const steer       = modInput.value.trim();
+
+      continueBtn.disabled = true;
+      loadingDots.classList.add('active');
+      document.getElementById('exchange-counter').textContent = `Exchange ${state.exchangeCount}`;
+
+      // Set Figure A speaking
+      setSpeaking('a');
+
+      try {
+        // Build the prompt for this exchange
+        const lastStatement = state.history.length > 0
+          ? state.history[state.history.length - 1]
+          : null;
+
+        const steerNote = steer ? ` The moderator asks you to address: "${steer}".` : '';
+
+        // Call debate endpoint
+        const response = await fetch(`${API_URL}/debate`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            persona_a:    state.figureA,
+            persona_b:    state.figureB,
+            topic:        state.topic,
+            history:      state.history,
+            steer:        steerNote,
+            exchange_num: state.exchangeCount
+          })
+        });
+
+        if (!response.ok) throw new Error('Debate API error');
+
+        const data = await response.json();
+
+        // Render Figure A response
+        await typeResponse('responses-a', data.response_a, state.exchangeCount);
+
+        // Switch to Figure B speaking
+        setSpeaking('b');
+        await sleep(600);
+
+        // Render Figure B response
+        await typeResponse('responses-b', data.response_b, state.exchangeCount);
+
+        // Update history
+        state.history.push({
+          exchange: state.exchangeCount,
+          figure_a: data.response_a,
+          figure_b: data.response_b
+        });
+
+        // Clear steer input
+        modInput.value = '';
+
+      } catch (err) {
+        console.error(err);
+        // Show error gracefully
+        appendError('responses-a', 'The connection to the archive was lost. Please try again.');
+      }
+
+      // Reset state
+      setSpeaking(null);
+      continueBtn.disabled = false;
+      loadingDots.classList.remove('active');
+      state.isLoading = false;
+    }
+
+    function continueDebate() {
+      runExchange();
+    }
+
+    // ── UI HELPERS ──
+    function setSpeaking(side) {
+      const podA = document.getElementById('podium-a');
+      const podB = document.getElementById('podium-b');
+
+      podA.classList.remove('speaking', 'dormant');
+      podB.classList.remove('speaking', 'dormant');
+
+      if (side === 'a') {
+        podA.classList.add('speaking');
+        podB.classList.add('dormant');
+      } else if (side === 'b') {
+        podB.classList.add('speaking');
+        podA.classList.add('dormant');
+      } else {
+        podA.classList.add('dormant');
+        podB.classList.add('dormant');
+      }
+    }
+
+    async function typeResponse(containerId, text, exchangeNum) {
+      const container = document.getElementById(containerId);
+
+      const exchangeEl = document.createElement('div');
+      exchangeEl.className = 'exchange';
+
+      const numEl = document.createElement('div');
+      numEl.className = 'exchange-number';
+      numEl.textContent = `Exchange ${exchangeNum}`;
+
+      const textEl = document.createElement('div');
+      textEl.className = 'exchange-text typing';
+
+      exchangeEl.appendChild(numEl);
+      exchangeEl.appendChild(textEl);
+      container.appendChild(exchangeEl);
+
+      // Typewriter effect
+      const words = text.split(' ');
+      let rendered = '';
+
+      for (let i = 0; i < words.length; i++) {
+        rendered += (i === 0 ? '' : ' ') + words[i];
+        textEl.textContent = rendered;
+        container.scrollTop = container.scrollHeight;
+        await sleep(28 + Math.random() * 18);
+      }
+
+      textEl.classList.remove('typing');
+    }
+
+    function appendError(containerId, message) {
+      const container = document.getElementById(containerId);
+      const el = document.createElement('div');
+      el.className = 'exchange';
+      el.innerHTML = `<div class="exchange-text" style="color:rgba(196,154,60,0.4);font-style:italic;">${message}</div>`;
+      container.appendChild(el);
+    }
+
+    function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    function resetArena() {
+      state = { figureA: null, figureB: null, topic: '', history: [], exchangeCount: 0, isLoading: false };
+      document.getElementById('debate-screen').classList.remove('active');
+      document.getElementById('setup-screen').style.display = 'flex';
+      document.querySelectorAll('.topic-chip').forEach(c => c.classList.remove('active'));
+      document.getElementById('topic-input').value = '';
+      document.getElementById('figure-a').value = '';
+      document.getElementById('figure-b').value = '';
+      document.getElementById('begin-btn').disabled = true;
+    }
+  </script>
+
+</body>
+</html>
