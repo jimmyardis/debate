@@ -3,990 +3,817 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Debate Hall — Historical Figures Museum</title>
-  <link
-    href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Cormorant+Garamond:wght@300;400;600&display=swap"
-    rel="stylesheet"
-  />
-  <style>
-    /* ── Design tokens ─────────────────────────────────────────────────── */
-    :root {
-      --bg:           #1a1917;
-      --surface:      #232220;
-      --surface-2:    #2b2a26;
-      --surface-3:    #34322d;
-      --brass:        #b8960c;
-      --brass-light:  #d4aa20;
-      --brass-dim:    #7a6408;
-      --text:         #e8e0d0;
-      --text-muted:   #9a9080;
-      --text-dim:     #5a5548;
-      --amber:        rgba(216, 155, 40, 0.14);
-      --amber-border: rgba(184, 150, 12, 0.55);
-      --amber-glow:   0 0 48px rgba(200, 145, 20, 0.22),
-                      0 0 12px rgba(200, 145, 20, 0.12);
-      --radius:       4px;
-      --serif:        'EB Garamond', Georgia, 'Times New Roman', serif;
-      --display:      'Cormorant Garamond', 'EB Garamond', Georgia, serif;
-    }
+  <title>John Taylor of Caroline — In Conversation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Cormorant+Upright:wght@300;400;500&display=swap" rel="stylesheet" />
 
-    /* ── Reset & base ──────────────────────────────────────────────────── */
+  <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    html { font-size: 16px; }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--serif);
-      min-height: 100vh;
-      line-height: 1.65;
+    :root {
+      --clay:         #6B2D1A;
+      --clay-mid:     #8B3D24;
+      --clay-light:   #A8522E;
+      --soil:         #2A1A0E;
+      --soil-mid:     #3D2410;
+      --soil-light:   #5C3A1E;
+      --tobacco:      #7A6040;
+      --tobacco-light:#A89060;
+      --indigo:       #2A3550;
+      --indigo-mid:   #354468;
+      --indigo-light: #4A5F8A;
+      --leather:      #8B6040;
+      --leather-light:#C49060;
+      --parchment:    #E8DCC0;
+      --parchment-mid:#D4C4A0;
+      --parchment-dark:#B8A880;
+      --cream:        #F0E8D0;
+      --text:         #2A1A0E;
+      --text-mid:     #4A3020;
+      --text-dim:     #7A6040;
     }
 
-    /* ── Utility ───────────────────────────────────────────────────────── */
-    .hidden { display: none !important; }
-    .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+    html { scroll-behavior: smooth; }
 
-    /* ── Header ────────────────────────────────────────────────────────── */
-    .hall-header {
-      text-align: center;
-      padding: 2.5rem 1rem 2rem;
-      border-bottom: 1px solid var(--surface-3);
+    body {
+      background: var(--parchment);
+      color: var(--text);
+      font-family: 'EB Garamond', Georgia, serif;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.68' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)' opacity='0.065'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(ellipse at center, transparent 50%, rgba(42,26,14,0.18) 100%);
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    header {
+      background: var(--soil);
+      padding: 1rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 3px solid var(--clay);
+      animation: fadeDown 0.7s ease both;
+    }
+
+    .header-label {
+      font-family: 'Cormorant Upright', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.35em;
+      color: var(--tobacco-light);
+      opacity: 0.7;
+      text-transform: uppercase;
+    }
+
+    .header-right {
+      font-family: 'Cormorant Upright', serif;
+      font-size: 0.58rem;
+      letter-spacing: 0.25em;
+      color: var(--tobacco);
+      opacity: 0.5;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.3fr 0.7fr;
+      min-height: 88vh;
+      border-bottom: 3px solid var(--soil);
+      overflow: hidden;
+      animation: fadeIn 0.9s ease 0.2s both;
+    }
+
+    .landscape-panel {
+      position: relative;
+      background: var(--soil-mid);
+      overflow: hidden;
+      min-height: 500px;
+    }
+
+    .landscape-panel svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .hero-title {
+      position: absolute;
+      bottom: 3rem;
+      left: 3rem;
+      right: 3rem;
+      z-index: 10;
+    }
+
+    .hero-title .overline {
+      font-family: 'Cormorant Upright', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.4em;
+      color: var(--clay-light);
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 0.6rem;
+      opacity: 0.8;
+    }
+
+    .hero-title h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 4vw, 4.5rem);
+      font-weight: 900;
+      color: var(--cream);
+      line-height: 1.0;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-title h1 em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--tobacco-light);
+      display: block;
+      font-size: 0.7em;
+    }
+
+    .hero-title .years {
+      font-family: 'Cormorant Upright', serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.4em;
+      color: var(--tobacco);
+      margin-top: 0.8rem;
+      display: block;
+      opacity: 0.6;
+    }
+
+    .bio-panel {
+      background: var(--cream);
+      border-left: 3px solid var(--soil);
+      padding: 3rem 2.2rem;
+      display: flex;
+      flex-direction: column;
       position: relative;
     }
 
-    .hall-header .ornament {
-      font-size: 1.4rem;
-      color: var(--brass-dim);
-      letter-spacing: 0.3em;
-      display: block;
-      margin-bottom: 0.5rem;
-    }
-
-    .hall-header h1 {
-      font-family: var(--display);
-      font-weight: 300;
-      font-size: clamp(2rem, 5vw, 3.2rem);
-      letter-spacing: 0.08em;
-      color: var(--text);
-      text-transform: uppercase;
-    }
-
-    .hall-header .subtitle {
-      font-size: 0.8rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--brass-dim);
-      margin-top: 0.3rem;
-    }
-
-    .rule {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin: 1.2rem auto 0;
-      max-width: 320px;
-      color: var(--brass-dim);
-    }
-    .rule::before, .rule::after {
+    .bio-panel::before {
       content: '';
-      flex: 1;
-      height: 1px;
-      background: currentColor;
-    }
-    .rule-diamond {
-      font-size: 0.5rem;
-    }
-
-    /* ── Setup section ─────────────────────────────────────────────────── */
-    #setup-section {
-      max-width: 760px;
-      margin: 3rem auto;
-      padding: 0 1.5rem;
+      position: absolute;
+      left: 3.5rem;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: rgba(42,53,80,0.2);
     }
 
-    .setup-title {
-      font-family: var(--display);
-      font-size: 1.1rem;
-      letter-spacing: 0.15em;
+    .exhibit-tag {
+      font-family: 'Cormorant Upright', serif;
+      font-size: 0.58rem;
+      letter-spacing: 0.35em;
+      color: var(--clay);
       text-transform: uppercase;
-      color: var(--brass-dim);
-      text-align: center;
       margin-bottom: 2rem;
+      opacity: 0.7;
     }
 
-    .figure-selectors {
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-
-    .vs-badge {
-      font-family: var(--display);
-      font-size: 1.4rem;
-      font-weight: 600;
-      color: var(--brass-dim);
-      text-align: center;
-      letter-spacing: 0.1em;
-    }
-
-    .selector-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-    }
-
-    .selector-group label {
-      font-size: 0.7rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-    }
-
-    select, input[type="text"], textarea {
+    .photo-frame {
+      position: relative;
       width: 100%;
-      background: var(--surface);
-      border: 1px solid var(--surface-3);
-      color: var(--text);
-      font-family: var(--serif);
-      font-size: 1rem;
-      padding: 0.6rem 0.8rem;
-      border-radius: var(--radius);
-      appearance: none;
-      transition: border-color 0.2s;
-      outline: none;
+      max-width: 260px;
+      margin: 0 auto 2.2rem;
+      border: 2px solid var(--soil);
     }
 
-    select {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%237a6408'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 0.8rem center;
-      padding-right: 2rem;
-      cursor: pointer;
+    .photo-frame::after {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border: 1px solid rgba(42,26,14,0.15);
     }
 
-    select:focus, input[type="text"]:focus, textarea:focus {
-      border-color: var(--brass-dim);
-    }
-
-    select option { background: #2b2a26; }
-
-    /* topic row */
-    .topic-group {
-      margin-bottom: 1.5rem;
-    }
-
-    .topic-group label {
-      display: block;
-      font-size: 0.7rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 0.4rem;
-    }
-
-    .quick-picks {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      margin-top: 0.6rem;
-    }
-
-    .quick-pick {
-      background: var(--surface-2);
-      border: 1px solid var(--surface-3);
-      color: var(--text-muted);
-      font-family: var(--serif);
-      font-size: 0.82rem;
-      padding: 0.25rem 0.65rem;
-      border-radius: 20px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .quick-pick:hover {
-      border-color: var(--brass-dim);
-      color: var(--brass-light);
-      background: var(--surface-3);
-    }
-
-    /* start button */
-    .btn-primary {
-      display: block;
+    .photo-placeholder {
       width: 100%;
-      padding: 0.8rem 1rem;
-      background: transparent;
-      border: 1px solid var(--brass-dim);
-      color: var(--brass-light);
-      font-family: var(--display);
-      font-size: 1rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      cursor: pointer;
-      border-radius: var(--radius);
-      transition: all 0.25s;
-      margin-top: 0.5rem;
-    }
-
-    .btn-primary:hover {
-      background: var(--brass-dim);
-      color: var(--bg);
-    }
-
-    .btn-primary:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-    }
-
-    /* error */
-    .setup-error {
-      color: #c07060;
-      font-size: 0.88rem;
-      text-align: center;
-      margin-top: 1rem;
-    }
-
-    /* ── Arena section ─────────────────────────────────────────────────── */
-    #arena-section {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 1rem 4rem;
-    }
-
-    .arena-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.5rem 0 1rem;
-      border-bottom: 1px solid var(--surface-3);
-      margin-bottom: 1.5rem;
-    }
-
-    .arena-topic {
-      font-family: var(--display);
-      font-size: 1.05rem;
-      font-style: italic;
-      color: var(--text-muted);
-      flex: 1;
-      text-align: center;
-    }
-
-    .btn-secondary {
-      background: transparent;
-      border: 1px solid var(--surface-3);
-      color: var(--text-dim);
-      font-family: var(--serif);
-      font-size: 0.78rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      padding: 0.35rem 0.75rem;
-      border-radius: var(--radius);
-      cursor: pointer;
-      transition: all 0.2s;
-      white-space: nowrap;
-    }
-
-    .btn-secondary:hover {
-      border-color: var(--brass-dim);
-      color: var(--text-muted);
-    }
-
-    /* ── Transcript ────────────────────────────────────────────────────── */
-    #transcript {
-      background: var(--surface);
-      border: 1px solid var(--surface-3);
-      border-radius: var(--radius);
-      padding: 1rem 1.2rem;
-      max-height: 280px;
-      overflow-y: auto;
-      margin-bottom: 1.5rem;
-      scroll-behavior: smooth;
-    }
-
-    #transcript:empty::before {
-      content: 'The debate record will appear here as the exchange unfolds.';
-      color: var(--text-dim);
-      font-style: italic;
-      font-size: 0.9rem;
-    }
-
-    .transcript-exchange {
-      margin-bottom: 1.2rem;
-      padding-bottom: 1.2rem;
-      border-bottom: 1px solid var(--surface-3);
-    }
-
-    .transcript-exchange:last-child {
-      border-bottom: none;
-      margin-bottom: 0;
-      padding-bottom: 0;
-    }
-
-    .transcript-speaker {
-      font-size: 0.72rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--brass-dim);
-      margin-bottom: 0.3rem;
-    }
-
-    .transcript-text {
-      font-size: 0.92rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-      white-space: pre-wrap;
-    }
-
-    /* ── Split-screen figure panels ────────────────────────────────────── */
-    .debate-stage {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.2rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .figure-panel {
-      background: var(--surface);
-      border: 1px solid var(--surface-3);
-      border-radius: var(--radius);
-      padding: 1.4rem;
-      min-height: 280px;
-      display: flex;
-      flex-direction: column;
-      transition: opacity 0.6s ease, border-color 0.6s ease, box-shadow 0.6s ease, background 0.6s ease;
-    }
-
-    .figure-panel.active {
-      border-color: var(--amber-border);
-      background: var(--surface);
-      box-shadow: var(--amber-glow);
-      opacity: 1;
-    }
-
-    .figure-panel.dimmed {
-      opacity: 0.4;
-    }
-
-    .figure-panel.idle {
-      opacity: 1;
-    }
-
-    /* portrait area */
-    .portrait-area {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding-bottom: 1rem;
-      border-bottom: 1px solid var(--surface-3);
-      margin-bottom: 1rem;
-    }
-
-    .portrait-circle {
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      border: 1px solid var(--surface-3);
-      background: var(--surface-2);
-      flex-shrink: 0;
+      aspect-ratio: 3/4;
+      background: var(--parchment-mid);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: var(--display);
-      font-size: 1.4rem;
-      color: var(--brass-dim);
-      transition: border-color 0.6s ease;
-    }
-
-    .figure-panel.active .portrait-circle {
-      border-color: var(--brass-dim);
-    }
-
-    .portrait-meta { flex: 1; min-width: 0; }
-
-    .portrait-name {
-      font-family: var(--display);
-      font-size: 1.15rem;
-      font-weight: 600;
-      color: var(--text);
-      line-height: 1.2;
-      display: block;
-    }
-
-    .portrait-years {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      letter-spacing: 0.08em;
-      display: block;
-      margin-top: 0.1rem;
-    }
-
-    /* speaking indicator */
-    .speaking-badge {
-      font-size: 0.65rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--brass);
-      opacity: 0;
-      transition: opacity 0.3s;
-      margin-top: 0.2rem;
-      display: block;
-    }
-
-    .figure-panel.active .speaking-badge {
-      opacity: 1;
-    }
-
-    /* response area */
-    .response-area {
-      flex: 1;
-      position: relative;
-      overflow-y: auto;
-    }
-
-    .response-text {
-      font-size: 1rem;
-      line-height: 1.72;
-      color: var(--text);
-      white-space: pre-wrap;
-    }
-
-    .response-text.typing::after {
-      content: '▌';
-      color: var(--brass);
-      animation: blink 0.7s step-end infinite;
-    }
-
-    .response-placeholder {
-      color: var(--text-dim);
-      font-style: italic;
-      font-size: 0.9rem;
-    }
-
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
-    }
-
-    /* ── Controls ──────────────────────────────────────────────────────── */
-    .controls {
-      display: flex;
       flex-direction: column;
-      gap: 0.75rem;
-    }
-
-    .controls-top {
-      display: flex;
-      gap: 0.75rem;
-      align-items: center;
-    }
-
-    .btn-continue {
-      flex: 1;
-      padding: 0.75rem 1rem;
-      background: transparent;
-      border: 1px solid var(--brass-dim);
-      color: var(--brass-light);
-      font-family: var(--display);
-      font-size: 0.95rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      cursor: pointer;
-      border-radius: var(--radius);
-      transition: all 0.25s;
-    }
-
-    .btn-continue:hover:not(:disabled) {
-      background: var(--brass-dim);
-      color: var(--bg);
-    }
-
-    .btn-continue:disabled {
-      opacity: 0.35;
-      cursor: not-allowed;
-    }
-
-    /* moderator row */
-    .moderator-row {
-      display: flex;
       gap: 0.5rem;
-      align-items: stretch;
+      padding: 1rem;
     }
 
-    .moderator-row input {
-      flex: 1;
-      padding: 0.55rem 0.8rem;
-      font-size: 0.92rem;
-    }
-
-    .moderator-label {
-      font-size: 0.7rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
+    .photo-placeholder span {
+      font-style: italic;
       color: var(--text-dim);
-      white-space: nowrap;
+      font-size: 0.75rem;
+      text-align: center;
+      opacity: 0.5;
+      line-height: 1.6;
+    }
+
+    /* Silhouette SVG inside placeholder */
+    .silhouette {
+      width: 80px;
+      opacity: 0.2;
+    }
+
+    .placard {
+      border-top: 2px solid var(--soil);
+      padding-top: 1.6rem;
+      margin-top: auto;
+    }
+
+    .placard-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--soil);
+      line-height: 1.1;
+      margin-bottom: 0.2rem;
+    }
+
+    .placard-sub {
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      font-size: 0.85rem;
+      color: var(--clay);
+      margin-bottom: 0.2rem;
+    }
+
+    .placard-dates {
+      font-family: 'Cormorant Upright', serif;
+      font-size: 0.58rem;
+      letter-spacing: 0.22em;
+      color: var(--text-dim);
+      margin-bottom: 1.3rem;
+      opacity: 0.7;
+    }
+
+    .placard-bio {
+      font-size: 0.9rem;
+      line-height: 1.9;
+      color: var(--text-mid);
+    }
+
+    .placard-bio strong { color: var(--soil); font-weight: 500; }
+    .placard-bio em { font-style: italic; color: var(--clay-mid); }
+
+    .indigo-band {
+      background: var(--indigo);
+      padding: 1.5rem 3rem;
+      border-top: 2px solid var(--indigo-mid);
+      border-bottom: 2px solid var(--indigo-mid);
       display: flex;
       align-items: center;
-      padding-right: 0.2rem;
+      gap: 1.5rem;
     }
 
-    .btn-steer {
-      background: var(--surface-2);
-      border: 1px solid var(--surface-3);
-      color: var(--text-muted);
-      font-family: var(--serif);
-      font-size: 0.8rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0 0.9rem;
-      border-radius: var(--radius);
-      cursor: pointer;
-      transition: all 0.2s;
+    .indigo-band::before, .indigo-band::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(74,95,138,0.4);
+    }
+
+    .indigo-band span {
+      font-family: 'Cormorant Upright', serif;
+      font-size: 0.58rem;
+      letter-spacing: 0.4em;
+      color: rgba(160,180,210,0.5);
       white-space: nowrap;
+      text-transform: uppercase;
     }
 
-    .btn-steer:hover {
-      border-color: var(--brass-dim);
-      color: var(--brass-light);
+    .chatbot-section {
+      padding: 5rem 3rem;
+      display: grid;
+      grid-template-columns: 1fr 1.8fr;
+      gap: 5rem;
+      border-bottom: 3px solid var(--soil);
+      background: var(--cream);
+      animation: fadeIn 1s ease 0.4s both;
+      position: relative;
     }
 
-    /* ── Loading overlay ───────────────────────────────────────────────── */
-    .loading-bar {
-      height: 2px;
-      background: linear-gradient(90deg, transparent 0%, var(--brass) 50%, transparent 100%);
-      background-size: 200% 100%;
-      animation: shimmer 1.4s ease infinite;
-      border-radius: 1px;
+    .chatbot-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: repeating-linear-gradient(0deg, transparent, transparent 42px, rgba(42,26,14,0.04) 42px, rgba(42,26,14,0.04) 43px);
+      pointer-events: none;
+    }
+
+    .chatbot-intro h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.9rem;
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--soil);
+      margin-bottom: 1.5rem;
+    }
+
+    .chatbot-intro h2 em { font-style: italic; font-weight: 400; color: var(--clay); }
+
+    .chatbot-intro p {
+      font-size: 1rem;
+      line-height: 1.95;
+      color: var(--text-mid);
       margin-bottom: 1rem;
     }
 
-    @keyframes shimmer {
-      0% { background-position: 200% 0; }
-      100% { background-position: -200% 0; }
+    .field-note {
+      margin-top: 2.5rem;
+      padding: 1.2rem;
+      border-left: 3px solid var(--clay);
+      background: rgba(107,45,26,0.05);
+      font-style: italic;
+      font-size: 0.88rem;
+      color: var(--clay-mid);
+      line-height: 1.75;
     }
 
-    /* ── Responsive ────────────────────────────────────────────────────── */
-    @media (max-width: 640px) {
-      .figure-selectors {
-        grid-template-columns: 1fr;
-      }
-      .vs-badge { display: none; }
-      .debate-stage {
-        grid-template-columns: 1fr;
-      }
+    .provenance {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(42,26,14,0.15);
+      font-family: 'Cormorant Upright', serif;
+      font-size: 0.58rem;
+      letter-spacing: 0.18em;
+      color: var(--text-dim);
+      line-height: 2.2;
+      text-transform: uppercase;
+    }
+
+    .chatbot-embed {
+      border: 2px solid var(--soil);
+      min-height: 560px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--parchment);
+      overflow: hidden;
+      box-shadow: 4px 4px 0 var(--soil-mid);
+    }
+
+    .chatbot-embed::before {
+      content: '';
+      position: absolute;
+      left: 40px;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: rgba(107,45,26,0.25);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .chatbot-embed::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: repeating-linear-gradient(0deg, transparent, transparent 30px, rgba(42,26,14,0.06) 30px, rgba(42,26,14,0.06) 31px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .ledger-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.22;
+      z-index: 0;
+    }
+
+    .panel-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 0.55rem 1rem;
+      background: var(--soil);
+      font-family: 'Cormorant Upright', serif;
+      font-size: 0.52rem;
+      letter-spacing: 0.2em;
+      color: var(--tobacco);
+      text-align: center;
+      z-index: 2;
+      text-transform: uppercase;
+      opacity: 0.8;
+    }
+
+    .pull-quote {
+      background: var(--indigo);
+      padding: 6rem 3rem;
+      text-align: center;
+      border-bottom: 3px solid var(--soil);
+    }
+
+    .pull-quote blockquote {
+      font-family: 'EB Garamond', serif;
+      font-size: clamp(1.2rem, 2.3vw, 1.85rem);
+      font-style: italic;
+      line-height: 1.6;
+      color: var(--parchment);
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .pull-quote cite {
+      display: block;
+      margin-top: 2.5rem;
+      font-family: 'Cormorant Upright', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      color: var(--tobacco);
+      opacity: 0.6;
+      font-style: normal;
+      text-transform: uppercase;
+    }
+
+    .context-section {
+      padding: 5rem 3rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      background: var(--soil);
+      border-bottom: 3px solid var(--clay);
+    }
+
+    .context-block h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--parchment);
+      margin-bottom: 1.2rem;
+      padding-bottom: 0.8rem;
+      border-bottom: 1px solid rgba(122,96,64,0.3);
+    }
+
+    .context-block p {
+      font-size: 0.92rem;
+      line-height: 1.95;
+      color: var(--tobacco-light);
+      opacity: 0.85;
+    }
+
+    .context-block p + p { margin-top: 1rem; }
+
+    .corpus-strip {
+      background: var(--parchment-mid);
+      padding: 2.5rem 3rem;
+      border-bottom: 2px solid var(--soil);
+      display: flex;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+      align-items: flex-start;
+    }
+
+    .corpus-label {
+      font-family: 'Cormorant Upright', serif;
+      font-size: 0.55rem;
+      letter-spacing: 0.35em;
+      color: var(--clay);
+      text-transform: uppercase;
+      white-space: nowrap;
+      padding-top: 0.2rem;
+      min-width: 100px;
+      opacity: 0.7;
+    }
+
+    .corpus-list { display: flex; flex-wrap: wrap; gap: 0.3rem 1.8rem; }
+
+    .corpus-item {
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      font-size: 0.9rem;
+      color: var(--text-mid);
+    }
+
+    footer {
+      background: var(--soil);
+      padding: 2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 2px solid var(--clay-mid);
+    }
+
+    .footer-text {
+      font-family: 'Cormorant Upright', serif;
+      font-size: 0.52rem;
+      letter-spacing: 0.22em;
+      color: var(--tobacco);
+      opacity: 0.35;
+      text-transform: uppercase;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+      .landscape-panel { min-height: 340px; }
+      .bio-panel { border-left: none; border-top: 3px solid var(--soil); padding: 2rem 1.5rem; }
+      .chatbot-section { grid-template-columns: 1fr; gap: 3rem; padding: 3rem 1.5rem; }
+      .context-section { grid-template-columns: 1fr; gap: 3rem; padding: 3rem 1.5rem; }
+      header { padding: 1rem 1.5rem; }
+      .hero-title { left: 1.5rem; right: 1.5rem; bottom: 2rem; }
+      .corpus-strip { padding: 2rem 1.5rem; flex-direction: column; gap: 1rem; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+      .pull-quote { padding: 4rem 1.5rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ── Header ──────────────────────────────────────────────────────────── -->
-  <header class="hall-header" role="banner">
-    <span class="ornament" aria-hidden="true">⁂</span>
-    <h1>The Debate Hall</h1>
-    <p class="subtitle">Historical Figures Museum</p>
-    <div class="rule" aria-hidden="true"><span class="rule-diamond">◆</span></div>
+  <header>
+    <span class="header-label">In Conversation With</span>
+    <span class="header-right">Accession No. &nbsp;JTC–1753–2026</span>
   </header>
 
-  <!-- ── Setup section ───────────────────────────────────────────────────── -->
-  <section id="setup-section" aria-label="Debate setup">
-    <p class="setup-title">Convene the debate</p>
+  <section class="hero">
+    <div class="landscape-panel">
+      <svg viewBox="0 0 700 900" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stop-color="#1A2340"/>
+            <stop offset="45%"  stop-color="#2A3550"/>
+            <stop offset="75%"  stop-color="#4A3828"/>
+            <stop offset="100%" stop-color="#6B3020"/>
+          </linearGradient>
+          <linearGradient id="fieldGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stop-color="#4A3020"/>
+            <stop offset="100%" stop-color="#2A1A0E"/>
+          </linearGradient>
+          <radialGradient id="dawnGlow" cx="50%" cy="52%" r="35%">
+            <stop offset="0%"   stop-color="rgba(180,80,30,0.3)"/>
+            <stop offset="60%"  stop-color="rgba(140,60,20,0.1)"/>
+            <stop offset="100%" stop-color="rgba(100,40,10,0)"/>
+          </radialGradient>
+        </defs>
 
-    <div class="figure-selectors">
-      <div class="selector-group">
-        <label for="select-a">Figure I</label>
-        <select id="select-a" aria-label="Select first figure">
-          <option value="">— choose a figure —</option>
-        </select>
-      </div>
-      <div class="vs-badge" aria-hidden="true">vs.</div>
-      <div class="selector-group">
-        <label for="select-b">Figure II</label>
-        <select id="select-b" aria-label="Select second figure">
-          <option value="">— choose a figure —</option>
-        </select>
+        <rect width="700" height="900" fill="url(#skyGrad)"/>
+
+        <!-- Stars -->
+        <g fill="rgba(232,220,192,0.35)">
+          <circle cx="80"  cy="60"  r="1.2"/>
+          <circle cx="180" cy="40"  r="0.8"/>
+          <circle cx="290" cy="80"  r="1"/>
+          <circle cx="410" cy="35"  r="1.2"/>
+          <circle cx="530" cy="65"  r="0.8"/>
+          <circle cx="640" cy="45"  r="1"/>
+          <circle cx="120" cy="130" r="0.8"/>
+          <circle cx="350" cy="110" r="1"/>
+          <circle cx="45"  cy="200" r="0.7"/>
+        </g>
+
+        <!-- Blue Ridge silhouette -->
+        <path d="M0,380 Q80,310 160,340 Q240,310 320,280 Q400,250 480,295 Q560,320 640,285 Q680,270 700,290 L700,420 L0,420Z" fill="rgba(30,40,24,0.7)"/>
+        <path d="M0,420 Q100,370 200,390 Q300,360 400,380 Q500,350 600,375 Q660,385 700,370 L700,460 L0,460Z" fill="rgba(30,40,24,0.8)"/>
+
+        <!-- Treeline -->
+        <g fill="rgba(20,28,16,0.9)">
+          <path d="M0,460 L25,380 L50,460Z"/>
+          <path d="M35,460 L60,370 L85,460Z"/>
+          <path d="M70,460 L95,385 L120,460Z"/>
+          <path d="M100,460 L125,375 L150,460Z"/>
+          <path d="M550,460 L575,372 L600,460Z"/>
+          <path d="M585,460 L610,382 L635,460Z"/>
+          <path d="M620,460 L645,368 L670,460Z"/>
+          <path d="M300,460 L318,388 L336,460Z" opacity="0.7"/>
+        </g>
+
+        <!-- Field rows -->
+        <g fill="none" stroke="rgba(122,96,64,0.3)" stroke-width="1">
+          <line x1="100" y1="900" x2="280" y2="500"/>
+          <line x1="160" y1="900" x2="300" y2="500"/>
+          <line x1="220" y1="900" x2="320" y2="500"/>
+          <line x1="280" y1="900" x2="340" y2="500"/>
+          <line x1="340" y1="900" x2="360" y2="500"/>
+          <line x1="400" y1="900" x2="380" y2="500"/>
+          <line x1="460" y1="900" x2="400" y2="500"/>
+          <line x1="520" y1="900" x2="420" y2="500"/>
+          <line x1="580" y1="900" x2="440" y2="500"/>
+          <line x1="50"  y1="580" x2="650" y2="545"/>
+          <line x1="30"  y1="640" x2="670" y2="600"/>
+          <line x1="20"  y1="700" x2="680" y2="660"/>
+          <line x1="10"  y1="770" x2="690" y2="730"/>
+        </g>
+
+        <rect x="0" y="460" width="700" height="440" fill="url(#fieldGrad)" opacity="0.85"/>
+
+        <!-- Tobacco plants -->
+        <g fill="rgba(60,50,20,0.6)" stroke="rgba(80,65,25,0.4)" stroke-width="0.5">
+          <ellipse cx="130" cy="550" rx="12" ry="6" transform="rotate(-15 130 550)"/>
+          <ellipse cx="200" cy="555" rx="12" ry="6" transform="rotate(10 200 555)"/>
+          <ellipse cx="270" cy="548" rx="11" ry="5" transform="rotate(-8 270 548)"/>
+          <ellipse cx="340" cy="552" rx="12" ry="6" transform="rotate(12 340 552)"/>
+          <ellipse cx="410" cy="547" rx="11" ry="5" transform="rotate(-10 410 547)"/>
+          <ellipse cx="480" cy="553" rx="12" ry="6" transform="rotate(8 480 553)"/>
+          <ellipse cx="550" cy="549" rx="11" ry="5" transform="rotate(-12 550 549)"/>
+          <ellipse cx="110" cy="620" rx="14" ry="7" transform="rotate(-12 110 620)"/>
+          <ellipse cx="195" cy="628" rx="14" ry="7" transform="rotate(15 195 628)"/>
+          <ellipse cx="280" cy="618" rx="13" ry="6" transform="rotate(-8 280 618)"/>
+          <ellipse cx="365" cy="625" rx="14" ry="7" transform="rotate(10 365 625)"/>
+          <ellipse cx="450" cy="617" rx="13" ry="6" transform="rotate(-14 450 617)"/>
+          <ellipse cx="535" cy="623" rx="14" ry="7" transform="rotate(8 535 623)"/>
+          <ellipse cx="90"  cy="700" rx="16" ry="8" transform="rotate(-10 90 700)"/>
+          <ellipse cx="190" cy="708" rx="16" ry="8" transform="rotate(12 190 708)"/>
+          <ellipse cx="290" cy="698" rx="15" ry="7" transform="rotate(-6 290 698)"/>
+          <ellipse cx="390" cy="705" rx="16" ry="8" transform="rotate(10 390 705)"/>
+          <ellipse cx="490" cy="697" rx="15" ry="7" transform="rotate(-12 490 697)"/>
+          <ellipse cx="590" cy="703" rx="16" ry="8" transform="rotate(8 590 703)"/>
+        </g>
+
+        <!-- Farmhouse -->
+        <g fill="rgba(20,14,8,0.85)">
+          <rect x="290" y="425" width="120" height="75"/>
+          <polygon points="275,425 350,385 425,425"/>
+          <rect x="380" y="375" width="14" height="30"/>
+          <rect x="305" y="440" width="22" height="28" fill="rgba(180,120,40,0.15)"/>
+          <rect x="370" y="440" width="22" height="28" fill="rgba(180,120,40,0.12)"/>
+          <rect x="335" y="468" width="28" height="32"/>
+          <g stroke="rgba(40,28,14,0.6)" stroke-width="1" fill="none">
+            <line x1="230" y1="500" x2="500" y2="500"/>
+            <line x1="240" y1="494" x2="240" y2="506"/>
+            <line x1="260" y1="494" x2="260" y2="506"/>
+            <line x1="280" y1="494" x2="280" y2="506"/>
+            <line x1="430" y1="494" x2="430" y2="506"/>
+            <line x1="450" y1="494" x2="450" y2="506"/>
+            <line x1="470" y1="494" x2="470" y2="506"/>
+          </g>
+        </g>
+
+        <!-- Dawn glow -->
+        <rect x="0" y="350" width="700" height="200" fill="url(#dawnGlow)"/>
+      </svg>
+
+      <div class="hero-title">
+        <span class="overline">Caroline County, Virginia</span>
+        <h1>John Taylor<br/><em>of Caroline</em></h1>
+        <span class="years">1753 &nbsp;—&nbsp; 1824</span>
       </div>
     </div>
 
-    <div class="topic-group">
-      <label for="topic-input">Debate topic</label>
-      <input
-        type="text"
-        id="topic-input"
-        placeholder="Enter a topic or choose from suggestions below…"
-        aria-label="Debate topic"
-      />
-      <div class="quick-picks" role="list" aria-label="Suggested topics">
-        <button class="quick-pick" role="listitem">The role of the individual vs. the collective</button>
-        <button class="quick-pick" role="listitem">What makes a city livable?</button>
-        <button class="quick-pick" role="listitem">The nature of the unconscious mind</button>
-        <button class="quick-pick" role="listitem">Democracy and its discontents</button>
-        <button class="quick-pick" role="listitem">The relationship between reason and intuition</button>
-        <button class="quick-pick" role="listitem">What does America get wrong?</button>
+    <div class="bio-panel">
+      <div class="exhibit-tag">Historical Archive &nbsp;·&nbsp; Portrait Study</div>
+
+      <div class="photo-frame">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/John_Taylor_ofCaroline.jpg" alt="John Taylor of Caroline" onerror="this.style.display='none'" />
+      </div>
+
+      <div class="placard">
+        <div class="placard-name">John Taylor of Caroline</div>
+        <div class="placard-sub">Farmer, Senator, Philosopher of the Republic</div>
+        <div class="placard-dates">Caroline County, Virginia, 1753 &nbsp;·&nbsp; Virginia, 1824</div>
+        <p class="placard-bio">
+          <strong>The most rigorous mind of the agrarian republic — and the most forgotten.</strong>
+          Taylor farmed his Caroline County land, served three separate stints in the U.S. Senate,
+          and wrote the most systematic philosophical critique of Alexander Hamilton's financial
+          order that any American has ever produced.
+          <br/><br/>
+          He believed Hamilton had imported a new aristocracy into the republic — not of birth,
+          but of <em>paper and stock and funded debt</em> — and that this artificial moneyed class
+          would corrupt republican government as surely as any hereditary nobility.
+          <br/><br/>
+          He was right. He wrote four books saying so in exhaustive detail.
+          Nobody read them. Hamilton's system was built anyway.
+          <br/><br/>
+          He is now 272 years old and has watched the Federal Reserve,
+          Wall Street, private equity, and the complete financialization of American life
+          with the grim satisfaction of a man who predicted every word of it.
+        </p>
       </div>
     </div>
-
-    <button id="btn-start" class="btn-primary" disabled>Begin the Debate</button>
-    <p id="setup-error" class="setup-error hidden" role="alert"></p>
   </section>
 
-  <!-- ── Arena section ───────────────────────────────────────────────────── -->
-  <section id="arena-section" class="hidden" aria-label="Debate arena">
+  <div class="indigo-band">
+    <span>Consultation</span>
+  </div>
 
-    <div class="arena-header">
-      <button class="btn-secondary" id="btn-new-debate">← New Debate</button>
-      <p class="arena-topic" id="arena-topic-label"></p>
-      <div style="width:90px"></div><!-- spacer -->
-    </div>
-
-    <!-- Transcript -->
-    <div id="transcript" aria-label="Debate transcript" aria-live="polite"></div>
-
-    <!-- Loading bar (shown during API call) -->
-    <div id="loading-bar" class="loading-bar hidden" aria-hidden="true"></div>
-
-    <!-- Stage -->
-    <div class="debate-stage">
-
-      <!-- Figure A panel -->
-      <div class="figure-panel idle" id="panel-a" aria-label="Figure A">
-        <div class="portrait-area">
-          <div class="portrait-circle" id="portrait-a" aria-hidden="true">A</div>
-          <div class="portrait-meta">
-            <span class="portrait-name" id="name-a">—</span>
-            <span class="portrait-years" id="years-a"></span>
-            <span class="speaking-badge" aria-live="polite">Speaking…</span>
-          </div>
-        </div>
-        <div class="response-area" id="response-area-a">
-          <p class="response-placeholder">Awaiting opening statement…</p>
-        </div>
+  <section class="chatbot-section">
+    <div class="chatbot-intro">
+      <h2>Consult the<br/><em>Forgotten Prophet.</em></h2>
+      <p>Taylor speaks from his complete written works — the agrarian philosophy of <em>Arator</em>, the systematic political theory of his <em>Inquiry</em>, the constitutional arguments of his later treatises.</p>
+      <p>Ask him about banking, debt, concentrated wealth, the corruption of republican institutions, the virtue of the independent farmer, or what he makes of the American economy in 2026.</p>
+      <div class="field-note">
+        "Banking and paper money have done more mischief to the morals and happiness of nations than all the wars and pestilences recorded in history."
       </div>
-
-      <!-- Figure B panel -->
-      <div class="figure-panel idle" id="panel-b" aria-label="Figure B">
-        <div class="portrait-area">
-          <div class="portrait-circle" id="portrait-b" aria-hidden="true">B</div>
-          <div class="portrait-meta">
-            <span class="portrait-name" id="name-b">—</span>
-            <span class="portrait-years" id="years-b"></span>
-            <span class="speaking-badge" aria-live="polite">Speaking…</span>
-          </div>
-        </div>
-        <div class="response-area" id="response-area-b">
-          <p class="response-placeholder">Awaiting response…</p>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Controls -->
-    <div class="controls">
-      <div class="controls-top">
-        <button class="btn-continue" id="btn-continue" disabled>Continue the Debate →</button>
-      </div>
-      <div class="moderator-row">
-        <span class="moderator-label">Moderate:</span>
-        <input
-          type="text"
-          id="moderator-input"
-          placeholder='e.g. "Ask them about the role of debt" or "Challenge them on this point…"'
-          aria-label="Moderator steering input"
-        />
-        <button class="btn-steer" id="btn-steer">Steer</button>
+      <div class="provenance">
+        Corpus Sources<br/>
+        Arator · 1813<br/>
+        An Inquiry into the Principles and Policy<br/>
+        &nbsp;&nbsp;of the Government of the United States · 1814<br/>
+        Construction Construed · 1820<br/>
+        Tyranny Unmasked · 1822<br/>
+        New Views of the Constitution · 1823
       </div>
     </div>
 
+    <div class="chatbot-embed" id="chatbot-container">
+      <svg class="ledger-bg" viewBox="0 0 500 580" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <rect width="500" height="580" fill="rgba(240,232,208,0.3)"/>
+        <g stroke="rgba(42,26,14,0.8)" stroke-width="1" fill="none">
+          <rect x="60" y="60" width="380" height="460"/>
+          <line x1="60"  y1="200" x2="440" y2="180"/>
+          <line x1="60"  y1="330" x2="440" y2="310"/>
+          <line x1="200" y1="60"  x2="220" y2="520"/>
+          <line x1="330" y1="60"  x2="310" y2="520"/>
+          <line x1="60" y1="60" x2="440" y2="520" stroke-width="0.7" opacity="0.4"/>
+          <line x1="440" y1="60" x2="60" y2="520" stroke-width="0.7" opacity="0.4"/>
+        </g>
+        <g fill="rgba(107,45,26,0.7)">
+          <circle cx="60"  cy="60"  r="5"/>
+          <circle cx="440" cy="60"  r="5"/>
+          <circle cx="60"  cy="520" r="5"/>
+          <circle cx="440" cy="520" r="5"/>
+          <circle cx="250" cy="290" r="4"/>
+        </g>
+        <g transform="translate(430,100)" stroke="rgba(42,26,14,0.6)" stroke-width="1" fill="none">
+          <circle cx="0" cy="0" r="16"/>
+          <line x1="0" y1="-16" x2="0" y2="16"/>
+          <line x1="-16" y1="0" x2="16" y2="0"/>
+          <polygon points="0,-16 -4,-5 0,-9 4,-5" fill="rgba(107,45,26,0.6)" stroke="none"/>
+          <text x="0" y="-20" text-anchor="middle" font-family="EB Garamond, serif" font-size="10" fill="rgba(42,26,14,0.6)" stroke="none">N</text>
+        </g>
+        <g fill="rgba(42,53,80,0.6)" font-family="EB Garamond, serif" font-style="italic" font-size="9">
+          <text x="100" y="145">North Field · 84 acres</text>
+          <text x="260" y="145">East Parcel · 62 acres</text>
+          <text x="100" y="275">Home Farm · 110 acres</text>
+          <text x="265" y="275">Tobacco Ground · 78 acres</text>
+          <text x="100" y="440">South Wood · 95 acres</text>
+          <text x="265" y="440">Mill Creek Lot · 44 acres</text>
+        </g>
+        <text x="250" y="42" text-anchor="middle" font-family="EB Garamond, serif" font-style="italic" font-size="11" fill="rgba(42,26,14,0.5)">Plat &amp; Survey · John Taylor, Proprietor · 1798</text>
+      </svg>
+
+      <span class="panel-caption">Hazelwood Plantation &nbsp;·&nbsp; Caroline County, Virginia &nbsp;·&nbsp; Survey 1798</span>
+
+      <link rel="stylesheet" href="https://jimmyardis.github.io/jane-jacobs-bot/widget/jacobs-widget.css">
+      <script src="https://jimmyardis.github.io/jane-jacobs-bot/widget/jacobs-widget.js"
+              data-api-url="https://illustrious-kindness-production-ab82.up.railway.app"
+              data-persona-id="john-taylor-of-caroline"></script>
+    </div>
   </section>
 
-  <script>
-    /* ── API base URL ─────────────────────────────────────────────────────── */
-    const API_BASE = 'https://aware-sparkle-production-868c.up.railway.app';
+  <div class="pull-quote">
+    <blockquote>
+      "Patronage and paper money are the modern substitutes for the feudal system.
+      They create a nobility as real, as burdensome, and as hostile to the principles
+      of a free government as any aristocracy which has ever existed."
+    </blockquote>
+    <cite>— John Taylor of Caroline &nbsp;·&nbsp; An Inquiry into the Principles and Policy &nbsp;·&nbsp; 1814</cite>
+  </div>
 
-    /* ── State ────────────────────────────────────────────────────────────── */
-    const state = {
-      personas: [],
-      selectedA: null,
-      selectedB: null,
-      topic: '',
-      history: [],
-      moderatorNote: '',
-      isRunning: false,
-    };
+  <div class="context-section">
+    <div class="context-block">
+      <h3>Why He Was Forgotten</h3>
+      <p>Taylor wrote in the dense, systematic style of a man arguing a case in court — not the aphoristic brilliance of Jefferson or the polemical electricity of Hamilton. His books were long, rigorous, and demanded full attention. The republic was busy building Hamilton's system and had little patience for the man warning against it.</p>
+      <p>He also represented a world — the independent agrarian republic of yeoman farmers — that was already losing. The cities, the banks, the factories were coming. Taylor could see it clearly. He could not stop it.</p>
+    </div>
+    <div class="context-block">
+      <h3>Why He Matters Now</h3>
+      <p>Taylor's central argument was structural: concentrated financial power corrupts republican institutions regardless of who holds it or what their intentions are. The problem is not bad actors — it is bad architecture. Build a system that rewards paper over production, speculation over work, and you will get the society that system incentivizes.</p>
+      <p>In 2026, with private equity stripping assets, central banks managing the economy, and financialization touching every corner of American life, Taylor's <em>Inquiry</em> reads less like historical curiosity and more like prophecy.</p>
+    </div>
+  </div>
 
-    /* ── DOM refs ─────────────────────────────────────────────────────────── */
-    const $ = id => document.getElementById(id);
-    const selA       = $('select-a');
-    const selB       = $('select-b');
-    const topicInput = $('topic-input');
-    const btnStart   = $('btn-start');
-    const setupErr   = $('setup-error');
-    const setupSec   = $('setup-section');
-    const arenaSec   = $('arena-section');
-    const panelA     = $('panel-a');
-    const panelB     = $('panel-b');
-    const nameA      = $('name-a');
-    const nameB      = $('name-b');
-    const yearsA     = $('years-a');
-    const yearsB     = $('years-b');
-    const portraitA  = $('portrait-a');
-    const portraitB  = $('portrait-b');
-    const responseAreaA = $('response-area-a');
-    const responseAreaB = $('response-area-b');
-    const transcript    = $('transcript');
-    const loadingBar    = $('loading-bar');
-    const btnContinue   = $('btn-continue');
-    const modInput      = $('moderator-input');
-    const btnSteer      = $('btn-steer');
-    const arenaTopicLabel = $('arena-topic-label');
-    const btnNewDebate  = $('btn-new-debate');
+  <div class="corpus-strip">
+    <div class="corpus-label">Corpus Sources</div>
+    <div class="corpus-list">
+      <span class="corpus-item">Arator · 1813</span>
+      <span class="corpus-item">An Inquiry into the Principles and Policy · 1814</span>
+      <span class="corpus-item">Construction Construed · 1820</span>
+      <span class="corpus-item">Tyranny Unmasked · 1822</span>
+      <span class="corpus-item">New Views of the Constitution · 1823</span>
+      <span class="corpus-item">Letters and Correspondence</span>
+    </div>
+  </div>
 
-    /* ── Load personas on init ────────────────────────────────────────────── */
-    async function loadPersonas() {
-      try {
-        const res = await fetch(`${API_BASE}/personas`);
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const data = await res.json();
-        state.personas = data.personas || [];
-        populateSelects();
-      } catch (e) {
-        setupErr.textContent = 'Could not load personas from server. Is api_server.py running?';
-        setupErr.classList.remove('hidden');
-      }
-    }
+  <footer>
+    <span class="footer-text">John Taylor of Caroline &nbsp;·&nbsp; 1753 – 1824</span>
+    <span class="footer-text">Powered by His Own Words</span>
+    <span class="footer-text">Accession No. JTC–1753–2026</span>
+  </footer>
 
-    function populateSelects() {
-      const opts = state.personas.map(p =>
-        `<option value="${p.id}">${p.display_name} (${p.years})</option>`
-      ).join('');
-
-      selA.innerHTML = '<option value="">— choose a figure —</option>' + opts;
-      selB.innerHTML = '<option value="">— choose a figure —</option>' + opts;
-    }
-
-    /* ── Setup validation ─────────────────────────────────────────────────── */
-    function validateSetup() {
-      const a = selA.value;
-      const b = selB.value;
-      const t = topicInput.value.trim();
-      btnStart.disabled = !(a && b && a !== b && t);
-
-      if (a && b && a === b) {
-        setupErr.textContent = 'Please select two different figures.';
-        setupErr.classList.remove('hidden');
-      } else {
-        setupErr.classList.add('hidden');
-      }
-    }
-
-    selA.addEventListener('change', validateSetup);
-    selB.addEventListener('change', validateSetup);
-    topicInput.addEventListener('input', validateSetup);
-
-    /* ── Quick-pick buttons ───────────────────────────────────────────────── */
-    document.querySelectorAll('.quick-pick').forEach(btn => {
-      btn.addEventListener('click', () => {
-        topicInput.value = btn.textContent.trim();
-        validateSetup();
-        topicInput.focus();
-      });
-    });
-
-    /* ── Start debate ─────────────────────────────────────────────────────── */
-    btnStart.addEventListener('click', () => {
-      const a = selA.value;
-      const b = selB.value;
-      const t = topicInput.value.trim();
-      if (!a || !b || a === b || !t) return;
-
-      state.selectedA = state.personas.find(p => p.id === a);
-      state.selectedB = state.personas.find(p => p.id === b);
-      state.topic     = t;
-      state.history   = [];
-      state.moderatorNote = '';
-
-      initArena();
-      runExchange();
-    });
-
-    /* ── Init arena UI ────────────────────────────────────────────────────── */
-    function initArena() {
-      const A = state.selectedA;
-      const B = state.selectedB;
-
-      nameA.textContent  = A.display_name;
-      yearsA.textContent = A.years;
-      nameB.textContent  = B.display_name;
-      yearsB.textContent = B.years;
-      portraitA.textContent = A.display_name.charAt(0);
-      portraitB.textContent = B.display_name.charAt(0);
-
-      arenaTopicLabel.textContent = `"${state.topic}"`;
-
-      responseAreaA.innerHTML = '<p class="response-placeholder">Awaiting opening statement…</p>';
-      responseAreaB.innerHTML = '<p class="response-placeholder">Awaiting response…</p>';
-      transcript.innerHTML    = '';
-      modInput.value          = '';
-
-      panelA.className = 'figure-panel idle';
-      panelB.className = 'figure-panel idle';
-      btnContinue.disabled = true;
-
-      setupSec.classList.add('hidden');
-      arenaSec.classList.remove('hidden');
-    }
-
-    /* ── Core exchange runner ─────────────────────────────────────────────── */
-    async function runExchange() {
-      if (state.isRunning) return;
-      state.isRunning = true;
-      btnContinue.disabled = true;
-      loadingBar.classList.remove('hidden');
-
-      const modNote = modInput.value.trim();
-      modInput.value = '';
-      state.moderatorNote = modNote;
-
-      try {
-        const res = await fetch(`${API_BASE}/debate`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            persona_a: state.selectedA.id,
-            persona_b: state.selectedB.id,
-            topic: state.topic,
-            history: state.history,
-            moderator_note: modNote || null,
-          }),
-        });
-
-        loadingBar.classList.add('hidden');
-
-        if (!res.ok) {
-          const err = await res.json().catch(() => ({ detail: 'Unknown error' }));
-          throw new Error(err.detail || `HTTP ${res.status}`);
-        }
-
-        const data = await res.json();
-        const [exchA, exchB] = data.exchange;
-
-        // Animate A
-        activateSpeaker('a');
-        await typeText(responseAreaA, exchA.text);
-
-        // Animate B
-        activateSpeaker('b');
-        await typeText(responseAreaB, exchB.text);
-
-        // Both done — both panels return to idle
-        panelA.className = 'figure-panel idle';
-        panelB.className = 'figure-panel idle';
-
-        // Append to transcript
-        appendTranscript(exchA);
-        appendTranscript(exchB);
-
-        // Update history
-        state.history.push(
-          { speaker: exchA.speaker, display_name: exchA.display_name, text: exchA.text },
-          { speaker: exchB.speaker, display_name: exchB.display_name, text: exchB.text }
-        );
-
-        btnContinue.disabled = false;
-
-      } catch (e) {
-        loadingBar.classList.add('hidden');
-        panelA.className = 'figure-panel idle';
-        panelB.className = 'figure-panel idle';
-        showArenaError(e.message);
-      } finally {
-        state.isRunning = false;
-      }
-    }
-
-    /* ── Typewriter animation ─────────────────────────────────────────────── */
-    function typeText(container, text, speed = 18) {
-      container.innerHTML = '';
-      const el = document.createElement('div');
-      el.className = 'response-text typing';
-      container.appendChild(el);
-
-      return new Promise(resolve => {
-        let i = 0;
-        const tick = () => {
-          if (i < text.length) {
-            el.textContent += text[i++];
-            container.scrollTop = container.scrollHeight;
-            setTimeout(tick, speed);
-          } else {
-            el.classList.remove('typing');
-            resolve();
-          }
-        };
-        tick();
-      });
-    }
-
-    /* ── Panel state ──────────────────────────────────────────────────────── */
-    function activateSpeaker(who) {
-      panelA.className = 'figure-panel ' + (who === 'a' ? 'active' : 'dimmed');
-      panelB.className = 'figure-panel ' + (who === 'b' ? 'active' : 'dimmed');
-    }
-
-    /* ── Transcript ───────────────────────────────────────────────────────── */
-    function appendTranscript(exch) {
-      const div = document.createElement('div');
-      div.className = 'transcript-exchange';
-      div.innerHTML = `
-        <p class="transcript-speaker">${escHtml(exch.display_name)}</p>
-        <p class="transcript-text">${escHtml(exch.text)}</p>
-      `;
-      transcript.appendChild(div);
-      transcript.scrollTop = transcript.scrollHeight;
-    }
-
-    function escHtml(str) {
-      return str
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
-    }
-
-    /* ── Error display ────────────────────────────────────────────────────── */
-    function showArenaError(msg) {
-      const div = document.createElement('div');
-      div.style.cssText = 'color:#c07060;font-size:.9rem;padding:.8rem;background:var(--surface);border:1px solid #5a3020;border-radius:4px;margin-bottom:1rem;';
-      div.textContent = `Error: ${msg}`;
-      arenaSec.insertBefore(div, loadingBar.nextSibling);
-      setTimeout(() => div.remove(), 8000);
-      btnContinue.disabled = false;
-    }
-
-    /* ── Continue / steer buttons ─────────────────────────────────────────── */
-    btnContinue.addEventListener('click', runExchange);
-
-    btnSteer.addEventListener('click', () => {
-      if (modInput.value.trim()) {
-        btnContinue.disabled = false;
-        btnContinue.textContent = 'Continue (with moderation) →';
-      }
-    });
-
-    modInput.addEventListener('keydown', e => {
-      if (e.key === 'Enter') btnSteer.click();
-    });
-
-    /* ── New debate ───────────────────────────────────────────────────────── */
-    btnNewDebate.addEventListener('click', () => {
-      arenaSec.classList.add('hidden');
-      setupSec.classList.remove('hidden');
-      btnContinue.textContent = 'Continue the Debate →';
-      validateSetup();
-    });
-
-    /* ── Boot ─────────────────────────────────────────────────────────────── */
-    loadPersonas();
-  </script>
 </body>
 </html>
