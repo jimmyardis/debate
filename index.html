@@ -3,817 +3,1165 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>John Taylor of Caroline — In Conversation</title>
+  <title>The Arena — Dialogues Across Time</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Cormorant+Upright:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cormorant+Upright:wght@300;400;500&display=swap" rel="stylesheet" />
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --clay:         #6B2D1A;
-      --clay-mid:     #8B3D24;
-      --clay-light:   #A8522E;
-      --soil:         #2A1A0E;
-      --soil-mid:     #3D2410;
-      --soil-light:   #5C3A1E;
-      --tobacco:      #7A6040;
-      --tobacco-light:#A89060;
-      --indigo:       #2A3550;
-      --indigo-mid:   #354468;
-      --indigo-light: #4A5F8A;
-      --leather:      #8B6040;
-      --leather-light:#C49060;
-      --parchment:    #E8DCC0;
-      --parchment-mid:#D4C4A0;
-      --parchment-dark:#B8A880;
-      --cream:        #F0E8D0;
-      --text:         #2A1A0E;
-      --text-mid:     #4A3020;
-      --text-dim:     #7A6040;
+      --void:        #0A090C;
+      --deep:        #111018;
+      --surface:     #1A1825;
+      --surface-mid: #232135;
+      --amber:       #C49A3C;
+      --amber-dim:   #7A5E20;
+      --amber-pale:  #E8C96A;
+      --brass:       #8B7035;
+      --ivory:       #EDE8D8;
+      --ivory-dim:   #A09880;
+      --steel:       #4A5568;
+      --text:        #D4CEB8;
+      --text-dim:    #6B6455;
+      --left-glow:   rgba(196,154,60,0.15);
+      --right-glow:  rgba(196,154,60,0.15);
     }
 
     html { scroll-behavior: smooth; }
 
     body {
-      background: var(--parchment);
+      background: var(--void);
       color: var(--text);
-      font-family: 'EB Garamond', Georgia, serif;
+      font-family: 'Cormorant Garamond', Georgia, serif;
       overflow-x: hidden;
+      min-height: 100vh;
     }
 
+    /* Grain overlay */
     body::before {
       content: '';
       position: fixed;
       inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.68' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)' opacity='0.065'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.06'/%3E%3C/svg%3E");
       pointer-events: none;
-      z-index: 1000;
+      z-index: 9999;
     }
 
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background: radial-gradient(ellipse at center, transparent 50%, rgba(42,26,14,0.18) 100%);
-      pointer-events: none;
-      z-index: 999;
-    }
-
+    /* ── HEADER ── */
     header {
-      background: var(--soil);
-      padding: 1rem 3rem;
+      padding: 1.2rem 3rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 3px solid var(--clay);
-      animation: fadeDown 0.7s ease both;
+      border-bottom: 1px solid rgba(196,154,60,0.2);
+      animation: fadeDown 0.8s ease both;
     }
 
     .header-label {
-      font-family: 'Cormorant Upright', serif;
-      font-size: 0.6rem;
-      letter-spacing: 0.35em;
-      color: var(--tobacco-light);
-      opacity: 0.7;
-      text-transform: uppercase;
-    }
-
-    .header-right {
-      font-family: 'Cormorant Upright', serif;
+      font-family: 'Cinzel', serif;
       font-size: 0.58rem;
-      letter-spacing: 0.25em;
-      color: var(--tobacco);
-      opacity: 0.5;
-    }
-
-    .hero {
-      display: grid;
-      grid-template-columns: 1.3fr 0.7fr;
-      min-height: 88vh;
-      border-bottom: 3px solid var(--soil);
-      overflow: hidden;
-      animation: fadeIn 0.9s ease 0.2s both;
-    }
-
-    .landscape-panel {
-      position: relative;
-      background: var(--soil-mid);
-      overflow: hidden;
-      min-height: 500px;
-    }
-
-    .landscape-panel svg {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-    }
-
-    .hero-title {
-      position: absolute;
-      bottom: 3rem;
-      left: 3rem;
-      right: 3rem;
-      z-index: 10;
-    }
-
-    .hero-title .overline {
-      font-family: 'Cormorant Upright', serif;
-      font-size: 0.6rem;
       letter-spacing: 0.4em;
-      color: var(--clay-light);
+      color: var(--amber);
       text-transform: uppercase;
-      display: block;
-      margin-bottom: 0.6rem;
-      opacity: 0.8;
+      opacity: 0.7;
     }
 
-    .hero-title h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.2rem, 4vw, 4.5rem);
-      font-weight: 900;
-      color: var(--cream);
-      line-height: 1.0;
-      letter-spacing: -0.01em;
+    .header-nav {
+      display: flex;
+      gap: 2rem;
     }
 
-    .hero-title h1 em {
-      font-style: italic;
-      font-weight: 400;
-      color: var(--tobacco-light);
-      display: block;
-      font-size: 0.7em;
+    .header-nav a {
+      font-family: 'Cinzel', serif;
+      font-size: 0.55rem;
+      letter-spacing: 0.3em;
+      color: var(--text-dim);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.2s;
     }
 
-    .hero-title .years {
-      font-family: 'Cormorant Upright', serif;
-      font-size: 0.62rem;
-      letter-spacing: 0.4em;
-      color: var(--tobacco);
-      margin-top: 0.8rem;
-      display: block;
-      opacity: 0.6;
-    }
+    .header-nav a:hover { color: var(--amber); }
 
-    .bio-panel {
-      background: var(--cream);
-      border-left: 3px solid var(--soil);
-      padding: 3rem 2.2rem;
+    /* ── HERO / SETUP SCREEN ── */
+    #setup-screen {
+      min-height: calc(100vh - 60px);
       display: flex;
       flex-direction: column;
-      position: relative;
-    }
-
-    .bio-panel::before {
-      content: '';
-      position: absolute;
-      left: 3.5rem;
-      top: 0;
-      bottom: 0;
-      width: 1px;
-      background: rgba(42,53,80,0.2);
-    }
-
-    .exhibit-tag {
-      font-family: 'Cormorant Upright', serif;
-      font-size: 0.58rem;
-      letter-spacing: 0.35em;
-      color: var(--clay);
-      text-transform: uppercase;
-      margin-bottom: 2rem;
-      opacity: 0.7;
-    }
-
-    .photo-frame {
-      position: relative;
-      width: 100%;
-      max-width: 260px;
-      margin: 0 auto 2.2rem;
-      border: 2px solid var(--soil);
-    }
-
-    .photo-frame::after {
-      content: '';
-      position: absolute;
-      inset: -6px;
-      border: 1px solid rgba(42,26,14,0.15);
-    }
-
-    .photo-placeholder {
-      width: 100%;
-      aspect-ratio: 3/4;
-      background: var(--parchment-mid);
-      display: flex;
       align-items: center;
       justify-content: center;
-      flex-direction: column;
-      gap: 0.5rem;
-      padding: 1rem;
+      padding: 4rem 2rem;
+      position: relative;
+      overflow: hidden;
     }
 
-    .photo-placeholder span {
-      font-style: italic;
-      color: var(--text-dim);
-      font-size: 0.75rem;
+    /* Background stage curtain effect */
+    #setup-screen::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(196,154,60,0.04) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 50%, rgba(196,154,60,0.04) 0%, transparent 60%),
+        radial-gradient(ellipse at 50% 100%, rgba(196,154,60,0.06) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    /* Stage floor line */
+    #setup-screen::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(196,154,60,0.3), transparent);
+    }
+
+    .arena-title {
       text-align: center;
-      opacity: 0.5;
-      line-height: 1.6;
+      margin-bottom: 1rem;
+      animation: fadeIn 1s ease 0.2s both;
     }
 
-    /* Silhouette SVG inside placeholder */
-    .silhouette {
-      width: 80px;
-      opacity: 0.2;
+    .arena-title .overline {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.5em;
+      color: var(--amber);
+      opacity: 0.6;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 1.2rem;
     }
 
-    .placard {
-      border-top: 2px solid var(--soil);
-      padding-top: 1.6rem;
-      margin-top: auto;
+    .arena-title h1 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 900;
+      color: var(--ivory);
+      letter-spacing: 0.08em;
+      line-height: 1;
     }
 
-    .placard-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: var(--soil);
-      line-height: 1.1;
-      margin-bottom: 0.2rem;
+    .arena-title h1 span {
+      color: var(--amber);
     }
 
-    .placard-sub {
-      font-family: 'EB Garamond', serif;
+    .arena-title .subtitle {
+      font-family: 'Cormorant Garamond', serif;
       font-style: italic;
-      font-size: 0.85rem;
-      color: var(--clay);
-      margin-bottom: 0.2rem;
-    }
-
-    .placard-dates {
-      font-family: 'Cormorant Upright', serif;
-      font-size: 0.58rem;
-      letter-spacing: 0.22em;
+      font-size: clamp(1rem, 2vw, 1.3rem);
       color: var(--text-dim);
-      margin-bottom: 1.3rem;
-      opacity: 0.7;
+      margin-top: 1rem;
+      font-weight: 300;
+      letter-spacing: 0.05em;
     }
 
-    .placard-bio {
-      font-size: 0.9rem;
-      line-height: 1.9;
-      color: var(--text-mid);
-    }
-
-    .placard-bio strong { color: var(--soil); font-weight: 500; }
-    .placard-bio em { font-style: italic; color: var(--clay-mid); }
-
-    .indigo-band {
-      background: var(--indigo);
-      padding: 1.5rem 3rem;
-      border-top: 2px solid var(--indigo-mid);
-      border-bottom: 2px solid var(--indigo-mid);
+    /* ── DIVIDER ORNAMENT ── */
+    .ornament {
       display: flex;
       align-items: center;
-      gap: 1.5rem;
+      gap: 1rem;
+      margin: 2.5rem 0;
+      width: 100%;
+      max-width: 700px;
+      animation: fadeIn 1s ease 0.4s both;
     }
 
-    .indigo-band::before, .indigo-band::after {
+    .ornament::before,
+    .ornament::after {
       content: '';
       flex: 1;
       height: 1px;
-      background: rgba(74,95,138,0.4);
+      background: linear-gradient(90deg, transparent, rgba(196,154,60,0.3), transparent);
     }
 
-    .indigo-band span {
-      font-family: 'Cormorant Upright', serif;
-      font-size: 0.58rem;
-      letter-spacing: 0.4em;
-      color: rgba(160,180,210,0.5);
-      white-space: nowrap;
-      text-transform: uppercase;
+    .ornament span {
+      font-size: 1rem;
+      color: var(--amber);
+      opacity: 0.4;
     }
 
-    .chatbot-section {
-      padding: 5rem 3rem;
+    /* ── SETUP PANEL ── */
+    .setup-panel {
+      width: 100%;
+      max-width: 860px;
+      animation: fadeIn 1s ease 0.5s both;
+    }
+
+    /* Figure selector */
+    .figure-selector {
       display: grid;
-      grid-template-columns: 1fr 1.8fr;
-      gap: 5rem;
-      border-bottom: 3px solid var(--soil);
-      background: var(--cream);
-      animation: fadeIn 1s ease 0.4s both;
-      position: relative;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 1.5rem;
+      align-items: center;
+      margin-bottom: 2.5rem;
     }
 
-    .chatbot-section::before {
+    .figure-slot {
+      border: 1px solid rgba(196,154,60,0.2);
+      background: var(--surface);
+      padding: 1.8rem;
+      position: relative;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .figure-slot:hover {
+      border-color: rgba(196,154,60,0.4);
+      box-shadow: 0 0 20px rgba(196,154,60,0.05);
+    }
+
+    .figure-slot::before {
       content: '';
       position: absolute;
-      inset: 0;
-      background-image: repeating-linear-gradient(0deg, transparent, transparent 42px, rgba(42,26,14,0.04) 42px, rgba(42,26,14,0.04) 43px);
+      inset: 4px;
+      border: 1px solid rgba(196,154,60,0.06);
       pointer-events: none;
     }
 
-    .chatbot-intro h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.9rem;
-      font-weight: 700;
-      line-height: 1.2;
-      color: var(--soil);
-      margin-bottom: 1.5rem;
+    .slot-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.55rem;
+      letter-spacing: 0.35em;
+      color: var(--amber);
+      opacity: 0.5;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      display: block;
     }
 
-    .chatbot-intro h2 em { font-style: italic; font-weight: 400; color: var(--clay); }
+    .slot-select {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(196,154,60,0.3);
+      color: var(--ivory);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-style: italic;
+      padding: 0.5rem 0;
+      cursor: pointer;
+      outline: none;
+      appearance: none;
+    }
 
-    .chatbot-intro p {
-      font-size: 1rem;
-      line-height: 1.95;
-      color: var(--text-mid);
+    .slot-select option {
+      background: var(--deep);
+      color: var(--ivory);
+      font-style: normal;
+    }
+
+    .slot-select:focus {
+      border-bottom-color: var(--amber);
+    }
+
+    .vs-divider {
+      text-align: center;
+    }
+
+    .vs-divider span {
+      font-family: 'Cinzel', serif;
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: var(--amber);
+      opacity: 0.4;
+      letter-spacing: 0.2em;
+    }
+
+    /* Topic section */
+    .topic-section {
+      margin-bottom: 2.5rem;
+    }
+
+    .topic-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.58rem;
+      letter-spacing: 0.35em;
+      color: var(--amber);
+      opacity: 0.6;
+      text-transform: uppercase;
+      display: block;
       margin-bottom: 1rem;
     }
 
-    .field-note {
-      margin-top: 2.5rem;
-      padding: 1.2rem;
-      border-left: 3px solid var(--clay);
-      background: rgba(107,45,26,0.05);
-      font-style: italic;
-      font-size: 0.88rem;
-      color: var(--clay-mid);
-      line-height: 1.75;
-    }
-
-    .provenance {
-      margin-top: 2rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid rgba(42,26,14,0.15);
-      font-family: 'Cormorant Upright', serif;
-      font-size: 0.58rem;
-      letter-spacing: 0.18em;
-      color: var(--text-dim);
-      line-height: 2.2;
-      text-transform: uppercase;
-    }
-
-    .chatbot-embed {
-      border: 2px solid var(--soil);
-      min-height: 560px;
+    .topic-input-wrap {
       position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--parchment);
-      overflow: hidden;
-      box-shadow: 4px 4px 0 var(--soil-mid);
-    }
-
-    .chatbot-embed::before {
-      content: '';
-      position: absolute;
-      left: 40px;
-      top: 0;
-      bottom: 0;
-      width: 1px;
-      background: rgba(107,45,26,0.25);
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    .chatbot-embed::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image: repeating-linear-gradient(0deg, transparent, transparent 30px, rgba(42,26,14,0.06) 30px, rgba(42,26,14,0.06) 31px);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .ledger-bg {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      opacity: 0.22;
-      z-index: 0;
-    }
-
-    .panel-caption {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 0.55rem 1rem;
-      background: var(--soil);
-      font-family: 'Cormorant Upright', serif;
-      font-size: 0.52rem;
-      letter-spacing: 0.2em;
-      color: var(--tobacco);
-      text-align: center;
-      z-index: 2;
-      text-transform: uppercase;
-      opacity: 0.8;
-    }
-
-    .pull-quote {
-      background: var(--indigo);
-      padding: 6rem 3rem;
-      text-align: center;
-      border-bottom: 3px solid var(--soil);
-    }
-
-    .pull-quote blockquote {
-      font-family: 'EB Garamond', serif;
-      font-size: clamp(1.2rem, 2.3vw, 1.85rem);
-      font-style: italic;
-      line-height: 1.6;
-      color: var(--parchment);
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .pull-quote cite {
-      display: block;
-      margin-top: 2.5rem;
-      font-family: 'Cormorant Upright', serif;
-      font-size: 0.6rem;
-      letter-spacing: 0.3em;
-      color: var(--tobacco);
-      opacity: 0.6;
-      font-style: normal;
-      text-transform: uppercase;
-    }
-
-    .context-section {
-      padding: 5rem 3rem;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5rem;
-      background: var(--soil);
-      border-bottom: 3px solid var(--clay);
-    }
-
-    .context-block h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: var(--parchment);
+      border: 1px solid rgba(196,154,60,0.25);
+      background: var(--surface);
       margin-bottom: 1.2rem;
-      padding-bottom: 0.8rem;
-      border-bottom: 1px solid rgba(122,96,64,0.3);
     }
 
-    .context-block p {
-      font-size: 0.92rem;
-      line-height: 1.95;
-      color: var(--tobacco-light);
-      opacity: 0.85;
-    }
-
-    .context-block p + p { margin-top: 1rem; }
-
-    .corpus-strip {
-      background: var(--parchment-mid);
-      padding: 2.5rem 3rem;
-      border-bottom: 2px solid var(--soil);
-      display: flex;
-      gap: 2.5rem;
-      flex-wrap: wrap;
-      align-items: flex-start;
-    }
-
-    .corpus-label {
-      font-family: 'Cormorant Upright', serif;
-      font-size: 0.55rem;
-      letter-spacing: 0.35em;
-      color: var(--clay);
-      text-transform: uppercase;
-      white-space: nowrap;
-      padding-top: 0.2rem;
-      min-width: 100px;
-      opacity: 0.7;
-    }
-
-    .corpus-list { display: flex; flex-wrap: wrap; gap: 0.3rem 1.8rem; }
-
-    .corpus-item {
-      font-family: 'EB Garamond', serif;
+    .topic-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      color: var(--ivory);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
       font-style: italic;
-      font-size: 0.9rem;
-      color: var(--text-mid);
+      padding: 1rem 1.2rem;
+      outline: none;
     }
 
-    footer {
-      background: var(--soil);
-      padding: 2rem 3rem;
+    .topic-input::placeholder {
+      color: var(--text-dim);
+      opacity: 0.5;
+    }
+
+    /* Suggested topics */
+    .suggested-topics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .topic-chip {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.82rem;
+      font-style: italic;
+      color: var(--text-dim);
+      border: 1px solid rgba(196,154,60,0.15);
+      padding: 0.4rem 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: transparent;
+    }
+
+    .topic-chip:hover,
+    .topic-chip.active {
+      border-color: var(--amber);
+      color: var(--amber-pale);
+      background: rgba(196,154,60,0.05);
+    }
+
+    /* Begin button */
+    .begin-btn {
+      width: 100%;
+      padding: 1.2rem;
+      background: transparent;
+      border: 1px solid var(--amber);
+      color: var(--amber-pale);
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .begin-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--amber);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+      z-index: 0;
+    }
+
+    .begin-btn:hover::before { transform: scaleX(1); }
+    .begin-btn:hover { color: var(--void); }
+    .begin-btn span { position: relative; z-index: 1; }
+
+    .begin-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .begin-btn:disabled::before { display: none; }
+
+    /* ── DEBATE ARENA (hidden until started) ── */
+    #debate-screen {
+      display: none;
+      min-height: calc(100vh - 60px);
+      flex-direction: column;
+    }
+
+    #debate-screen.active { display: flex; }
+
+    /* Stage header */
+    .stage-header {
+      padding: 1.5rem 3rem;
+      border-bottom: 1px solid rgba(196,154,60,0.15);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-top: 2px solid var(--clay-mid);
+      background: var(--deep);
     }
 
-    .footer-text {
-      font-family: 'Cormorant Upright', serif;
-      font-size: 0.52rem;
-      letter-spacing: 0.22em;
-      color: var(--tobacco);
-      opacity: 0.35;
+    .stage-topic {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1rem;
+      color: var(--text-dim);
+    }
+
+    .stage-topic strong {
+      color: var(--ivory);
+      font-style: normal;
+      font-weight: 400;
+    }
+
+    .stage-controls {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .btn-small {
+      font-family: 'Cinzel', serif;
+      font-size: 0.5rem;
+      letter-spacing: 0.3em;
+      padding: 0.5rem 1rem;
+      border: 1px solid rgba(196,154,60,0.3);
+      color: var(--text-dim);
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.2s;
       text-transform: uppercase;
     }
 
+    .btn-small:hover {
+      border-color: var(--amber);
+      color: var(--amber);
+    }
+
+    /* Split stage */
+    .split-stage {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      flex: 1;
+      min-height: 0;
+    }
+
+    /* Individual podium */
+    .podium {
+      display: flex;
+      flex-direction: column;
+      padding: 2.5rem 2rem;
+      border-right: 1px solid rgba(196,154,60,0.1);
+      transition: background 0.5s ease, opacity 0.5s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .podium:last-child { border-right: none; }
+
+    /* Active / inactive states */
+    .podium.speaking {
+      background: rgba(196,154,60,0.04);
+    }
+
+    .podium.speaking::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--amber), transparent);
+      animation: scanline 2s ease infinite;
+    }
+
+    .podium.dormant {
+      opacity: 0.45;
+    }
+
+    @keyframes scanline {
+      0%   { opacity: 0; transform: scaleX(0); }
+      50%  { opacity: 1; transform: scaleX(1); }
+      100% { opacity: 0; transform: scaleX(1); }
+    }
+
+    /* Figure nameplate */
+    .nameplate {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid rgba(196,154,60,0.12);
+    }
+
+    .portrait-circle {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: 1px solid rgba(196,154,60,0.3);
+      overflow: hidden;
+      flex-shrink: 0;
+      background: var(--surface-mid);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cinzel', serif;
+      font-size: 1.2rem;
+      color: var(--amber);
+      opacity: 0.6;
+    }
+
+    .portrait-circle img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(100%) contrast(1.1);
+    }
+
+    .nameplate-text {}
+
+    .figure-name {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--ivory);
+      letter-spacing: 0.05em;
+    }
+
+    .figure-years {
+      font-family: 'Cormorant Upright', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      color: var(--amber);
+      opacity: 0.5;
+      margin-top: 0.2rem;
+    }
+
+    .speaking-indicator {
+      margin-left: auto;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--amber);
+      opacity: 0;
+      transition: opacity 0.3s;
+      box-shadow: 0 0 8px var(--amber);
+    }
+
+    .podium.speaking .speaking-indicator {
+      opacity: 1;
+      animation: pulse 1.5s ease infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
+    }
+
+    /* Response area */
+    .response-area {
+      flex: 1;
+      overflow-y: auto;
+      padding-right: 0.5rem;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(196,154,60,0.2) transparent;
+    }
+
+    .response-area::-webkit-scrollbar { width: 3px; }
+    .response-area::-webkit-scrollbar-track { background: transparent; }
+    .response-area::-webkit-scrollbar-thumb { background: rgba(196,154,60,0.2); }
+
+    .exchange {
+      margin-bottom: 2rem;
+      animation: fadeIn 0.6s ease both;
+    }
+
+    .exchange-number {
+      font-family: 'Cinzel', serif;
+      font-size: 0.5rem;
+      letter-spacing: 0.3em;
+      color: var(--amber);
+      opacity: 0.3;
+      margin-bottom: 0.6rem;
+    }
+
+    .exchange-text {
+      font-size: 1rem;
+      line-height: 1.85;
+      color: var(--text);
+      font-weight: 300;
+    }
+
+    /* Typewriter cursor */
+    .typing::after {
+      content: '|';
+      animation: blink 0.7s step-end infinite;
+      color: var(--amber);
+      opacity: 0.7;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 0.7; }
+      50% { opacity: 0; }
+    }
+
+    /* ── BOTTOM BAR ── */
+    .debate-footer {
+      border-top: 1px solid rgba(196,154,60,0.12);
+      padding: 1.2rem 2rem;
+      background: var(--deep);
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .moderator-input {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid rgba(196,154,60,0.2);
+      color: var(--ivory);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.95rem;
+      font-style: italic;
+      padding: 0.7rem 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .moderator-input::placeholder {
+      color: var(--text-dim);
+      opacity: 0.4;
+    }
+
+    .moderator-input:focus {
+      border-color: rgba(196,154,60,0.4);
+    }
+
+    .continue-btn {
+      font-family: 'Cinzel', serif;
+      font-size: 0.58rem;
+      letter-spacing: 0.3em;
+      padding: 0.75rem 1.8rem;
+      border: 1px solid var(--amber);
+      color: var(--amber-pale);
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-transform: uppercase;
+      white-space: nowrap;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .continue-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--amber);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s;
+      z-index: 0;
+    }
+
+    .continue-btn:hover::before { transform: scaleX(1); }
+    .continue-btn:hover { color: var(--void); }
+    .continue-btn span { position: relative; z-index: 1; }
+
+    .continue-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .continue-btn:disabled::before { display: none; }
+
+    /* Loading state */
+    .loading-dots {
+      display: none;
+      gap: 4px;
+      align-items: center;
+    }
+
+    .loading-dots.active { display: flex; }
+
+    .loading-dots span {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--amber);
+      animation: dotPulse 1.2s ease infinite;
+    }
+
+    .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes dotPulse {
+      0%, 100% { opacity: 0.2; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    /* ── EXCHANGE COUNT ── */
+    .exchange-counter {
+      font-family: 'Cinzel', serif;
+      font-size: 0.52rem;
+      letter-spacing: 0.2em;
+      color: var(--text-dim);
+      white-space: nowrap;
+    }
+
+    /* ── ANIMATIONS ── */
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(14px); }
       to   { opacity: 1; transform: translateY(0); }
     }
+
     @keyframes fadeDown {
       from { opacity: 0; transform: translateY(-8px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    @media (max-width: 900px) {
-      .hero { grid-template-columns: 1fr; }
-      .landscape-panel { min-height: 340px; }
-      .bio-panel { border-left: none; border-top: 3px solid var(--soil); padding: 2rem 1.5rem; }
-      .chatbot-section { grid-template-columns: 1fr; gap: 3rem; padding: 3rem 1.5rem; }
-      .context-section { grid-template-columns: 1fr; gap: 3rem; padding: 3rem 1.5rem; }
-      header { padding: 1rem 1.5rem; }
-      .hero-title { left: 1.5rem; right: 1.5rem; bottom: 2rem; }
-      .corpus-strip { padding: 2rem 1.5rem; flex-direction: column; gap: 1rem; }
-      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
-      .pull-quote { padding: 4rem 1.5rem; }
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      header { padding: 1rem 1.2rem; }
+      #setup-screen { padding: 2rem 1.2rem; }
+      .figure-selector { grid-template-columns: 1fr; }
+      .vs-divider { padding: 0.5rem 0; }
+      .split-stage { grid-template-columns: 1fr; }
+      .podium { border-right: none; border-bottom: 1px solid rgba(196,154,60,0.1); }
+      .debate-footer { flex-wrap: wrap; }
+      .moderator-input { min-width: 0; }
+      .stage-header { flex-direction: column; gap: 1rem; padding: 1rem 1.2rem; }
     }
   </style>
 </head>
 <body>
 
+  <!-- HEADER -->
   <header>
-    <span class="header-label">In Conversation With</span>
-    <span class="header-right">Accession No. &nbsp;JTC–1753–2026</span>
+    <span class="header-label">The Museum &nbsp;·&nbsp; Debate Arena</span>
+    <nav class="header-nav">
+      <a href="#">Jane Jacobs</a>
+      <a href="#">Carl Jung</a>
+      <a href="#">Thomas Jefferson</a>
+      <a href="#">Alexander Hamilton</a>
+    </nav>
   </header>
 
-  <section class="hero">
-    <div class="landscape-panel">
-      <svg viewBox="0 0 700 900" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-        <defs>
-          <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%"   stop-color="#1A2340"/>
-            <stop offset="45%"  stop-color="#2A3550"/>
-            <stop offset="75%"  stop-color="#4A3828"/>
-            <stop offset="100%" stop-color="#6B3020"/>
-          </linearGradient>
-          <linearGradient id="fieldGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%"   stop-color="#4A3020"/>
-            <stop offset="100%" stop-color="#2A1A0E"/>
-          </linearGradient>
-          <radialGradient id="dawnGlow" cx="50%" cy="52%" r="35%">
-            <stop offset="0%"   stop-color="rgba(180,80,30,0.3)"/>
-            <stop offset="60%"  stop-color="rgba(140,60,20,0.1)"/>
-            <stop offset="100%" stop-color="rgba(100,40,10,0)"/>
-          </radialGradient>
-        </defs>
+  <!-- ══ SETUP SCREEN ══ -->
+  <div id="setup-screen">
 
-        <rect width="700" height="900" fill="url(#skyGrad)"/>
-
-        <!-- Stars -->
-        <g fill="rgba(232,220,192,0.35)">
-          <circle cx="80"  cy="60"  r="1.2"/>
-          <circle cx="180" cy="40"  r="0.8"/>
-          <circle cx="290" cy="80"  r="1"/>
-          <circle cx="410" cy="35"  r="1.2"/>
-          <circle cx="530" cy="65"  r="0.8"/>
-          <circle cx="640" cy="45"  r="1"/>
-          <circle cx="120" cy="130" r="0.8"/>
-          <circle cx="350" cy="110" r="1"/>
-          <circle cx="45"  cy="200" r="0.7"/>
-        </g>
-
-        <!-- Blue Ridge silhouette -->
-        <path d="M0,380 Q80,310 160,340 Q240,310 320,280 Q400,250 480,295 Q560,320 640,285 Q680,270 700,290 L700,420 L0,420Z" fill="rgba(30,40,24,0.7)"/>
-        <path d="M0,420 Q100,370 200,390 Q300,360 400,380 Q500,350 600,375 Q660,385 700,370 L700,460 L0,460Z" fill="rgba(30,40,24,0.8)"/>
-
-        <!-- Treeline -->
-        <g fill="rgba(20,28,16,0.9)">
-          <path d="M0,460 L25,380 L50,460Z"/>
-          <path d="M35,460 L60,370 L85,460Z"/>
-          <path d="M70,460 L95,385 L120,460Z"/>
-          <path d="M100,460 L125,375 L150,460Z"/>
-          <path d="M550,460 L575,372 L600,460Z"/>
-          <path d="M585,460 L610,382 L635,460Z"/>
-          <path d="M620,460 L645,368 L670,460Z"/>
-          <path d="M300,460 L318,388 L336,460Z" opacity="0.7"/>
-        </g>
-
-        <!-- Field rows -->
-        <g fill="none" stroke="rgba(122,96,64,0.3)" stroke-width="1">
-          <line x1="100" y1="900" x2="280" y2="500"/>
-          <line x1="160" y1="900" x2="300" y2="500"/>
-          <line x1="220" y1="900" x2="320" y2="500"/>
-          <line x1="280" y1="900" x2="340" y2="500"/>
-          <line x1="340" y1="900" x2="360" y2="500"/>
-          <line x1="400" y1="900" x2="380" y2="500"/>
-          <line x1="460" y1="900" x2="400" y2="500"/>
-          <line x1="520" y1="900" x2="420" y2="500"/>
-          <line x1="580" y1="900" x2="440" y2="500"/>
-          <line x1="50"  y1="580" x2="650" y2="545"/>
-          <line x1="30"  y1="640" x2="670" y2="600"/>
-          <line x1="20"  y1="700" x2="680" y2="660"/>
-          <line x1="10"  y1="770" x2="690" y2="730"/>
-        </g>
-
-        <rect x="0" y="460" width="700" height="440" fill="url(#fieldGrad)" opacity="0.85"/>
-
-        <!-- Tobacco plants -->
-        <g fill="rgba(60,50,20,0.6)" stroke="rgba(80,65,25,0.4)" stroke-width="0.5">
-          <ellipse cx="130" cy="550" rx="12" ry="6" transform="rotate(-15 130 550)"/>
-          <ellipse cx="200" cy="555" rx="12" ry="6" transform="rotate(10 200 555)"/>
-          <ellipse cx="270" cy="548" rx="11" ry="5" transform="rotate(-8 270 548)"/>
-          <ellipse cx="340" cy="552" rx="12" ry="6" transform="rotate(12 340 552)"/>
-          <ellipse cx="410" cy="547" rx="11" ry="5" transform="rotate(-10 410 547)"/>
-          <ellipse cx="480" cy="553" rx="12" ry="6" transform="rotate(8 480 553)"/>
-          <ellipse cx="550" cy="549" rx="11" ry="5" transform="rotate(-12 550 549)"/>
-          <ellipse cx="110" cy="620" rx="14" ry="7" transform="rotate(-12 110 620)"/>
-          <ellipse cx="195" cy="628" rx="14" ry="7" transform="rotate(15 195 628)"/>
-          <ellipse cx="280" cy="618" rx="13" ry="6" transform="rotate(-8 280 618)"/>
-          <ellipse cx="365" cy="625" rx="14" ry="7" transform="rotate(10 365 625)"/>
-          <ellipse cx="450" cy="617" rx="13" ry="6" transform="rotate(-14 450 617)"/>
-          <ellipse cx="535" cy="623" rx="14" ry="7" transform="rotate(8 535 623)"/>
-          <ellipse cx="90"  cy="700" rx="16" ry="8" transform="rotate(-10 90 700)"/>
-          <ellipse cx="190" cy="708" rx="16" ry="8" transform="rotate(12 190 708)"/>
-          <ellipse cx="290" cy="698" rx="15" ry="7" transform="rotate(-6 290 698)"/>
-          <ellipse cx="390" cy="705" rx="16" ry="8" transform="rotate(10 390 705)"/>
-          <ellipse cx="490" cy="697" rx="15" ry="7" transform="rotate(-12 490 697)"/>
-          <ellipse cx="590" cy="703" rx="16" ry="8" transform="rotate(8 590 703)"/>
-        </g>
-
-        <!-- Farmhouse -->
-        <g fill="rgba(20,14,8,0.85)">
-          <rect x="290" y="425" width="120" height="75"/>
-          <polygon points="275,425 350,385 425,425"/>
-          <rect x="380" y="375" width="14" height="30"/>
-          <rect x="305" y="440" width="22" height="28" fill="rgba(180,120,40,0.15)"/>
-          <rect x="370" y="440" width="22" height="28" fill="rgba(180,120,40,0.12)"/>
-          <rect x="335" y="468" width="28" height="32"/>
-          <g stroke="rgba(40,28,14,0.6)" stroke-width="1" fill="none">
-            <line x1="230" y1="500" x2="500" y2="500"/>
-            <line x1="240" y1="494" x2="240" y2="506"/>
-            <line x1="260" y1="494" x2="260" y2="506"/>
-            <line x1="280" y1="494" x2="280" y2="506"/>
-            <line x1="430" y1="494" x2="430" y2="506"/>
-            <line x1="450" y1="494" x2="450" y2="506"/>
-            <line x1="470" y1="494" x2="470" y2="506"/>
-          </g>
-        </g>
-
-        <!-- Dawn glow -->
-        <rect x="0" y="350" width="700" height="200" fill="url(#dawnGlow)"/>
-      </svg>
-
-      <div class="hero-title">
-        <span class="overline">Caroline County, Virginia</span>
-        <h1>John Taylor<br/><em>of Caroline</em></h1>
-        <span class="years">1753 &nbsp;—&nbsp; 1824</span>
-      </div>
+    <div class="arena-title">
+      <span class="overline">Dialogues Across Time</span>
+      <h1>The <span>Arena</span></h1>
+      <p class="subtitle">Summon two minds. Choose the ground. Let them speak.</p>
     </div>
 
-    <div class="bio-panel">
-      <div class="exhibit-tag">Historical Archive &nbsp;·&nbsp; Portrait Study</div>
-
-      <div class="photo-frame">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/John_Taylor_ofCaroline.jpg" alt="John Taylor of Caroline" onerror="this.style.display='none'" />
-      </div>
-
-      <div class="placard">
-        <div class="placard-name">John Taylor of Caroline</div>
-        <div class="placard-sub">Farmer, Senator, Philosopher of the Republic</div>
-        <div class="placard-dates">Caroline County, Virginia, 1753 &nbsp;·&nbsp; Virginia, 1824</div>
-        <p class="placard-bio">
-          <strong>The most rigorous mind of the agrarian republic — and the most forgotten.</strong>
-          Taylor farmed his Caroline County land, served three separate stints in the U.S. Senate,
-          and wrote the most systematic philosophical critique of Alexander Hamilton's financial
-          order that any American has ever produced.
-          <br/><br/>
-          He believed Hamilton had imported a new aristocracy into the republic — not of birth,
-          but of <em>paper and stock and funded debt</em> — and that this artificial moneyed class
-          would corrupt republican government as surely as any hereditary nobility.
-          <br/><br/>
-          He was right. He wrote four books saying so in exhaustive detail.
-          Nobody read them. Hamilton's system was built anyway.
-          <br/><br/>
-          He is now 272 years old and has watched the Federal Reserve,
-          Wall Street, private equity, and the complete financialization of American life
-          with the grim satisfaction of a man who predicted every word of it.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <div class="indigo-band">
-    <span>Consultation</span>
-  </div>
-
-  <section class="chatbot-section">
-    <div class="chatbot-intro">
-      <h2>Consult the<br/><em>Forgotten Prophet.</em></h2>
-      <p>Taylor speaks from his complete written works — the agrarian philosophy of <em>Arator</em>, the systematic political theory of his <em>Inquiry</em>, the constitutional arguments of his later treatises.</p>
-      <p>Ask him about banking, debt, concentrated wealth, the corruption of republican institutions, the virtue of the independent farmer, or what he makes of the American economy in 2026.</p>
-      <div class="field-note">
-        "Banking and paper money have done more mischief to the morals and happiness of nations than all the wars and pestilences recorded in history."
-      </div>
-      <div class="provenance">
-        Corpus Sources<br/>
-        Arator · 1813<br/>
-        An Inquiry into the Principles and Policy<br/>
-        &nbsp;&nbsp;of the Government of the United States · 1814<br/>
-        Construction Construed · 1820<br/>
-        Tyranny Unmasked · 1822<br/>
-        New Views of the Constitution · 1823
-      </div>
+    <div class="ornament">
+      <span>⚔</span>
     </div>
 
-    <div class="chatbot-embed" id="chatbot-container">
-      <svg class="ledger-bg" viewBox="0 0 500 580" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-        <rect width="500" height="580" fill="rgba(240,232,208,0.3)"/>
-        <g stroke="rgba(42,26,14,0.8)" stroke-width="1" fill="none">
-          <rect x="60" y="60" width="380" height="460"/>
-          <line x1="60"  y1="200" x2="440" y2="180"/>
-          <line x1="60"  y1="330" x2="440" y2="310"/>
-          <line x1="200" y1="60"  x2="220" y2="520"/>
-          <line x1="330" y1="60"  x2="310" y2="520"/>
-          <line x1="60" y1="60" x2="440" y2="520" stroke-width="0.7" opacity="0.4"/>
-          <line x1="440" y1="60" x2="60" y2="520" stroke-width="0.7" opacity="0.4"/>
-        </g>
-        <g fill="rgba(107,45,26,0.7)">
-          <circle cx="60"  cy="60"  r="5"/>
-          <circle cx="440" cy="60"  r="5"/>
-          <circle cx="60"  cy="520" r="5"/>
-          <circle cx="440" cy="520" r="5"/>
-          <circle cx="250" cy="290" r="4"/>
-        </g>
-        <g transform="translate(430,100)" stroke="rgba(42,26,14,0.6)" stroke-width="1" fill="none">
-          <circle cx="0" cy="0" r="16"/>
-          <line x1="0" y1="-16" x2="0" y2="16"/>
-          <line x1="-16" y1="0" x2="16" y2="0"/>
-          <polygon points="0,-16 -4,-5 0,-9 4,-5" fill="rgba(107,45,26,0.6)" stroke="none"/>
-          <text x="0" y="-20" text-anchor="middle" font-family="EB Garamond, serif" font-size="10" fill="rgba(42,26,14,0.6)" stroke="none">N</text>
-        </g>
-        <g fill="rgba(42,53,80,0.6)" font-family="EB Garamond, serif" font-style="italic" font-size="9">
-          <text x="100" y="145">North Field · 84 acres</text>
-          <text x="260" y="145">East Parcel · 62 acres</text>
-          <text x="100" y="275">Home Farm · 110 acres</text>
-          <text x="265" y="275">Tobacco Ground · 78 acres</text>
-          <text x="100" y="440">South Wood · 95 acres</text>
-          <text x="265" y="440">Mill Creek Lot · 44 acres</text>
-        </g>
-        <text x="250" y="42" text-anchor="middle" font-family="EB Garamond, serif" font-style="italic" font-size="11" fill="rgba(42,26,14,0.5)">Plat &amp; Survey · John Taylor, Proprietor · 1798</text>
-      </svg>
+    <div class="setup-panel">
 
-      <span class="panel-caption">Hazelwood Plantation &nbsp;·&nbsp; Caroline County, Virginia &nbsp;·&nbsp; Survey 1798</span>
+      <!-- Figure Selector -->
+      <div class="figure-selector">
+        <div class="figure-slot">
+          <span class="slot-label">First Mind</span>
+          <select class="slot-select" id="figure-a">
+            <option value="">— Select a figure —</option>
+            <option value="jane-jacobs">Jane Jacobs</option>
+            <option value="carl-jung">Carl Jung</option>
+            <option value="thomas-jefferson">Thomas Jefferson</option>
+            <option value="alexander-hamilton">Alexander Hamilton</option>
+            <option value="hl-mencken">H.L. Mencken</option>
+            <option value="john-taylor-of-caroline">John Taylor of Caroline</option>
+          </select>
+        </div>
 
-      <link rel="stylesheet" href="https://jimmyardis.github.io/jane-jacobs-bot/widget/jacobs-widget.css">
-      <script src="https://jimmyardis.github.io/jane-jacobs-bot/widget/jacobs-widget.js"
-              data-api-url="https://illustrious-kindness-production-ab82.up.railway.app"
-              data-persona-id="john-taylor-of-caroline"></script>
-    </div>
-  </section>
+        <div class="vs-divider">
+          <span>VS</span>
+        </div>
 
-  <div class="pull-quote">
-    <blockquote>
-      "Patronage and paper money are the modern substitutes for the feudal system.
-      They create a nobility as real, as burdensome, and as hostile to the principles
-      of a free government as any aristocracy which has ever existed."
-    </blockquote>
-    <cite>— John Taylor of Caroline &nbsp;·&nbsp; An Inquiry into the Principles and Policy &nbsp;·&nbsp; 1814</cite>
-  </div>
+        <div class="figure-slot">
+          <span class="slot-label">Second Mind</span>
+          <select class="slot-select" id="figure-b">
+            <option value="">— Select a figure —</option>
+            <option value="jane-jacobs">Jane Jacobs</option>
+            <option value="carl-jung">Carl Jung</option>
+            <option value="thomas-jefferson">Thomas Jefferson</option>
+            <option value="alexander-hamilton">Alexander Hamilton</option>
+            <option value="hl-mencken">H.L. Mencken</option>
+            <option value="john-taylor-of-caroline">John Taylor of Caroline</option>
+          </select>
+        </div>
+      </div>
 
-  <div class="context-section">
-    <div class="context-block">
-      <h3>Why He Was Forgotten</h3>
-      <p>Taylor wrote in the dense, systematic style of a man arguing a case in court — not the aphoristic brilliance of Jefferson or the polemical electricity of Hamilton. His books were long, rigorous, and demanded full attention. The republic was busy building Hamilton's system and had little patience for the man warning against it.</p>
-      <p>He also represented a world — the independent agrarian republic of yeoman farmers — that was already losing. The cities, the banks, the factories were coming. Taylor could see it clearly. He could not stop it.</p>
-    </div>
-    <div class="context-block">
-      <h3>Why He Matters Now</h3>
-      <p>Taylor's central argument was structural: concentrated financial power corrupts republican institutions regardless of who holds it or what their intentions are. The problem is not bad actors — it is bad architecture. Build a system that rewards paper over production, speculation over work, and you will get the society that system incentivizes.</p>
-      <p>In 2026, with private equity stripping assets, central banks managing the economy, and financialization touching every corner of American life, Taylor's <em>Inquiry</em> reads less like historical curiosity and more like prophecy.</p>
+      <!-- Topic -->
+      <div class="topic-section">
+        <span class="topic-label">The Question Before Them</span>
+        <div class="topic-input-wrap">
+          <input
+            type="text"
+            class="topic-input"
+            id="topic-input"
+            placeholder="Enter a topic or choose below..."
+          />
+        </div>
+        <div class="suggested-topics">
+          <button class="topic-chip" onclick="selectTopic(this, 'What does America keep getting wrong?')">What does America keep getting wrong?</button>
+          <button class="topic-chip" onclick="selectTopic(this, 'The role of the individual versus the collective')">The individual vs. the collective</button>
+          <button class="topic-chip" onclick="selectTopic(this, 'What makes a city truly livable?')">What makes a city livable?</button>
+          <button class="topic-chip" onclick="selectTopic(this, 'The nature of the unconscious mind')">The unconscious mind</button>
+          <button class="topic-chip" onclick="selectTopic(this, 'Democracy and its discontents in 2026')">Democracy in 2026</button>
+          <button class="topic-chip" onclick="selectTopic(this, 'The relationship between reason and intuition')">Reason vs. intuition</button>
+          <button class="topic-chip" onclick="selectTopic(this, 'The role of federal power in the economy')">Federal power and the economy</button>
+          <button class="topic-chip" onclick="selectTopic(this, 'What does a good society look like?')">What is a good society?</button>
+          <button class="topic-chip" onclick="selectTopic(this, 'Technology and its effect on human nature')">Technology and human nature</button>
+          <button class="topic-chip" onclick="selectTopic(this, 'The meaning of liberty')">The meaning of liberty</button>
+        </div>
+      </div>
+
+      <!-- Begin -->
+      <button class="begin-btn" id="begin-btn" onclick="beginDebate()" disabled>
+        <span>Open the Arena</span>
+      </button>
+
     </div>
   </div>
 
-  <div class="corpus-strip">
-    <div class="corpus-label">Corpus Sources</div>
-    <div class="corpus-list">
-      <span class="corpus-item">Arator · 1813</span>
-      <span class="corpus-item">An Inquiry into the Principles and Policy · 1814</span>
-      <span class="corpus-item">Construction Construed · 1820</span>
-      <span class="corpus-item">Tyranny Unmasked · 1822</span>
-      <span class="corpus-item">New Views of the Constitution · 1823</span>
-      <span class="corpus-item">Letters and Correspondence</span>
+  <!-- ══ DEBATE SCREEN ══ -->
+  <div id="debate-screen">
+
+    <!-- Stage header -->
+    <div class="stage-header">
+      <div class="stage-topic">
+        On the question of: <strong id="stage-topic-display"></strong>
+      </div>
+      <div class="stage-controls">
+        <div class="loading-dots" id="loading-dots">
+          <span></span><span></span><span></span>
+        </div>
+        <span class="exchange-counter" id="exchange-counter">Exchange 0</span>
+        <button class="btn-small" onclick="resetArena()">New Debate</button>
+      </div>
     </div>
+
+    <!-- Split stage -->
+    <div class="split-stage">
+
+      <!-- Left podium -->
+      <div class="podium dormant" id="podium-a">
+        <div class="nameplate">
+          <div class="portrait-circle" id="portrait-a">A</div>
+          <div class="nameplate-text">
+            <div class="figure-name" id="name-a">—</div>
+            <div class="figure-years" id="years-a"></div>
+          </div>
+          <div class="speaking-indicator"></div>
+        </div>
+        <div class="response-area" id="responses-a"></div>
+      </div>
+
+      <!-- Right podium -->
+      <div class="podium dormant" id="podium-b">
+        <div class="nameplate">
+          <div class="portrait-circle" id="portrait-b">B</div>
+          <div class="nameplate-text">
+            <div class="figure-name" id="name-b">—</div>
+            <div class="figure-years" id="years-b"></div>
+          </div>
+          <div class="speaking-indicator"></div>
+        </div>
+        <div class="response-area" id="responses-b"></div>
+      </div>
+
+    </div>
+
+    <!-- Footer controls -->
+    <div class="debate-footer">
+      <input
+        type="text"
+        class="moderator-input"
+        id="moderator-input"
+        placeholder="Steer the debate... (e.g. 'Challenge them on the role of religion' or leave blank to continue)"
+      />
+      <button class="continue-btn" id="continue-btn" onclick="continueDebate()">
+        <span>Continue →</span>
+      </button>
+    </div>
+
   </div>
 
-  <footer>
-    <span class="footer-text">John Taylor of Caroline &nbsp;·&nbsp; 1753 – 1824</span>
-    <span class="footer-text">Powered by His Own Words</span>
-    <span class="footer-text">Accession No. JTC–1753–2026</span>
-  </footer>
+  <script>
+    // ── PERSONA DATA ──
+    const PERSONAS = {
+      'jane-jacobs': {
+        name: 'Jane Jacobs',
+        years: '1916 —',
+        initial: 'JJ',
+        portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Jane_Jacobs.jpg/1920px-Jane_Jacobs.jpg'
+      },
+      'carl-jung': {
+        name: 'Carl Jung',
+        years: '1875 — 1961',
+        initial: 'CJ',
+        portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/ETH-BIB-Jung%2C_Carl_Gustav_%281875-1961%29-Portrait-Portr_14163_%28cropped%29.tif/lossy-page1-1280px-ETH-BIB-Jung%2C_Carl_Gustav_%281875-1961%29-Portrait-Portr_14163_%28cropped%29.tif.jpg'
+      },
+      'thomas-jefferson': {
+        name: 'Thomas Jefferson',
+        years: '1743 — 1826',
+        initial: 'TJ',
+        portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Thomas_Jefferson_by_Rembrandt_Peale%2C_1800.jpg/800px-Thomas_Jefferson_by_Rembrandt_Peale%2C_1800.jpg'
+      },
+      'alexander-hamilton': {
+        name: 'Alexander Hamilton',
+        years: '1755 — 1804',
+        initial: 'AH',
+        portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Alexander_Hamilton_portrait_by_John_Trumbull_1806.jpg/800px-Alexander_Hamilton_portrait_by_John_Trumbull_1806.jpg'
+      },
+      'hl-mencken': {
+        name: 'H.L. Mencken',
+        years: '1880 — 1956',
+        initial: 'HM',
+        portrait: 'https://www.theparisreview.org/blog/wp-content/uploads/2016/04/screen-shot-2016-04-18-at-2.02.28-pm.png'
+      },
+      'john-taylor-of-caroline': {
+        name: 'John Taylor of Caroline',
+        years: '1753 — 1824',
+        initial: 'JT',
+        portrait: 'https://upload.wikimedia.org/wikipedia/commons/4/41/John_Taylor_ofCaroline.jpg'
+      }
+    };
+
+    // ── STATE ──
+    let state = {
+      figureA: null,
+      figureB: null,
+      topic: '',
+      history: [],
+      exchangeCount: 0,
+      isLoading: false
+    };
+
+    // API URL — update this to your Railway deployment
+    const API_URL = 'https://aware-sparkle-production-868c.up.railway.app';
+
+    // ── SETUP VALIDATION ──
+    document.getElementById('figure-a').addEventListener('change', validateSetup);
+    document.getElementById('figure-b').addEventListener('change', validateSetup);
+    document.getElementById('topic-input').addEventListener('input', validateSetup);
+
+    function validateSetup() {
+      const a = document.getElementById('figure-a').value;
+      const b = document.getElementById('figure-b').value;
+      const t = document.getElementById('topic-input').value.trim();
+      const btn = document.getElementById('begin-btn');
+      btn.disabled = !(a && b && a !== b && t);
+    }
+
+    function selectTopic(el, topic) {
+      document.querySelectorAll('.topic-chip').forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+      document.getElementById('topic-input').value = topic;
+      validateSetup();
+    }
+
+    // ── BEGIN DEBATE ──
+    function beginDebate() {
+      state.figureA = document.getElementById('figure-a').value;
+      state.figureB = document.getElementById('figure-b').value;
+      state.topic   = document.getElementById('topic-input').value.trim();
+      state.history = [];
+      state.exchangeCount = 0;
+
+      // Populate stage
+      const pA = PERSONAS[state.figureA];
+      const pB = PERSONAS[state.figureB];
+
+      document.getElementById('stage-topic-display').textContent = state.topic;
+      document.getElementById('name-a').textContent  = pA.name;
+      document.getElementById('years-a').textContent = pA.years;
+      document.getElementById('name-b').textContent  = pB.name;
+      document.getElementById('years-b').textContent = pB.years;
+
+      // Set portraits
+      setPortrait('portrait-a', pA);
+      setPortrait('portrait-b', pB);
+
+      // Clear responses
+      document.getElementById('responses-a').innerHTML = '';
+      document.getElementById('responses-b').innerHTML = '';
+
+      // Switch screens
+      document.getElementById('setup-screen').style.display = 'none';
+      document.getElementById('debate-screen').classList.add('active');
+
+      // Fire first exchange
+      runExchange();
+    }
+
+    function setPortrait(id, persona) {
+      const el = document.getElementById(id);
+      if (persona.portrait) {
+        const img = document.createElement('img');
+        img.src = persona.portrait;
+        img.onerror = () => { el.innerHTML = persona.initial; };
+        el.innerHTML = '';
+        el.appendChild(img);
+      } else {
+        el.textContent = persona.initial;
+      }
+    }
+
+    // ── RUN EXCHANGE ──
+    async function runExchange() {
+      if (state.isLoading) return;
+      state.isLoading = true;
+      state.exchangeCount++;
+
+      const continueBtn = document.getElementById('continue-btn');
+      const loadingDots = document.getElementById('loading-dots');
+      const modInput    = document.getElementById('moderator-input');
+      const steer       = modInput.value.trim();
+
+      continueBtn.disabled = true;
+      loadingDots.classList.add('active');
+      document.getElementById('exchange-counter').textContent = `Exchange ${state.exchangeCount}`;
+
+      // Set Figure A speaking
+      setSpeaking('a');
+
+      try {
+        // Build the prompt for this exchange
+        const lastStatement = state.history.length > 0
+          ? state.history[state.history.length - 1]
+          : null;
+
+        const steerNote = steer ? ` The moderator asks you to address: "${steer}".` : '';
+
+        // Call debate endpoint
+        const response = await fetch(`${API_URL}/debate`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            persona_a:    state.figureA,
+            persona_b:    state.figureB,
+            topic:        state.topic,
+            history:      state.history,
+            steer:        steerNote,
+            exchange_num: state.exchangeCount
+          })
+        });
+
+        if (!response.ok) throw new Error('Debate API error');
+
+        const data = await response.json();
+
+        // Render Figure A response
+        await typeResponse('responses-a', data.response_a, state.exchangeCount);
+
+        // Switch to Figure B speaking
+        setSpeaking('b');
+        await sleep(600);
+
+        // Render Figure B response
+        await typeResponse('responses-b', data.response_b, state.exchangeCount);
+
+        // Update history
+        state.history.push({
+          exchange: state.exchangeCount,
+          figure_a: data.response_a,
+          figure_b: data.response_b
+        });
+
+        // Clear steer input
+        modInput.value = '';
+
+      } catch (err) {
+        console.error(err);
+        // Show error gracefully
+        appendError('responses-a', 'The connection to the archive was lost. Please try again.');
+      }
+
+      // Reset state
+      setSpeaking(null);
+      continueBtn.disabled = false;
+      loadingDots.classList.remove('active');
+      state.isLoading = false;
+    }
+
+    function continueDebate() {
+      runExchange();
+    }
+
+    // ── UI HELPERS ──
+    function setSpeaking(side) {
+      const podA = document.getElementById('podium-a');
+      const podB = document.getElementById('podium-b');
+
+      podA.classList.remove('speaking', 'dormant');
+      podB.classList.remove('speaking', 'dormant');
+
+      if (side === 'a') {
+        podA.classList.add('speaking');
+        podB.classList.add('dormant');
+      } else if (side === 'b') {
+        podB.classList.add('speaking');
+        podA.classList.add('dormant');
+      } else {
+        podA.classList.add('dormant');
+        podB.classList.add('dormant');
+      }
+    }
+
+    async function typeResponse(containerId, text, exchangeNum) {
+      const container = document.getElementById(containerId);
+
+      const exchangeEl = document.createElement('div');
+      exchangeEl.className = 'exchange';
+
+      const numEl = document.createElement('div');
+      numEl.className = 'exchange-number';
+      numEl.textContent = `Exchange ${exchangeNum}`;
+
+      const textEl = document.createElement('div');
+      textEl.className = 'exchange-text typing';
+
+      exchangeEl.appendChild(numEl);
+      exchangeEl.appendChild(textEl);
+      container.appendChild(exchangeEl);
+
+      // Typewriter effect
+      const words = text.split(' ');
+      let rendered = '';
+
+      for (let i = 0; i < words.length; i++) {
+        rendered += (i === 0 ? '' : ' ') + words[i];
+        textEl.textContent = rendered;
+        container.scrollTop = container.scrollHeight;
+        await sleep(28 + Math.random() * 18);
+      }
+
+      textEl.classList.remove('typing');
+    }
+
+    function appendError(containerId, message) {
+      const container = document.getElementById(containerId);
+      const el = document.createElement('div');
+      el.className = 'exchange';
+      el.innerHTML = `<div class="exchange-text" style="color:rgba(196,154,60,0.4);font-style:italic;">${message}</div>`;
+      container.appendChild(el);
+    }
+
+    function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    function resetArena() {
+      state = { figureA: null, figureB: null, topic: '', history: [], exchangeCount: 0, isLoading: false };
+      document.getElementById('debate-screen').classList.remove('active');
+      document.getElementById('setup-screen').style.display = 'flex';
+      document.querySelectorAll('.topic-chip').forEach(c => c.classList.remove('active'));
+      document.getElementById('topic-input').value = '';
+      document.getElementById('figure-a').value = '';
+      document.getElementById('figure-b').value = '';
+      document.getElementById('begin-btn').disabled = true;
+    }
+  </script>
 
 </body>
 </html>
