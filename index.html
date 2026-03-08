@@ -432,6 +432,19 @@
       color: var(--amber);
     }
 
+    .btn-voice {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4em;
+      opacity: 0.5;
+    }
+
+    .btn-voice.active {
+      opacity: 1;
+      border-color: var(--amber);
+      color: var(--amber);
+    }
+
     /* Split stage */
     .split-stage {
       display: grid;
@@ -838,6 +851,14 @@
           <span></span><span></span><span></span>
         </div>
         <span class="exchange-counter" id="exchange-counter">Exchange 0</span>
+        <button class="btn-small btn-voice" id="voice-toggle" onclick="toggleVoice()" title="Enable voice">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+          Voice
+        </button>
         <button class="btn-small" onclick="resetArena()">New Debate</button>
       </div>
     </div>
@@ -942,8 +963,22 @@
       topic: '',
       history: [],
       exchangeCount: 0,
-      isLoading: false
+      isLoading: false,
+      voiceEnabled: false
     };
+
+    function toggleVoice() {
+      state.voiceEnabled = !state.voiceEnabled;
+      const btn = document.getElementById('voice-toggle');
+      btn.classList.toggle('active', state.voiceEnabled);
+      btn.title = state.voiceEnabled ? 'Voice on — click to mute' : 'Enable voice';
+    }
+
+    function playAudio(base64) {
+      if (!base64) return;
+      const audio = new Audio(`data:audio/mpeg;base64,${base64}`);
+      audio.play().catch(err => console.warn('Audio playback blocked:', err));
+    }
 
     // API URL — update this to your Railway deployment
     const API_URL = 'https://aware-sparkle-production-868c.up.railway.app';
@@ -1041,8 +1076,9 @@
 
         const steerNote = steer ? ` The moderator asks you to address: "${steer}".` : '';
 
-        // Call debate endpoint
-        const response = await fetch(`${API_URL}/debate`, {
+        // Call debate endpoint (voice variant if enabled)
+        const endpoint = state.voiceEnabled ? `${API_URL}/debate/voice` : `${API_URL}/debate`;
+        const response = await fetch(endpoint, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -1059,14 +1095,16 @@
 
         const data = await response.json();
 
-        // Render Figure A response
+        // Render Figure A response (play audio simultaneously if voice enabled)
+        playAudio(data.audio_a);
         await typeResponse('responses-a', data.response_a, state.exchangeCount);
 
         // Switch to Figure B speaking
         setSpeaking('b');
         await sleep(600);
 
-        // Render Figure B response
+        // Render Figure B response (play audio simultaneously if voice enabled)
+        playAudio(data.audio_b);
         await typeResponse('responses-b', data.response_b, state.exchangeCount);
 
         // Update history
