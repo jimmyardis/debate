@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Constitution of the United States — Museum of Minds</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=EB+Garamond:ital,opsz,wght@0,8..144,400;0,8..144,500;1,8..144,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --slate:        #1B2435;
+      --slate-mid:    #253046;
+      --slate-light:  #344060;
+      --parchment:    #EFE6D2;
+      --parchment-d:  #E5D9BD;
+      --parchment-dd: #D8CEAD;
+      --ink:          #0E0E0E;
+      --gold:         #A88425;
+      --gold-pale:    #C9A84C;
+      --gold-dim:     #7A6020;
+      --text:         #1A1200;
+      --text-mid:     #3D2D0A;
+      --text-dim:     #7A6B50;
+      --chat-bg:      #F8F4EA;
+    }
+
+    html, body { height: 100%; }
+
+    body {
+      background: var(--parchment);
+      color: var(--text);
+      font-family: 'Source Serif 4', Georgia, serif;
+      overflow: hidden; /* split-pane layout takes full viewport */
+    }
+
+    /* ── OPENING ANIMATION ── */
+    #opening-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--slate);
+      z-index: 10000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.8s ease;
+    }
+
+    #opening-overlay.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .seal-container {
+      position: relative;
+      width: 160px;
+      height: 160px;
+      margin-bottom: 2.5rem;
+    }
+
+    .seal-svg {
+      width: 100%;
+      height: 100%;
+      animation: seal-pulse 0.5s ease forwards;
+      animation-delay: 0.3s;
+      opacity: 0;
+    }
+
+    @keyframes seal-pulse {
+      0%   { opacity: 0; transform: scale(0.8); }
+      60%  { opacity: 1; transform: scale(1.05); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    .seal-crack {
+      animation: crack 0.4s ease forwards;
+      animation-delay: 1.2s;
+      transform-origin: center;
+    }
+
+    @keyframes crack {
+      0%   { opacity: 0; }
+      100% { opacity: 1; stroke-dashoffset: 0; }
+    }
+
+    .opening-title {
+      font-family: 'Libre Caslon Text', serif;
+      font-size: clamp(1.4rem, 3vw, 2.2rem);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--parchment);
+      text-align: center;
+      animation: fadeUp 0.8s ease forwards;
+      animation-delay: 0.8s;
+      opacity: 0;
+    }
+
+    .opening-subtitle {
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      font-size: 1rem;
+      color: var(--gold-pale);
+      text-align: center;
+      margin-top: 0.6rem;
+      animation: fadeUp 0.8s ease forwards;
+      animation-delay: 1.0s;
+      opacity: 0;
+    }
+
+    @keyframes fadeUp {
+      0%   { opacity: 0; transform: translateY(12px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .opening-skip {
+      margin-top: 3rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      cursor: pointer;
+      animation: fadeUp 0.5s ease forwards;
+      animation-delay: 1.5s;
+      opacity: 0;
+      transition: color 0.2s;
+    }
+    .opening-skip:hover { color: var(--parchment); }
+
+    /* ── APP LAYOUT ── */
+    #app {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      visibility: hidden; /* shown after animation */
+    }
+
+    #app.visible { visibility: visible; }
+
+    /* ── HEADER ── */
+    .site-header {
+      background: var(--slate);
+      padding: 0.7rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(168,132,37,0.3);
+      flex-shrink: 0;
+      z-index: 100;
+    }
+
+    .site-header-left {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .brand-link {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--parchment);
+      text-decoration: none;
+      opacity: 0.5;
+    }
+
+    .brand-link:hover { opacity: 0.8; }
+
+    .doc-title-header {
+      font-family: 'Libre Caslon Text', serif;
+      font-size: 0.85rem;
+      color: var(--parchment);
+      letter-spacing: 0.05em;
+    }
+
+    .doc-title-header span {
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    .site-header-right {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .trust-badge-header {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      color: var(--gold-pale);
+      border: 1px solid var(--gold-dim);
+      border-radius: 20px;
+      padding: 2px 10px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .trust-badge-header::before {
+      content: '';
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+
+    .editorial-note {
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      font-size: 0.75rem;
+      color: var(--parchment);
+      opacity: 0.45;
+    }
+
+    .editorial-note a {
+      color: var(--gold-pale);
+      text-decoration: none;
+      opacity: 0.7;
+    }
+
+    /* ── MAIN SPLIT PANE ── */
+    .split-pane {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* ── LEFT PANE: DOCUMENT TEXT ── */
+    .doc-pane {
+      width: 42%;
+      min-width: 280px;
+      background: var(--parchment);
+      border-right: 2px solid var(--gold-dim);
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .doc-pane-header {
+      background: var(--parchment-d);
+      border-bottom: 1px solid var(--parchment-dd);
+      padding: 1.2rem 2rem;
+      flex-shrink: 0;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .doc-pane-title {
+      font-family: 'Libre Caslon Text', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+    }
+
+    .doc-pane-subtitle {
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      font-size: 0.85rem;
+      color: var(--text-mid);
+      margin-top: 2px;
+    }
+
+    .doc-content {
+      padding: 2rem 2.2rem 3rem;
+      font-family: 'EB Garamond', serif;
+      font-size: 0.97rem;
+      line-height: 1.75;
+      color: var(--ink);
+    }
+
+    .doc-section {
+      margin-bottom: 2.5rem;
+      scroll-margin-top: 70px;
+      border-radius: 3px;
+      transition: background-color 0.4s ease, box-shadow 0.4s ease;
+      padding: 0.3rem 0.5rem;
+      margin-left: -0.5rem;
+      margin-right: -0.5rem;
+    }
+
+    .doc-section.highlight {
+      background-color: rgba(168, 132, 37, 0.12);
+      box-shadow: 0 0 0 2px rgba(168, 132, 37, 0.35);
+    }
+
+    .doc-article-title {
+      font-family: 'Libre Caslon Text', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      margin-bottom: 0.8rem;
+      margin-top: 0;
+    }
+
+    .doc-section-title {
+      font-family: 'EB Garamond', serif;
+      font-weight: 500;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      color: var(--text-mid);
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+    }
+
+    .doc-clause {
+      margin-bottom: 0.8rem;
+    }
+
+    .doc-clause-num {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      vertical-align: super;
+      margin-right: 3px;
+    }
+
+    .doc-amendment-badge {
+      display: inline-block;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      border: 1px solid var(--gold-dim);
+      border-radius: 2px;
+      padding: 1px 6px;
+      margin-right: 6px;
+    }
+
+    .doc-rule {
+      border: none;
+      border-top: 1px solid var(--parchment-dd);
+      margin: 1.5rem 0;
+    }
+
+    /* ── RIGHT PANE: CHAT ── */
+    .chat-pane {
+      flex: 1;
+      background: var(--chat-bg);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .chat-header {
+      padding: 1.2rem 1.8rem;
+      background: var(--parchment-d);
+      border-bottom: 1px solid var(--parchment-dd);
+      flex-shrink: 0;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+
+    .chat-persona-info {}
+
+    .chat-persona-name {
+      font-family: 'Libre Caslon Text', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.2;
+    }
+
+    .chat-persona-date {
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      font-size: 0.85rem;
+      color: var(--text-mid);
+      margin-top: 2px;
+    }
+
+    /* Length toggle */
+    .length-toggle {
+      display: flex;
+      gap: 0;
+      border: 1px solid var(--parchment-dd);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .length-btn {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 5px 10px;
+      background: transparent;
+      border: none;
+      color: var(--text-dim);
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .length-btn.active {
+      background: var(--slate);
+      color: var(--parchment);
+    }
+
+    /* Sources panel toggle */
+    .sources-toggle-btn {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      background: transparent;
+      border: 1px solid var(--parchment-dd);
+      border-radius: 3px;
+      color: var(--text-dim);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .sources-toggle-btn.active {
+      background: var(--slate);
+      color: var(--parchment);
+      border-color: var(--slate);
+    }
+
+    /* Conversation starters */
+    .starters-area {
+      padding: 1.2rem 1.8rem 0;
+    }
+
+    .starters-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 0.7rem;
+    }
+
+    .starters-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .starter-btn {
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.82rem;
+      color: var(--text-mid);
+      background: var(--parchment);
+      border: 1px solid var(--parchment-dd);
+      border-radius: 3px;
+      padding: 0.55rem 0.8rem;
+      text-align: left;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+      line-height: 1.45;
+    }
+
+    .starter-btn:hover {
+      background: var(--parchment-d);
+      border-color: var(--gold-dim);
+      color: var(--ink);
+    }
+
+    /* Messages area */
+    .messages-area {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.2rem 1.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .message {
+      max-width: 92%;
+      line-height: 1.65;
+    }
+
+    .message.user {
+      align-self: flex-end;
+      background: var(--slate);
+      color: var(--parchment);
+      border-radius: 12px 12px 2px 12px;
+      padding: 0.7rem 1rem;
+      font-size: 0.9rem;
+    }
+
+    .message.assistant {
+      align-self: flex-start;
+      background: var(--parchment);
+      border: 1px solid var(--parchment-dd);
+      border-radius: 2px 12px 12px 12px;
+      padding: 1rem 1.2rem;
+      font-family: 'EB Garamond', serif;
+      font-size: 1.02rem;
+      color: var(--ink);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+
+    .message.assistant p { margin-bottom: 0.7em; }
+    .message.assistant p:last-child { margin-bottom: 0; }
+
+    /* Sources panel within assistant message */
+    .sources-panel {
+      margin-top: 0.8rem;
+      padding-top: 0.8rem;
+      border-top: 1px solid var(--parchment-dd);
+      display: none;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .sources-panel.show { display: flex; }
+
+    .source-chip {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.05em;
+      color: var(--text-dim);
+      background: var(--parchment-d);
+      border: 1px solid var(--parchment-dd);
+      border-radius: 3px;
+      padding: 3px 8px;
+    }
+
+    .source-chip.federalist   { border-left: 3px solid #5B7FA6; color: #3A5570; }
+    .source-chip.anti_federalist { border-left: 3px solid #8A6A3C; color: #6A4A1C; }
+    .source-chip.case_majority   { border-left: 3px solid #5C7A5C; color: #3A5A3A; }
+    .source-chip.case_dissent    { border-left: 3px solid #7A5C5C; color: #5A3C3C; }
+    .source-chip.constitution_text { border-left: 3px solid var(--gold); color: var(--gold-dim); }
+
+    /* Loading indicator */
+    .loading-dots {
+      display: none;
+      align-items: center;
+      gap: 4px;
+      padding: 0.5rem 0;
+    }
+
+    .loading-dots.show { display: flex; }
+
+    .dot {
+      width: 7px; height: 7px;
+      background: var(--gold-dim);
+      border-radius: 50%;
+      animation: bounce 1.2s infinite;
+    }
+
+    .dot:nth-child(2) { animation-delay: 0.2s; }
+    .dot:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes bounce {
+      0%, 80%, 100% { transform: translateY(0); opacity: 0.5; }
+      40% { transform: translateY(-5px); opacity: 1; }
+    }
+
+    /* Input area */
+    .input-area {
+      padding: 1rem 1.8rem 1.4rem;
+      border-top: 1px solid var(--parchment-dd);
+      background: var(--parchment-d);
+      flex-shrink: 0;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 0.6rem;
+      align-items: flex-end;
+    }
+
+    .input-field {
+      flex: 1;
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.9rem;
+      color: var(--ink);
+      background: var(--chat-bg);
+      border: 1px solid var(--parchment-dd);
+      border-radius: 4px;
+      padding: 0.65rem 1rem;
+      resize: none;
+      min-height: 42px;
+      max-height: 120px;
+      line-height: 1.4;
+      transition: border-color 0.15s;
+    }
+
+    .input-field:focus {
+      outline: none;
+      border-color: var(--gold-dim);
+    }
+
+    .input-field::placeholder { color: var(--text-dim); }
+
+    .send-btn {
+      background: var(--slate);
+      color: var(--parchment);
+      border: none;
+      border-radius: 4px;
+      padding: 0.65rem 1.2rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.15s;
+      white-space: nowrap;
+    }
+
+    .send-btn:hover { background: var(--slate-mid); }
+    .send-btn:disabled { opacity: 0.45; cursor: default; }
+
+    /* ── MOBILE: TABS ── */
+    .mobile-tabs {
+      display: none;
+      background: var(--parchment-d);
+      border-bottom: 1px solid var(--parchment-dd);
+      padding: 0;
+    }
+
+    .mobile-tab {
+      flex: 1;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.8rem;
+      text-align: center;
+      cursor: pointer;
+      color: var(--text-dim);
+      border: none;
+      background: transparent;
+      border-bottom: 2px solid transparent;
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    .mobile-tab.active {
+      color: var(--gold-dim);
+      border-bottom-color: var(--gold);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      body { overflow: auto; }
+      #app { height: auto; }
+      .split-pane { flex-direction: column; }
+      .mobile-tabs { display: flex; }
+      .doc-pane { width: 100%; min-width: unset; border-right: none; border-bottom: 2px solid var(--gold-dim); height: 50vh; }
+      .doc-pane.mobile-hidden { display: none; }
+      .chat-pane.mobile-hidden { display: none; }
+      .site-header { padding: 0.7rem 1.2rem; }
+      .editorial-note { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── OPENING ANIMATION ── -->
+<div id="opening-overlay">
+  <div class="seal-container">
+    <svg class="seal-svg" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Outer ring -->
+      <circle cx="80" cy="80" r="72" stroke="#A88425" stroke-width="2"/>
+      <!-- Inner ring -->
+      <circle cx="80" cy="80" r="60" stroke="#A88425" stroke-width="1" opacity="0.6"/>
+      <!-- Stars scattered -->
+      <text x="80" y="48" text-anchor="middle" font-size="10" fill="#A88425" opacity="0.5">★ ★ ★</text>
+      <!-- Eagle silhouette / US text -->
+      <text x="80" y="75" text-anchor="middle" font-family="serif" font-size="22" fill="#A88425" font-weight="bold" letter-spacing="4">US</text>
+      <text x="80" y="95" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#A88425" letter-spacing="3">CONSTITUTION</text>
+      <text x="80" y="112" text-anchor="middle" font-family="serif" font-size="9" fill="#A88425" opacity="0.5">MDCCLXXXVIII</text>
+      <!-- Crack lines (appear after animation delay) -->
+      <g class="seal-crack" stroke="#C9A84C" stroke-width="1" opacity="0">
+        <line x1="80" y1="20" x2="75" y2="35" stroke-dasharray="20" stroke-dashoffset="20"/>
+        <line x1="80" y1="20" x2="85" y2="32" stroke-dasharray="15" stroke-dashoffset="15"/>
+      </g>
+    </svg>
+  </div>
+  <h1 class="opening-title">The Constitution</h1>
+  <p class="opening-subtitle">of the United States · Ratified 1788</p>
+  <p class="opening-skip" id="skip-btn" onclick="closeOpening()" role="button" tabindex="0">Skip intro ↓</p>
+</div>
+
+<!-- ── MAIN APP ── -->
+<div id="app">
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="site-header-left">
+      <a href="/founding-documents/" class="brand-link">← Founding Documents</a>
+      <span class="doc-title-header"><span>The Constitution</span> of the United States</span>
+    </div>
+    <div class="site-header-right">
+      <span class="trust-badge-header">99 · Primary Source</span>
+      <span class="editorial-note">I quote myself. I do not opine. <a href="#editorial-standard">Read the standard →</a></span>
+    </div>
+  </header>
+
+  <!-- Mobile tabs (shown on narrow screens) -->
+  <div class="mobile-tabs">
+    <button class="mobile-tab active" id="tab-doc" onclick="showPane('doc')">Document</button>
+    <button class="mobile-tab" id="tab-chat" onclick="showPane('chat')">Conversation</button>
+  </div>
+
+  <!-- Split pane -->
+  <div class="split-pane">
+
+    <!-- LEFT: Document text -->
+    <div class="doc-pane" id="doc-pane">
+      <div class="doc-pane-header">
+        <div class="doc-pane-title">THE CONSTITUTION OF THE UNITED STATES</div>
+        <div class="doc-pane-subtitle">Ratified 1788 · 27 Amendments through 1992</div>
+      </div>
+      <div class="doc-content" id="doc-content">
+
+        <!-- PREAMBLE -->
+        <div class="doc-section" id="preamble">
+          <div class="doc-article-title">Preamble</div>
+          <div class="doc-clause">
+            We the People of the United States, in Order to form a more perfect Union, establish Justice, insure domestic Tranquility, provide for the common defence, promote the general Welfare, and secure the Blessings of Liberty to ourselves and our Posterity, do ordain and establish this <em>Constitution for the United States of America</em>.
+          </div>
+        </div>
+
+        <hr class="doc-rule"/>
+
+        <!-- ARTICLE I -->
+        <div class="doc-section" id="article-1">
+          <div class="doc-article-title">Article I — The Legislative Branch</div>
+
+          <div class="doc-section" id="article-1-section-1">
+            <div class="doc-section-title">Section 1</div>
+            <div class="doc-clause">All legislative Powers herein granted shall be vested in a Congress of the United States, which shall consist of a Senate and House of Representatives.</div>
+          </div>
+
+          <div class="doc-section" id="article-1-section-2">
+            <div class="doc-section-title">Section 2 — The House</div>
+            <div class="doc-clause"><span class="doc-clause-num">§2.1</span> The House of Representatives shall be composed of Members chosen every second Year by the People of the several States…</div>
+            <div class="doc-clause"><span class="doc-clause-num">§2.5</span> The House of Representatives shall chuse their Speaker and other Officers; and shall have the <strong>sole Power of Impeachment</strong>.</div>
+          </div>
+
+          <div class="doc-section" id="article-1-section-3">
+            <div class="doc-section-title">Section 3 — The Senate</div>
+            <div class="doc-clause"><span class="doc-clause-num">§3.1</span> The Senate of the United States shall be composed of two Senators from each State, chosen by the Legislature thereof, for six Years; and each Senator shall have one Vote. <em>[Amended by Amendment XVII — direct election]</em></div>
+            <div class="doc-clause"><span class="doc-clause-num">§3.6</span> The Senate shall have the <strong>sole Power to try all Impeachments</strong>. When sitting for that Purpose, they shall be on Oath or Affirmation. When the President of the United States is tried, the Chief Justice shall preside: And no Person shall be convicted without the Concurrence of two thirds of the Members present.</div>
+          </div>
+
+          <div class="doc-section" id="article-1-section-7">
+            <div class="doc-section-title">Section 7 — Lawmaking</div>
+            <div class="doc-clause"><span class="doc-clause-num">§7.1</span> All Bills for raising Revenue shall originate in the House of Representatives.</div>
+            <div class="doc-clause"><span class="doc-clause-num">§7.2</span> Every Bill which shall have passed the House of Representatives and the Senate, shall, before it become a Law, be presented to the President of the United States; If he approve he shall sign it, but if not he shall return it, with his Objections to that House in which it shall have originated… If after such Reconsideration two thirds of that House shall agree to pass the Bill, it shall become a Law. <em>[Presidential veto and veto override]</em></div>
+          </div>
+
+          <div class="doc-section" id="article-1-section-8">
+            <div class="doc-section-title">Section 8 — Powers of Congress</div>
+            <div class="doc-clause"><span class="doc-clause-num">§8.1</span> The Congress shall have Power To lay and collect Taxes, Duties, Imposts and Excises, to pay the Debts and provide for the common Defence and general Welfare of the United States…</div>
+            <div class="doc-clause"><span class="doc-clause-num">§8.3</span> To regulate Commerce with foreign Nations, and among the several States, and with the Indian Tribes; <em>[The Commerce Clause]</em></div>
+            <div class="doc-clause"><span class="doc-clause-num">§8.11</span> To declare War, grant Letters of Marque and Reprisal, and make Rules concerning Captures on Land and Water;</div>
+            <div class="doc-clause"><span class="doc-clause-num">§8.18</span> To make all Laws which shall be <strong>necessary and proper</strong> for carrying into Execution the foregoing Powers, and all other Powers vested by this Constitution in the Government of the United States, or in any Department or Officer thereof. <em>[The Necessary and Proper Clause]</em></div>
+          </div>
+
+          <div class="doc-section" id="article-1-section-9">
+            <div class="doc-section-title">Section 9 — Limits on Congress</div>
+            <div class="doc-clause"><span class="doc-clause-num">§9.2</span> The Privilege of the Writ of <strong>Habeas Corpus</strong> shall not be suspended, unless when in Cases of Rebellion or Invasion the public Safety may require it.</div>
+            <div class="doc-clause"><span class="doc-clause-num">§9.3</span> No Bill of Attainder or ex post facto Law shall be passed.</div>
+          </div>
+        </div>
+
+        <hr class="doc-rule"/>
+
+        <!-- ARTICLE II -->
+        <div class="doc-section" id="article-2">
+          <div class="doc-article-title">Article II — The Executive Branch</div>
+
+          <div class="doc-section" id="article-2-section-1">
+            <div class="doc-section-title">Section 1 — The President</div>
+            <div class="doc-clause"><span class="doc-clause-num">§1.1</span> The executive Power shall be vested in a President of the United States of America. He shall hold his Office during the Term of four Years…</div>
+            <div class="doc-clause"><span class="doc-clause-num">§1.2</span> Each State shall appoint, in such Manner as the Legislature thereof may direct, a Number of <strong>Electors</strong>, equal to the whole Number of Senators and Representatives to which the State may be entitled in the Congress. <em>[The Electoral College]</em></div>
+            <div class="doc-clause"><span class="doc-clause-num">§1.5</span> No Person except a natural born Citizen… shall be eligible to the Office of President; neither shall any Person be eligible to that Office who shall not have attained to the Age of thirty five Years, and been fourteen Years a Resident within the United States.</div>
+            <div class="doc-clause"><span class="doc-clause-num">§1.8</span> "I do solemnly swear (or affirm) that I will faithfully execute the Office of President of the United States, and will to the best of my Ability, preserve, protect and defend the Constitution of the United States." <em>[Presidential oath]</em></div>
+          </div>
+
+          <div class="doc-section" id="article-2-section-2">
+            <div class="doc-section-title">Section 2 — Powers of the President</div>
+            <div class="doc-clause"><span class="doc-clause-num">§2.1</span> The President shall be <strong>Commander in Chief</strong> of the Army and Navy of the United States…; he shall have Power to Grant Reprieves and Pardons for Offences against the United States, except in Cases of Impeachment.</div>
+            <div class="doc-clause"><span class="doc-clause-num">§2.2</span> He shall have Power, by and with the Advice and Consent of the Senate, to make Treaties, provided two thirds of the Senators present concur; and he shall nominate… Judges of the supreme Court…</div>
+          </div>
+
+          <div class="doc-section" id="article-2-section-4">
+            <div class="doc-section-title">Section 4 — Impeachment</div>
+            <div class="doc-clause">The President, Vice President and all Civil Officers of the United States, shall be removed from Office on Impeachment for, and Conviction of, <strong>Treason, Bribery, or other high Crimes and Misdemeanors</strong>.</div>
+          </div>
+        </div>
+
+        <hr class="doc-rule"/>
+
+        <!-- ARTICLE III -->
+        <div class="doc-section" id="article-3">
+          <div class="doc-article-title">Article III — The Judicial Branch</div>
+
+          <div class="doc-section" id="article-3-section-1">
+            <div class="doc-section-title">Section 1 — The Supreme Court</div>
+            <div class="doc-clause">The judicial Power of the United States shall be vested in one supreme Court, and in such inferior Courts as the Congress may from time to time ordain and establish. The Judges… shall hold their Offices during good Behaviour…</div>
+          </div>
+
+          <div class="doc-section" id="article-3-section-2">
+            <div class="doc-section-title">Section 2 — Jurisdiction</div>
+            <div class="doc-clause"><span class="doc-clause-num">§2.1</span> The judicial Power shall extend to all Cases, in Law and Equity, arising under this Constitution, the Laws of the United States, and Treaties… <em>[Note: Marbury v. Madison (1803) inferred judicial review from this provision]</em></div>
+            <div class="doc-clause"><span class="doc-clause-num">§2.3</span> The Trial of all Crimes, except in Cases of Impeachment, shall be by <strong>Jury</strong>…</div>
+          </div>
+
+          <div class="doc-section" id="article-3-section-3">
+            <div class="doc-section-title">Section 3 — Treason</div>
+            <div class="doc-clause">Treason against the United States shall consist only in <strong>levying War</strong> against them, or in adhering to their Enemies, giving them Aid and Comfort. No Person shall be convicted of Treason unless on the Testimony of two Witnesses to the same overt Act, or on Confession in open Court.</div>
+          </div>
+        </div>
+
+        <hr class="doc-rule"/>
+
+        <!-- ARTICLES IV–VII (condensed) -->
+        <div class="doc-section" id="article-4">
+          <div class="doc-article-title">Article IV — The States</div>
+          <div class="doc-clause"><strong>Full Faith and Credit</strong> shall be given in each State to the public Acts, Records, and judicial Proceedings of every other State.</div>
+          <div class="doc-clause">The Citizens of each State shall be entitled to all <strong>Privileges and Immunities</strong> of Citizens in the several States.</div>
+          <div class="doc-clause">The United States shall guarantee to every State in this Union a <strong>Republican Form of Government</strong>…</div>
+        </div>
+
+        <div class="doc-section" id="article-5">
+          <div class="doc-article-title">Article V — The Amendment Process</div>
+          <div class="doc-clause">The Congress, whenever <strong>two thirds of both Houses</strong> shall deem it necessary, shall propose Amendments to this Constitution… which… shall be valid… when ratified by the Legislatures of <strong>three fourths</strong> of the several States…</div>
+        </div>
+
+        <div class="doc-section" id="article-6">
+          <div class="doc-article-title">Article VI — Supremacy</div>
+          <div class="doc-clause">This Constitution, and the Laws of the United States which shall be made in Pursuance thereof; and all Treaties… shall be the <strong>supreme Law of the Land</strong>; and the Judges in every State shall be bound thereby, any Thing in the Constitution or Laws of any State to the Contrary notwithstanding. <em>[The Supremacy Clause]</em></div>
+        </div>
+
+        <hr class="doc-rule"/>
+
+        <!-- AMENDMENTS -->
+        <div class="doc-section" id="bill-of-rights">
+          <div class="doc-article-title">The Bill of Rights — Amendments I–X (1791)</div>
+        </div>
+
+        <div class="doc-section" id="amendment-1">
+          <span class="doc-amendment-badge">Amend. I</span>
+          <strong>Congress shall make no law</strong> respecting an establishment of religion, or prohibiting the free exercise thereof; or abridging the freedom of speech, or of the press; or the right of the people peaceably to assemble, and to petition the Government for a redress of grievances.
+        </div>
+
+        <div class="doc-section" id="amendment-2">
+          <span class="doc-amendment-badge">Amend. II</span>
+          A well regulated Militia, being necessary to the security of a free State, <strong>the right of the people to keep and bear Arms, shall not be infringed</strong>.
+        </div>
+
+        <div class="doc-section" id="amendment-3">
+          <span class="doc-amendment-badge">Amend. III</span>
+          No Soldier shall, in time of peace be quartered in any house, without the consent of the Owner, nor in time of war, but in a manner to be prescribed by law.
+        </div>
+
+        <div class="doc-section" id="amendment-4">
+          <span class="doc-amendment-badge">Amend. IV</span>
+          The right of the people to be secure in their persons, houses, papers, and effects, against <strong>unreasonable searches and seizures</strong>, shall not be violated, and no Warrants shall issue, but upon probable cause, supported by Oath or affirmation, and particularly describing the place to be searched, and the persons or things to be seized.
+        </div>
+
+        <div class="doc-section" id="amendment-5">
+          <span class="doc-amendment-badge">Amend. V</span>
+          No person shall be held to answer for a capital, or otherwise infamous crime, unless on a presentment or indictment of a Grand Jury… nor shall any person be subject for the same offence to be <strong>twice put in jeopardy</strong>… nor shall be <strong>compelled in any criminal case to be a witness against himself</strong>, nor be deprived of life, liberty, or property, without <strong>due process of law</strong>; nor shall private property be taken for public use, without just compensation. <em>[Takings Clause]</em>
+        </div>
+
+        <div class="doc-section" id="amendment-6">
+          <span class="doc-amendment-badge">Amend. VI</span>
+          In all criminal prosecutions, the accused shall enjoy the right to a <strong>speedy and public trial</strong>, by an impartial jury…; to be confronted with the witnesses against him; to have compulsory process for obtaining witnesses in his favor, and to have the <strong>Assistance of Counsel</strong> for his defence.
+        </div>
+
+        <div class="doc-section" id="amendment-7">
+          <span class="doc-amendment-badge">Amend. VII</span>
+          In Suits at common law, where the value in controversy shall exceed twenty dollars, the right of <strong>trial by jury shall be preserved</strong>…
+        </div>
+
+        <div class="doc-section" id="amendment-8">
+          <span class="doc-amendment-badge">Amend. VIII</span>
+          Excessive bail shall not be required, nor excessive fines imposed, nor <strong>cruel and unusual punishments</strong> inflicted.
+        </div>
+
+        <div class="doc-section" id="amendment-9">
+          <span class="doc-amendment-badge">Amend. IX</span>
+          The enumeration in the Constitution, of certain rights, shall not be construed to <strong>deny or disparage others retained by the people</strong>.
+        </div>
+
+        <div class="doc-section" id="amendment-10">
+          <span class="doc-amendment-badge">Amend. X</span>
+          The powers not delegated to the United States by the Constitution, nor prohibited by it to the States, are <strong>reserved to the States respectively, or to the people</strong>.
+        </div>
+
+        <hr class="doc-rule"/>
+
+        <div class="doc-section" id="amendments-later">
+          <div class="doc-article-title">Later Amendments (XI–XXVII)</div>
+        </div>
+
+        <div class="doc-section" id="amendment-11">
+          <span class="doc-amendment-badge">Amend. XI · 1795</span>
+          The Judicial power of the United States shall not be construed to extend to any suit in law or equity, commenced or prosecuted against one of the United States by Citizens of another State, or by Citizens or Subjects of any Foreign State.
+        </div>
+
+        <div class="doc-section" id="amendment-12">
+          <span class="doc-amendment-badge">Amend. XII · 1804</span>
+          <em>[Electoral College reform — separate ballots for President and Vice President. Supersedes Article II, Section 1, Clause 3.]</em>
+        </div>
+
+        <div class="doc-section" id="amendment-13">
+          <span class="doc-amendment-badge">Amend. XIII · 1865</span>
+          <strong>Neither slavery nor involuntary servitude</strong>, except as a punishment for crime whereof the party shall have been duly convicted, shall exist within the United States, or any place subject to their jurisdiction. Congress shall have power to enforce this article by appropriate legislation.
+        </div>
+
+        <div class="doc-section" id="amendment-14">
+          <span class="doc-amendment-badge">Amend. XIV · 1868</span>
+          <div class="doc-clause"><strong>Section 1.</strong> All persons born or naturalized in the United States and subject to the jurisdiction thereof, are <strong>citizens of the United States</strong> and of the State wherein they reside. No State shall make or enforce any law which shall abridge the <strong>privileges or immunities</strong> of citizens of the United States; nor shall any State deprive any person of life, liberty, or property, without <strong>due process of law</strong>; nor deny to any person within its jurisdiction the <strong>equal protection of the laws</strong>.</div>
+          <div class="doc-clause"><strong>Section 3.</strong> No person shall be a Senator or Representative in Congress… who, having previously taken an oath… to support the Constitution… shall have engaged in insurrection or rebellion against the same… <em>[The Disqualification Clause]</em></div>
+          <div class="doc-clause"><strong>Section 5.</strong> The Congress shall have power to enforce, by appropriate legislation, the provisions of this article.</div>
+        </div>
+
+        <div class="doc-section" id="amendment-15">
+          <span class="doc-amendment-badge">Amend. XV · 1870</span>
+          The right of citizens of the United States to vote shall not be denied or abridged by the United States or by any State on account of <strong>race, color, or previous condition of servitude</strong>.
+        </div>
+
+        <div class="doc-section" id="amendment-16">
+          <span class="doc-amendment-badge">Amend. XVI · 1913</span>
+          The Congress shall have power to lay and collect <strong>taxes on incomes</strong>, from whatever source derived, without apportionment among the several States…
+        </div>
+
+        <div class="doc-section" id="amendment-17">
+          <span class="doc-amendment-badge">Amend. XVII · 1913</span>
+          The Senate of the United States shall be composed of two Senators from each State, <strong>elected by the people</strong> thereof, for six years… <em>[Replaces Article I, Section 3 — previously elected by state legislatures]</em>
+        </div>
+
+        <div class="doc-section" id="amendment-18">
+          <span class="doc-amendment-badge">Amend. XVIII · 1919</span>
+          <em>Prohibition of intoxicating liquors. <strong>Repealed by Amendment XXI (1933).</strong></em>
+        </div>
+
+        <div class="doc-section" id="amendment-19">
+          <span class="doc-amendment-badge">Amend. XIX · 1920</span>
+          The right of citizens of the United States to vote shall not be denied or abridged by the United States or by any State on account of <strong>sex</strong>.
+        </div>
+
+        <div class="doc-section" id="amendment-20">
+          <span class="doc-amendment-badge">Amend. XX · 1933</span>
+          <em>[The "Lame Duck" Amendment — moves inauguration from March 4 to January 20; Congress convenes January 3.]</em>
+        </div>
+
+        <div class="doc-section" id="amendment-21">
+          <span class="doc-amendment-badge">Amend. XXI · 1933</span>
+          The eighteenth article of amendment to the Constitution of the United States is hereby <strong>repealed</strong>.
+        </div>
+
+        <div class="doc-section" id="amendment-22">
+          <span class="doc-amendment-badge">Amend. XXII · 1951</span>
+          No person shall be <strong>elected to the office of the President more than twice</strong>… <em>[Two-term limit, proposed after FDR's four terms]</em>
+        </div>
+
+        <div class="doc-section" id="amendment-23">
+          <span class="doc-amendment-badge">Amend. XXIII · 1961</span>
+          <em>[Grants the District of Columbia Electoral College votes — at least 3, not exceeding the least populous State]</em>
+        </div>
+
+        <div class="doc-section" id="amendment-24">
+          <span class="doc-amendment-badge">Amend. XXIV · 1964</span>
+          The right of citizens of the United States to vote… shall not be denied or abridged by the United States or any State by reason of <strong>failure to pay any poll tax or other tax</strong>.
+        </div>
+
+        <div class="doc-section" id="amendment-25">
+          <span class="doc-amendment-badge">Amend. XXV · 1967</span>
+          <div class="doc-clause"><strong>Section 1.</strong> In case of the removal of the President from office or of his death or resignation, the <strong>Vice President shall become President</strong>.</div>
+          <div class="doc-clause"><strong>Section 4.</strong> Whenever the Vice President and a majority of… the principal officers of the executive departments… transmit… their written declaration that the President is unable to discharge the powers and duties of his office, the Vice President shall immediately assume the powers and duties of the office as <strong>Acting President</strong>.</div>
+        </div>
+
+        <div class="doc-section" id="amendment-26">
+          <span class="doc-amendment-badge">Amend. XXVI · 1971</span>
+          The right of citizens of the United States, who are <strong>eighteen years of age or older</strong>, to vote shall not be denied or abridged by the United States or by any State on account of age.
+        </div>
+
+        <div class="doc-section" id="amendment-27">
+          <span class="doc-amendment-badge">Amend. XXVII · 1992</span>
+          No law, varying the compensation for the services of the Senators and Representatives, shall take effect, until an <strong>election of Representatives shall have intervened</strong>. <em>[Originally proposed 1789; ratified 203 years later]</em>
+        </div>
+
+        <hr class="doc-rule"/>
+
+        <!-- Editorial standard anchor -->
+        <div id="editorial-standard" style="padding: 1rem 0; color: var(--text-dim); font-family: 'Inter', sans-serif; font-size: 0.72rem; line-height: 1.7;">
+          <strong style="display:block; margin-bottom: 0.5rem; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.65rem;">Editorial Standard</strong>
+          This platform quotes the literal text of the Constitution, the Federalist Papers (Hamilton, Madison, Jay, 1788), selected Anti-Federalist writings (Brutus, Federal Farmer, et al., 1787–88), and fifteen landmark Supreme Court cases with majority and dissenting opinions separated. The platform takes no political position. For contested constitutional questions, it presents the text, the founding debate, and both sides of the Court's reading. It does not editorialize. Errors and interpretive gaps are inevitable; corrections are invited at the Museum of Minds project page.
+        </div>
+
+      </div>
+    </div>
+
+    <!-- RIGHT: Chat -->
+    <div class="chat-pane" id="chat-pane">
+      <div class="chat-header">
+        <div class="chat-persona-info">
+          <div class="chat-persona-name">The Constitution of the United States</div>
+          <div class="chat-persona-date">Ratified 1788 · 27 Amendments · In force</div>
+        </div>
+        <div style="display:flex; gap:0.6rem; align-items:center; flex-wrap:wrap;">
+          <div class="length-toggle">
+            <button class="length-btn" onclick="setLength('brief')" id="len-brief">Brief</button>
+            <button class="length-btn active" onclick="setLength('detailed')" id="len-detailed">Standard</button>
+            <button class="length-btn" onclick="setLength('extended')" id="len-extended">Full</button>
+          </div>
+          <button class="sources-toggle-btn" id="sources-toggle" onclick="toggleSourcesGlobal()">Sources</button>
+        </div>
+      </div>
+
+      <!-- Conversation starters (shown until first message) -->
+      <div class="starters-area" id="starters-area">
+        <div class="starters-label">Ask the Constitution</div>
+        <div class="starters-list">
+          <button class="starter-btn" onclick="sendStarter(this)">What does Article I, Section 8 say about the powers of Congress — and what did Hamilton say about implied powers?</button>
+          <button class="starter-btn" onclick="sendStarter(this)">Show me the Second Amendment as written, and how courts from Heller to Bruen have read it.</button>
+          <button class="starter-btn" onclick="sendStarter(this)">What does the Fourteenth Amendment say about equal protection, and how has that been applied?</button>
+          <button class="starter-btn" onclick="sendStarter(this)">How was the Electoral College designed, and what concerns did the founders debate about it?</button>
+        </div>
+      </div>
+
+      <!-- Messages -->
+      <div class="messages-area" id="messages-area">
+        <div class="loading-dots" id="loading-dots">
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </div>
+      </div>
+
+      <!-- Input -->
+      <div class="input-area">
+        <div class="input-row">
+          <textarea
+            class="input-field"
+            id="chat-input"
+            placeholder="Ask about an article, amendment, or constitutional question…"
+            rows="1"
+            onkeydown="handleKey(event)"
+            oninput="autoResize(this)"
+          ></textarea>
+          <button class="send-btn" id="send-btn" onclick="sendMessage()">Send</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const API_URL = 'https://aware-sparkle-production-868c.up.railway.app';
+  const PERSONA_ID = 'the-constitution';
+
+  let conversationId = null;
+  let currentLength = 'detailed';
+  let showSourcesGlobal = false;
+  let isLoading = false;
+  let hasStarted = false;
+
+  // ── OPENING ANIMATION ────────────────────────────────────────
+  const hasOpened = localStorage.getItem('museum_constitution_opened');
+
+  function closeOpening() {
+    const overlay = document.getElementById('opening-overlay');
+    overlay.classList.add('hidden');
+    document.getElementById('app').classList.add('visible');
+    setTimeout(() => { overlay.style.display = 'none'; }, 850);
+    localStorage.setItem('museum_constitution_opened', '1');
+  }
+
+  if (hasOpened) {
+    // Skip animation on return visits
+    document.getElementById('opening-overlay').style.display = 'none';
+    document.getElementById('app').classList.add('visible');
+  } else {
+    // Auto-advance after 2.5s
+    setTimeout(closeOpening, 2600);
+  }
+
+  document.getElementById('skip-btn').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') closeOpening();
+  });
+
+  // ── MOBILE TABS ─────────────────────────────────────────────
+  function showPane(pane) {
+    const docPane = document.getElementById('doc-pane');
+    const chatPane = document.getElementById('chat-pane');
+    document.getElementById('tab-doc').classList.toggle('active', pane === 'doc');
+    document.getElementById('tab-chat').classList.toggle('active', pane === 'chat');
+    docPane.classList.toggle('mobile-hidden', pane !== 'doc');
+    chatPane.classList.toggle('mobile-hidden', pane !== 'chat');
+  }
+
+  // ── LENGTH TOGGLE ────────────────────────────────────────────
+  function setLength(l) {
+    currentLength = l;
+    document.querySelectorAll('.length-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(`len-${l}`).classList.add('active');
+  }
+
+  // ── SOURCES TOGGLE ───────────────────────────────────────────
+  function toggleSourcesGlobal() {
+    showSourcesGlobal = !showSourcesGlobal;
+    document.getElementById('sources-toggle').classList.toggle('active', showSourcesGlobal);
+    document.querySelectorAll('.sources-panel').forEach(p => {
+      p.classList.toggle('show', showSourcesGlobal);
+    });
+  }
+
+  // ── INPUT ────────────────────────────────────────────────────
+  function autoResize(el) {
+    el.style.height = 'auto';
+    el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+  }
+
+  function handleKey(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  }
+
+  // ── CONVERSATION STARTERS ────────────────────────────────────
+  function sendStarter(btn) {
+    const text = btn.textContent.trim();
+    document.getElementById('chat-input').value = text;
+    sendMessage();
+  }
+
+  // ── CLAUSE HIGHLIGHT ─────────────────────────────────────────
+  const CLAUSE_PATTERNS = [
+    // Article + Section
+    { re: /\bArticle\s+I(?:I|II|V|VI|VII)?\b,\s*Section\s+(\d+)/gi,
+      handler: (m) => {
+        const articleMap = {'article i':1,'article ii':2,'article iii':3,'article iv':4,'article v':5,'article vi':6,'article vii':7};
+        const aMatch = m.match(/Article\s+(I{1,3}|IV|V|VI{1,2})/i);
+        const sMatch = m.match(/Section\s+(\d+)/i);
+        if (!aMatch || !sMatch) return null;
+        const aRoman = aMatch[1].toLowerCase();
+        const aNum = {i:1,ii:2,iii:3,iv:4,v:5,vi:6,vii:7}[aRoman] || 1;
+        return `article-${aNum}-section-${sMatch[1]}`;
+      }
+    },
+    // Article alone
+    { re: /\bArticle\s+(I{1,3}|IV|V|VI{1,2})\b/gi,
+      handler: (m) => {
+        const aRoman = m.replace(/Article\s+/i,'').toLowerCase();
+        const n = {i:1,ii:2,iii:3,iv:4,v:5,vi:6,vii:7}[aRoman];
+        return n ? `article-${n}` : null;
+      }
+    },
+    // Named amendments
+    { re: /\b(?:First|1st)\s+Amendment\b/gi, handler: () => 'amendment-1' },
+    { re: /\b(?:Second|2nd)\s+Amendment\b/gi, handler: () => 'amendment-2' },
+    { re: /\b(?:Third|3rd)\s+Amendment\b/gi, handler: () => 'amendment-3' },
+    { re: /\b(?:Fourth|4th)\s+Amendment\b/gi, handler: () => 'amendment-4' },
+    { re: /\b(?:Fifth|5th)\s+Amendment\b/gi, handler: () => 'amendment-5' },
+    { re: /\b(?:Sixth|6th)\s+Amendment\b/gi, handler: () => 'amendment-6' },
+    { re: /\b(?:Seventh|7th)\s+Amendment\b/gi, handler: () => 'amendment-7' },
+    { re: /\b(?:Eighth|8th)\s+Amendment\b/gi, handler: () => 'amendment-8' },
+    { re: /\b(?:Ninth|9th)\s+Amendment\b/gi, handler: () => 'amendment-9' },
+    { re: /\b(?:Tenth|10th)\s+Amendment\b/gi, handler: () => 'amendment-10' },
+    { re: /\b(?:Eleventh|11th)\s+Amendment\b/gi, handler: () => 'amendment-11' },
+    { re: /\b(?:Twelfth|12th)\s+Amendment\b/gi, handler: () => 'amendment-12' },
+    { re: /\b(?:Thirteenth|13th)\s+Amendment\b/gi, handler: () => 'amendment-13' },
+    { re: /\b(?:Fourteenth|14th)\s+Amendment\b/gi, handler: () => 'amendment-14' },
+    { re: /\b(?:Fifteenth|15th)\s+Amendment\b/gi, handler: () => 'amendment-15' },
+    { re: /\b(?:Sixteenth|16th)\s+Amendment\b/gi, handler: () => 'amendment-16' },
+    { re: /\b(?:Seventeenth|17th)\s+Amendment\b/gi, handler: () => 'amendment-17' },
+    { re: /\b(?:Eighteenth|18th)\s+Amendment\b/gi, handler: () => 'amendment-18' },
+    { re: /\b(?:Nineteenth|19th)\s+Amendment\b/gi, handler: () => 'amendment-19' },
+    { re: /\b(?:Twentieth|20th)\s+Amendment\b/gi, handler: () => 'amendment-20' },
+    { re: /\b(?:Twenty.First|21st)\s+Amendment\b/gi, handler: () => 'amendment-21' },
+    { re: /\b(?:Twenty.Second|22nd)\s+Amendment\b/gi, handler: () => 'amendment-22' },
+    { re: /\b(?:Twenty.Third|23rd)\s+Amendment\b/gi, handler: () => 'amendment-23' },
+    { re: /\b(?:Twenty.Fourth|24th)\s+Amendment\b/gi, handler: () => 'amendment-24' },
+    { re: /\b(?:Twenty.Fifth|25th)\s+Amendment\b/gi, handler: () => 'amendment-25' },
+    { re: /\b(?:Twenty.Sixth|26th)\s+Amendment\b/gi, handler: () => 'amendment-26' },
+    { re: /\b(?:Twenty.Seventh|27th)\s+Amendment\b/gi, handler: () => 'amendment-27' },
+    // Amendment I-X notation
+    { re: /\bAmendment\s+(I{1,3}|IV|V|VI{1,2}|VII|VIII|IX|X{1,2}I{0,3}|XIV|XV)\b/gi,
+      handler: (m) => {
+        const roman = m.replace(/Amendment\s+/i,'').toUpperCase();
+        const map = {I:1,II:2,III:3,IV:4,V:5,VI:6,VII:7,VIII:8,IX:9,X:10,XI:11,XII:12,XIII:13,XIV:14,XV:15,XVI:16,XVII:17,XVIII:18,XIX:19,XX:20,XXI:21,XXII:22,XXIII:23,XXIV:24,XXV:25,XXVI:26,XXVII:27};
+        const n = map[roman];
+        return n ? `amendment-${n}` : null;
+      }
+    },
+    // Named clause shortcuts
+    { re: /\bNecessary\s+and\s+Proper\s+Clause\b/gi, handler: () => 'article-1-section-8' },
+    { re: /\bCommerce\s+Clause\b/gi, handler: () => 'article-1-section-8' },
+    { re: /\bSupremacy\s+Clause\b/gi, handler: () => 'article-6' },
+    { re: /\bElectoral\s+College\b/gi, handler: () => 'article-2-section-1' },
+    { re: /\bBill\s+of\s+Rights\b/gi, handler: () => 'bill-of-rights' },
+    { re: /\bPreamble\b/gi, handler: () => 'preamble' },
+  ];
+
+  function extractSectionIds(text) {
+    const found = new Set();
+    for (const pattern of CLAUSE_PATTERNS) {
+      const matches = text.matchAll(new RegExp(pattern.re.source, 'gi'));
+      for (const m of matches) {
+        const id = pattern.handler(m[0]);
+        if (id) found.add(id);
+      }
+    }
+    return Array.from(found);
+  }
+
+  let highlightTimeout = null;
+
+  function highlightSection(id) {
+    // Clear any previous highlights
+    document.querySelectorAll('.doc-section.highlight').forEach(el => el.classList.remove('highlight'));
+    if (highlightTimeout) clearTimeout(highlightTimeout);
+
+    const el = document.getElementById(id);
+    if (!el) return;
+
+    el.classList.add('highlight');
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    highlightTimeout = setTimeout(() => {
+      el.classList.remove('highlight');
+    }, 3000);
+  }
+
+  function processResponseForHighlights(text) {
+    const ids = extractSectionIds(text);
+    if (ids.length > 0) {
+      // Highlight the first match; small delay to let text render
+      setTimeout(() => highlightSection(ids[0]), 300);
+    }
+  }
+
+  // ── CHAT ─────────────────────────────────────────────────────
+  function addMessage(role, text, sources) {
+    const area = document.getElementById('messages-area');
+
+    // Remove starters on first message
+    if (!hasStarted) {
+      document.getElementById('starters-area').style.display = 'none';
+      hasStarted = true;
+    }
+
+    const el = document.createElement('div');
+    el.classList.add('message', role);
+
+    if (role === 'assistant') {
+      // Render paragraphs
+      const paras = text.split(/\n\n+/).filter(Boolean);
+      paras.forEach(p => {
+        const pEl = document.createElement('p');
+        pEl.textContent = p;
+        el.appendChild(pEl);
+      });
+
+      // Sources panel
+      if (sources && sources.length > 0) {
+        const panel = document.createElement('div');
+        panel.classList.add('sources-panel');
+        if (showSourcesGlobal) panel.classList.add('show');
+
+        sources.forEach(s => {
+          const chip = document.createElement('div');
+          chip.classList.add('source-chip', s.knowledge_type === 'own words' ? 'constitution_text' : (s.source_type || ''));
+          chip.textContent = `${s.title} (${s.year})`;
+          panel.appendChild(chip);
+        });
+        el.appendChild(panel);
+      }
+
+      // Trigger left-pane clause highlight
+      processResponseForHighlights(text);
+    } else {
+      el.textContent = text;
+    }
+
+    // Insert before loading dots
+    const dots = document.getElementById('loading-dots');
+    area.insertBefore(el, dots);
+    area.scrollTop = area.scrollHeight;
+    return el;
+  }
+
+  async function sendMessage() {
+    if (isLoading) return;
+    const input = document.getElementById('chat-input');
+    const message = input.value.trim();
+    if (!message) return;
+
+    isLoading = true;
+    input.value = '';
+    input.style.height = 'auto';
+    document.getElementById('send-btn').disabled = true;
+
+    addMessage('user', message, null);
+
+    // Show loading
+    const dots = document.getElementById('loading-dots');
+    dots.classList.add('show');
+
+    // On mobile, switch to chat pane
+    if (window.innerWidth <= 900) showPane('chat');
+
+    try {
+      const lengthMap = { brief: 'brief', detailed: 'conversational', extended: 'detailed' };
+      const resp = await fetch(`${API_URL}/chat`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message,
+          conversation_id: conversationId,
+          mode: 'modern',
+          length: lengthMap[currentLength] || 'conversational',
+          reading_level: 'general',
+          persona_id: PERSONA_ID,
+        }),
+      });
+
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+      const data = await resp.json();
+
+      conversationId = data.conversation_id;
+      dots.classList.remove('show');
+      addMessage('assistant', data.response, data.sources || []);
+
+    } catch (err) {
+      dots.classList.remove('show');
+      addMessage('assistant', 'The text is momentarily unavailable. Please try again.', null);
+      console.error('Chat error:', err);
+    } finally {
+      isLoading = false;
+      document.getElementById('send-btn').disabled = false;
+    }
+  }
+</script>
+
+</body>
+</html>

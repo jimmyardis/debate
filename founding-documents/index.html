@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Founding Documents — Museum of Minds</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --slate:       #1B2435;
+      --slate-mid:   #253046;
+      --parchment:   #EFE6D2;
+      --parchment-d: #E5D9BD;
+      --ink:         #0E0E0E;
+      --gold:        #A88425;
+      --gold-pale:   #C9A84C;
+      --gold-dim:    #7A6020;
+      --text:        #2C1F0A;
+      --text-mid:    #5C4A28;
+      --text-dim:    #8A7450;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--parchment);
+      color: var(--text);
+      font-family: 'Source Serif 4', Georgia, serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Subtle aged-paper grain */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--slate);
+      padding: 1rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid var(--gold-dim);
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-decoration: none;
+      color: var(--parchment);
+    }
+
+    .header-brand-name {
+      font-family: 'Libre Caslon Text', serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      color: var(--parchment);
+      opacity: 0.85;
+    }
+
+    .header-nav {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .header-nav a {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--parchment);
+      text-decoration: none;
+      opacity: 0.65;
+      transition: opacity 0.2s;
+    }
+
+    .header-nav a:hover { opacity: 1; }
+    .header-nav a.active { opacity: 1; color: var(--gold-pale); }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--slate);
+      padding: 5rem 3rem 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--gold), var(--gold-pale), var(--gold), transparent);
+    }
+
+    /* Decorative columns SVG on hero sides */
+    .hero-column {
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 60px;
+      opacity: 0.07;
+      background-image: repeating-linear-gradient(
+        180deg,
+        var(--gold) 0px, var(--gold) 2px,
+        transparent 2px, transparent 24px
+      );
+    }
+    .hero-column.left { left: 2rem; }
+    .hero-column.right { right: 2rem; }
+
+    .hero-eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-title {
+      font-family: 'Libre Caslon Text', serif;
+      font-size: clamp(2.2rem, 5vw, 4.5rem);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--parchment);
+      text-transform: uppercase;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .hero-subtitle {
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1rem, 2vw, 1.3rem);
+      color: var(--parchment);
+      opacity: 0.65;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-rule {
+      width: 120px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 0 auto 2.5rem;
+    }
+
+    .hero-desc {
+      font-family: 'Source Serif 4', serif;
+      font-size: 1rem;
+      color: var(--parchment);
+      opacity: 0.6;
+      max-width: 560px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* ── DOCUMENTS GRID ── */
+    .documents-section {
+      padding: 4rem 3rem 5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      margin-bottom: 2.5rem;
+    }
+
+    .documents-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    /* ── DOCUMENT CARD ── */
+    .doc-card {
+      background: var(--parchment-d);
+      border: 1px solid var(--gold-dim);
+      border-radius: 2px;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+    }
+
+    .doc-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(168, 132, 37, 0.15);
+    }
+
+    .doc-card.live { cursor: pointer; }
+
+    .doc-card-seal {
+      background: var(--slate);
+      padding: 1.8rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid var(--gold-dim);
+    }
+
+    .doc-card-seal-icon {
+      width: 44px;
+      height: 44px;
+      opacity: 0.9;
+    }
+
+    .doc-card-year {
+      font-family: 'EB Garamond', serif;
+      font-size: 0.85rem;
+      color: var(--gold-pale);
+      letter-spacing: 0.1em;
+    }
+
+    .doc-card-body {
+      padding: 1.6rem 2rem 2rem;
+    }
+
+    .doc-card-title {
+      font-family: 'Libre Caslon Text', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+    }
+
+    .doc-card-subtitle {
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      font-size: 0.9rem;
+      color: var(--text-mid);
+      margin-bottom: 1rem;
+    }
+
+    .doc-card-desc {
+      font-size: 0.87rem;
+      color: var(--text-mid);
+      line-height: 1.65;
+      margin-bottom: 1.5rem;
+    }
+
+    .doc-card-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      text-decoration: none;
+      border-bottom: 1px solid var(--gold-dim);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .doc-card-cta:hover {
+      color: var(--gold);
+      border-color: var(--gold);
+    }
+
+    .doc-card-cta svg {
+      width: 14px; height: 14px;
+      transition: transform 0.2s;
+    }
+
+    .doc-card-cta:hover svg { transform: translateX(3px); }
+
+    /* Coming soon cards */
+    .doc-card.coming-soon {
+      opacity: 0.55;
+      cursor: default;
+    }
+
+    .doc-card.coming-soon .doc-card-seal {
+      background: #2C3548;
+    }
+
+    .coming-soon-badge {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--parchment);
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 20px;
+      padding: 3px 10px;
+    }
+
+    /* Trust badge on live card */
+    .trust-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      border: 1px solid var(--gold-dim);
+      border-radius: 20px;
+      padding: 3px 10px;
+      margin-bottom: 1rem;
+    }
+
+    .trust-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+
+    /* ── ABOUT SECTION ── */
+    .about-section {
+      background: var(--slate);
+      padding: 4rem 3rem;
+      color: var(--parchment);
+    }
+
+    .about-inner {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .about-title {
+      font-family: 'Libre Caslon Text', serif;
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      color: var(--gold-pale);
+    }
+
+    .about-body {
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: var(--parchment);
+      opacity: 0.8;
+    }
+
+    .about-body p + p { margin-top: 1rem; }
+
+    .about-link {
+      color: var(--gold-pale);
+      text-decoration: none;
+      border-bottom: 1px solid var(--gold-dim);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink);
+      padding: 1.5rem 3rem;
+      text-align: center;
+    }
+
+    .footer-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: rgba(239,230,210,0.3);
+      text-transform: uppercase;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      header { padding: 1rem 1.5rem; }
+      .hero { padding: 3.5rem 1.5rem 3rem; }
+      .documents-section { padding: 3rem 1.5rem 4rem; }
+      .documents-grid { grid-template-columns: 1fr; }
+      .header-nav { gap: 1rem; }
+      .about-section { padding: 3rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header>
+  <a href="/" class="header-brand">
+    <span class="header-brand-name">Museum of Minds</span>
+  </a>
+  <nav class="header-nav">
+    <a href="/">The Arena</a>
+    <a href="/founding-documents/" class="active">Founding Documents</a>
+  </nav>
+</header>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-column left"></div>
+  <div class="hero-column right"></div>
+  <p class="hero-eyebrow">Museum of Minds · Documents Wing</p>
+  <h1 class="hero-title">The Founding Documents</h1>
+  <div class="hero-rule"></div>
+  <p class="hero-subtitle">Documents that quote themselves</p>
+  <p class="hero-desc">Primary sources that speak in their own voice — quoting their own text, surfacing the debates that shaped them, citing how courts and history have read them.</p>
+</section>
+
+<!-- ── DOCUMENTS GRID ── -->
+<section class="documents-section">
+  <p class="section-label">Documents in the collection</p>
+  <div class="documents-grid">
+
+    <!-- LIVE: The Constitution -->
+    <div class="doc-card live" onclick="window.location.href='/founding-documents/the-constitution/'">
+      <div class="doc-card-seal">
+        <svg class="doc-card-seal-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Wax seal / scroll icon -->
+          <circle cx="22" cy="22" r="18" stroke="#A88425" stroke-width="1.5" fill="none"/>
+          <circle cx="22" cy="22" r="14" stroke="#A88425" stroke-width="0.8" fill="rgba(168,132,37,0.08)"/>
+          <text x="22" y="27" text-anchor="middle" font-family="serif" font-size="14" fill="#A88425" font-weight="bold">US</text>
+        </svg>
+        <span class="doc-card-year">RATIFIED 1788</span>
+      </div>
+      <div class="doc-card-body">
+        <div class="trust-badge">99 / 100 · Primary Source</div>
+        <h2 class="doc-card-title">The Constitution of the United States</h2>
+        <p class="doc-card-subtitle">Articles I–VII + 27 Amendments</p>
+        <p class="doc-card-desc">Ask the Constitution about any article, section, or amendment. It quotes itself, surfaces the Federalist and Anti-Federalist debates, and cites how the Supreme Court has read each clause. It does not opine.</p>
+        <a href="/founding-documents/the-constitution/" class="doc-card-cta">
+          Open document
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M3 8h10M9 4l4 4-4 4"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- COMING SOON: Declaration of Independence -->
+    <div class="doc-card coming-soon">
+      <div class="doc-card-seal">
+        <svg class="doc-card-seal-icon" viewBox="0 0 44 44" fill="none">
+          <circle cx="22" cy="22" r="18" stroke="#A88425" stroke-width="1.5" fill="none" stroke-dasharray="3 2"/>
+          <text x="22" y="27" text-anchor="middle" font-family="serif" font-size="11" fill="#A88425">1776</text>
+        </svg>
+        <span class="coming-soon-badge">Coming Soon</span>
+      </div>
+      <div class="doc-card-body">
+        <h2 class="doc-card-title">Declaration of Independence</h2>
+        <p class="doc-card-subtitle">July 4, 1776</p>
+        <p class="doc-card-desc">Jefferson's self-evident truths, the list of grievances against the Crown, and two centuries of commentary on what "all men are created equal" actually meant to the men who wrote it.</p>
+      </div>
+    </div>
+
+    <!-- COMING SOON: Federalist Papers (standalone) -->
+    <div class="doc-card coming-soon">
+      <div class="doc-card-seal">
+        <svg class="doc-card-seal-icon" viewBox="0 0 44 44" fill="none">
+          <circle cx="22" cy="22" r="18" stroke="#A88425" stroke-width="1.5" fill="none" stroke-dasharray="3 2"/>
+          <text x="22" y="27" text-anchor="middle" font-family="serif" font-size="9" fill="#A88425">Fed 51</text>
+        </svg>
+        <span class="coming-soon-badge">Coming Soon</span>
+      </div>
+      <div class="doc-card-body">
+        <h2 class="doc-card-title">The Federalist Papers</h2>
+        <p class="doc-card-subtitle">Hamilton, Madison, Jay — 1787–1788</p>
+        <p class="doc-card-desc">Eighty-five essays arguing for ratification of the Constitution. The most important American political theory document, available as a standalone speaker with cross-references to the Constitution's text.</p>
+      </div>
+    </div>
+
+    <!-- COMING SOON: Emancipation Proclamation -->
+    <div class="doc-card coming-soon">
+      <div class="doc-card-seal">
+        <svg class="doc-card-seal-icon" viewBox="0 0 44 44" fill="none">
+          <circle cx="22" cy="22" r="18" stroke="#A88425" stroke-width="1.5" fill="none" stroke-dasharray="3 2"/>
+          <text x="22" y="27" text-anchor="middle" font-family="serif" font-size="10" fill="#A88425">1863</text>
+        </svg>
+        <span class="coming-soon-badge">Coming Soon</span>
+      </div>
+      <div class="doc-card-body">
+        <h2 class="doc-card-title">The Emancipation Proclamation</h2>
+        <p class="doc-card-subtitle">January 1, 1863</p>
+        <p class="doc-card-desc">Lincoln's executive order, the debates over its legal authority, and its relationship to the Thirteenth Amendment that followed — the document that started the end of American slavery.</p>
+      </div>
+    </div>
+
+    <!-- COMING SOON: Magna Carta -->
+    <div class="doc-card coming-soon">
+      <div class="doc-card-seal">
+        <svg class="doc-card-seal-icon" viewBox="0 0 44 44" fill="none">
+          <circle cx="22" cy="22" r="18" stroke="#A88425" stroke-width="1.5" fill="none" stroke-dasharray="3 2"/>
+          <text x="22" y="27" text-anchor="middle" font-family="serif" font-size="10" fill="#A88425">1215</text>
+        </svg>
+        <span class="coming-soon-badge">Coming Soon</span>
+      </div>
+      <div class="doc-card-body">
+        <h2 class="doc-card-title">Magna Carta</h2>
+        <p class="doc-card-subtitle">1215 · Runnymede</p>
+        <p class="doc-card-desc">The foundational limit on royal power — due process, habeas corpus, the principle that no person is above the law. The text from which eight centuries of Anglo-American law descends.</p>
+      </div>
+    </div>
+
+    <!-- COMING SOON: 14th Amendment standalone -->
+    <div class="doc-card coming-soon">
+      <div class="doc-card-seal">
+        <svg class="doc-card-seal-icon" viewBox="0 0 44 44" fill="none">
+          <circle cx="22" cy="22" r="18" stroke="#A88425" stroke-width="1.5" fill="none" stroke-dasharray="3 2"/>
+          <text x="22" y="27" text-anchor="middle" font-family="serif" font-size="9" fill="#A88425">Amend XIV</text>
+        </svg>
+        <span class="coming-soon-badge">Coming Soon</span>
+      </div>
+      <div class="doc-card-body">
+        <h2 class="doc-card-title">The Fourteenth Amendment</h2>
+        <p class="doc-card-subtitle">Ratified July 9, 1868</p>
+        <p class="doc-card-desc">Equal protection. Due process. Citizenship for the formerly enslaved. The most litigated amendment in American history, presented as a standalone document with the full arc of its interpretation.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── ABOUT ── -->
+<section class="about-section">
+  <div class="about-inner">
+    <h2 class="about-title">About the Founding Documents wing</h2>
+    <div class="about-body">
+      <p>Every document in this collection quotes itself. It does not paraphrase. When you ask about a clause, it gives you the clause — verbatim. When the question is contested, it surfaces the debate on both sides and refuses to declare a winner.</p>
+      <p>The Constitution quotes itself, the Federalist Papers, the Anti-Federalist arguments, and the majority and dissenting opinions of fifteen landmark Supreme Court cases. It takes no political position. It has no party affiliation. It predates both major American political parties.</p>
+      <p>For the editorial standard that governs each document — what sources are used, how contested questions are handled, and what the platform refuses to say — see <a href="/founding-documents/the-constitution/#editorial-standard" class="about-link">the Constitution's editorial standard</a>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <p class="footer-text">Museum of Minds · Founding Documents · America250</p>
+</footer>
+
+</body>
+</html>
