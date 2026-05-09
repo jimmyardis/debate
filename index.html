@@ -25,7 +25,7 @@
       --ivory-dim:   #A09880;
       --steel:       #4A5568;
       --text:        #D4CEB8;
-      --text-dim:    #6B6455;
+      --text-dim:    #BEB8B0;
       --left-glow:   rgba(196,154,60,0.15);
       --right-glow:  rgba(196,154,60,0.15);
     }
@@ -66,7 +66,7 @@
       letter-spacing: 0.4em;
       color: var(--amber);
       text-transform: uppercase;
-      opacity: 0.7;
+      opacity: 0.95;
     }
 
     .header-nav {
@@ -227,8 +227,8 @@
       font-family: 'Cinzel', serif;
       font-size: 0.55rem;
       letter-spacing: 0.35em;
-      color: var(--amber);
-      opacity: 0.5;
+      color: var(--amber-pale);
+      opacity: 0.92;
       text-transform: uppercase;
       margin-bottom: 1rem;
       display: block;
@@ -268,7 +268,7 @@
       font-size: 1.4rem;
       font-weight: 900;
       color: var(--amber);
-      opacity: 0.4;
+      opacity: 0.80;
       letter-spacing: 0.2em;
     }
 
@@ -281,8 +281,8 @@
       font-family: 'Cinzel', serif;
       font-size: 0.58rem;
       letter-spacing: 0.35em;
-      color: var(--amber);
-      opacity: 0.6;
+      color: var(--amber-pale);
+      opacity: 0.95;
       text-transform: uppercase;
       display: block;
       margin-bottom: 1rem;
@@ -290,7 +290,7 @@
 
     .topic-input-wrap {
       position: relative;
-      border: 1px solid rgba(196,154,60,0.25);
+      border: 1px solid rgba(196,154,60,0.55);
       background: var(--surface);
       margin-bottom: 1.2rem;
     }
@@ -308,8 +308,8 @@
     }
 
     .topic-input::placeholder {
-      color: var(--text-dim);
-      opacity: 0.5;
+      color: var(--ivory-dim);
+      opacity: 0.85;
     }
 
     /* Suggested topics */
@@ -323,8 +323,8 @@
       font-family: 'Cormorant Garamond', serif;
       font-size: 0.82rem;
       font-style: italic;
-      color: var(--text-dim);
-      border: 1px solid rgba(196,154,60,0.15);
+      color: var(--text);
+      border: 1px solid rgba(196,154,60,0.40);
       padding: 0.4rem 0.9rem;
       cursor: pointer;
       transition: all 0.2s;
@@ -761,13 +761,6 @@
   <!-- HEADER -->
   <header>
     <span class="header-label">The Museum &nbsp;·&nbsp; Debate Arena</span>
-    <nav class="header-nav">
-      <a href="#">Jane Jacobs</a>
-      <a href="#">Carl Jung</a>
-      <a href="#">Thomas Jefferson</a>
-      <a href="#">Alexander Hamilton</a>
-      <a href="/founding-documents/" style="border-left:1px solid rgba(196,154,60,0.3);margin-left:.5rem;padding-left:1rem;">Founding Documents</a>
-    </nav>
   </header>
 
   <!-- ══ SETUP SCREEN ══ -->
@@ -871,7 +864,7 @@
 
       <!-- Begin -->
       <button class="begin-btn" id="begin-btn" onclick="beginDebate()" disabled>
-        <span>Open the Arena</span>
+        <span>Start Debate</span>
       </button>
 
     </div>
