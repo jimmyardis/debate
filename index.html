@@ -761,6 +761,13 @@
   <!-- HEADER -->
   <header>
     <span class="header-label">The Museum &nbsp;·&nbsp; Debate Arena</span>
+    <nav class="header-nav">
+      <a href="https://museumofminds.com/jane-jacobs/">Jane Jacobs</a>
+      <a href="https://museumofminds.com/carl-jung/">Carl Jung</a>
+      <a href="https://museumofminds.com/thomas-jefferson/">Thomas Jefferson</a>
+      <a href="https://museumofminds.com/alexander-hamilton/">Alexander Hamilton</a>
+      <a href="/founding-documents/" style="border-left:1px solid rgba(196,154,60,0.3);margin-left:.5rem;padding-left:1rem;">Founding Documents</a>
+    </nav>
   </header>
 
   <!-- ══ SETUP SCREEN ══ -->
@@ -784,25 +791,6 @@
           <span class="slot-label">First Mind</span>
           <select class="slot-select" id="figure-a">
             <option value="">— Select a figure —</option>
-            <option value="jane-jacobs">Jane Jacobs</option>
-            <option value="carl-jung">Carl Jung</option>
-            <option value="thomas-jefferson">Thomas Jefferson</option>
-            <option value="alexander-hamilton">Alexander Hamilton</option>
-            <option value="hl-mencken">H.L. Mencken</option>
-            <option value="john-taylor-of-caroline">John Taylor of Caroline</option>
-            <option value="adam-smith">Adam Smith</option>
-          
-            <option value="george-washington">George Washington</option>
-          
-            <option value="thomas-paine">Thomas Paine</option>
-          
-            <option value="helen-keller">Helen Keller</option>
-          
-            <option value="karl-marx">Karl Marx</option>
-          
-            <option value="albert-einstein">Albert Einstein</option>
-          
-            <option value="amelia-earhart">Amelia Earhart</option>
           </select>
         </div>
 
@@ -814,25 +802,6 @@
           <span class="slot-label">Second Mind</span>
           <select class="slot-select" id="figure-b">
             <option value="">— Select a figure —</option>
-            <option value="jane-jacobs">Jane Jacobs</option>
-            <option value="carl-jung">Carl Jung</option>
-            <option value="thomas-jefferson">Thomas Jefferson</option>
-            <option value="alexander-hamilton">Alexander Hamilton</option>
-            <option value="hl-mencken">H.L. Mencken</option>
-            <option value="john-taylor-of-caroline">John Taylor of Caroline</option>
-            <option value="adam-smith">Adam Smith</option>
-          
-            <option value="george-washington">George Washington</option>
-          
-            <option value="thomas-paine">Thomas Paine</option>
-          
-            <option value="helen-keller">Helen Keller</option>
-          
-            <option value="karl-marx">Karl Marx</option>
-          
-            <option value="albert-einstein">Albert Einstein</option>
-          
-            <option value="amelia-earhart">Amelia Earhart</option>
           </select>
         </div>
       </div>
@@ -950,93 +919,78 @@
   </div>
 
   <script>
-    // ── PERSONA DATA ──
-    const PERSONAS = {
-      'jane-jacobs': {
-        name: 'Jane Jacobs',
-        years: '1916 —',
-        initial: 'JJ',
-        portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Jane_Jacobs.jpg/1920px-Jane_Jacobs.jpg'
-      },
-      'carl-jung': {
-        name: 'Carl Jung',
-        years: '1875 — 1961',
-        initial: 'CJ',
-        portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/ETH-BIB-Jung%2C_Carl_Gustav_%281875-1961%29-Portrait-Portr_14163_%28cropped%29.tif/lossy-page1-1280px-ETH-BIB-Jung%2C_Carl_Gustav_%281875-1961%29-Portrait-Portr_14163_%28cropped%29.tif.jpg'
-      },
-      'thomas-jefferson': {
-        name: 'Thomas Jefferson',
-        years: '1743 — 1826',
-        initial: 'TJ',
-        portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Thomas_Jefferson_by_Rembrandt_Peale%2C_1800.jpg/800px-Thomas_Jefferson_by_Rembrandt_Peale%2C_1800.jpg'
-      },
-      'alexander-hamilton': {
-        name: 'Alexander Hamilton',
-        years: '1755 — 1804',
-        initial: 'AH',
-        portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Alexander_Hamilton_portrait_by_John_Trumbull_1806.jpg/800px-Alexander_Hamilton_portrait_by_John_Trumbull_1806.jpg'
-      },
-      'hl-mencken': {
-        name: 'H.L. Mencken',
-        years: '1880 — 1956',
-        initial: 'HM',
-        portrait: 'https://www.theparisreview.org/blog/wp-content/uploads/2016/04/screen-shot-2016-04-18-at-2.02.28-pm.png'
-      },
-      'john-taylor-of-caroline': {
-        name: 'John Taylor of Caroline',
-        years: '1753 — 1824',
-        initial: 'JT',
-        portrait: 'https://upload.wikimedia.org/wikipedia/commons/4/41/John_Taylor_ofCaroline.jpg'
-      },
-      'adam-smith': {
-        name: 'Adam Smith',
-        years: '1723 — 1790',
-        initial: 'AS',
-        portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Adam_Smith_The_Muir_portrait.jpg/1280px-Adam_Smith_The_Muir_portrait.jpg'
-      },
-      'george-washington': {
-        name: 'George Washington',
-        years: '1732 — 1799',
-        initial: 'GW',
-        portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Gilbert_Stuart_Williamstown_Portrait_of_George_Washington.jpg/800px-Gilbert_Stuart_Williamstown_Portrait_of_George_Washington.jpg'
-      },
-      'thomas-paine': {
-        name: 'Thomas Paine',
-        years: '1737–1809',
-        initial: 'TP',
-        portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Thomas_Paine.jpg/1280px-Thomas_Paine.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail'
-      },
-      'helen-keller': {
-        name: 'Helen Keller',
-        years: '1880 — 1968',
-        initial: 'HK',
-        portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Helen_Keller_cph.3b07695.jpg/1280px-Helen_Keller_cph.3b07695.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail'
-      },
-      'karl-marx': {
-        name: 'Karl Marx',
-        years: '1818 — 1883',
-        initial: 'KM',
-        portrait: 'https://upload.wikimedia.org/wikipedia/commons/f/fc/Karl_Marx.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled'
-      },
-      'albert-einstein': {
-        name: 'Albert Einstein',
-        years: '1879 — 1955',
-        initial: 'AE',
-        portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Albert_Einstein_%28LOC%29.jpg/1280px-Albert_Einstein_%28LOC%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail'
-      },
-      'amelia-earhart': {
-        name: 'Amelia Earhart',
-        years: '1897 — 1937',
-        initial: 'AE',
-        portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/The_Fun_of_It-frontispiece-Amelia_Earhart.jpg/1280px-The_Fun_of_It-frontispiece-Amelia_Earhart.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail'
-      }
-    
-    
-    
-    
-    
-    
+    // ── PORTRAIT MAP — stable Wikipedia URLs, keyed by persona ID ──
+    const PORTRAIT_MAP = {
+      'abraham-lincoln':        { initial: 'AL', portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Abraham_Lincoln_O-77_matte_collodion_print.jpg/800px-Abraham_Lincoln_O-77_matte_collodion_print.jpg' },
+      'ada-lovelace':           { initial: 'AL', portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Ada_Lovelace_portrait.jpg/800px-Ada_Lovelace_portrait.jpg' },
+      'adam-smith':             { initial: 'AS', portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Adam_Smith_The_Muir_portrait.jpg/800px-Adam_Smith_The_Muir_portrait.jpg' },
+      'alan-turing':            { initial: 'AT', portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Alan_Turing_Aged_16.jpg/800px-Alan_Turing_Aged_16.jpg' },
+      'albert-einstein':        { initial: 'AE', portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Albert_Einstein_Head.jpg/800px-Albert_Einstein_Head.jpg' },
+      'alexander-hamilton':     { initial: 'AH', portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Alexander_Hamilton_portrait_by_John_Trumbull_1806.jpg/800px-Alexander_Hamilton_portrait_by_John_Trumbull_1806.jpg' },
+      'amelia-earhart':         { initial: 'AE', portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/The_Fun_of_It-frontispiece-Amelia_Earhart.jpg/800px-The_Fun_of_It-frontispiece-Amelia_Earhart.jpg' },
+      'benjamin-banneker':      { initial: 'BB', portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Banneker_portrait.jpg/800px-Banneker_portrait.jpg' },
+      'benjamin-franklin':      { initial: 'BF', portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Benjamin_Franklin_by_Joseph_Duplessis_1778.jpg/800px-Benjamin_Franklin_by_Joseph_Duplessis_1778.jpg' },
+      'carl-jung':              { initial: 'CJ', portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/ETH-BIB-Jung%2C_Carl_Gustav_%281875-1961%29-Portrait-Portr_14163_%28cropped%29.tif/lossy-page1-800px-ETH-BIB-Jung%2C_Carl_Gustav_%281875-1961%29-Portrait-Portr_14163_%28cropped%29.tif.jpg' },
+      'charles-darwin':         { initial: 'CD', portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Charles_Darwin_seated_crop.jpg/800px-Charles_Darwin_seated_crop.jpg' },
+      'charles-drew':           { initial: 'CD', portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Charles_R._Drew.jpg/800px-Charles_R._Drew.jpg' },
+      'claude-shannon':         { initial: 'CS', portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Claude_Elwood_Shannon_%281916-2001%29.jpg/800px-Claude_Elwood_Shannon_%281916-2001%29.jpg' },
+      'franklin-d-roosevelt':   { initial: 'FR', portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/FDR_1944_Color_Portrait.jpg/800px-FDR_1944_Color_Portrait.jpg' },
+      'frederick-douglass':     { initial: 'FD', portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Frederick_Douglass_portrait.jpg/800px-Frederick_Douglass_portrait.jpg' },
+      'frederick-law-olmsted':  { initial: 'FO', portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Frederick_Law_Olmsted_-_c._1893.jpg/800px-Frederick_Law_Olmsted_-_c._1893.jpg' },
+      'friedrich-hayek':        { initial: 'FH', portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Friedrich_Hayek_portrait.jpg/800px-Friedrich_Hayek_portrait.jpg' },
+      'george-orwell':          { initial: 'GO', portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/George_Orwell_press_photo.jpg/800px-George_Orwell_press_photo.jpg' },
+      'george-washington':      { initial: 'GW', portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Gilbert_Stuart_Williamstown_Portrait_of_George_Washington.jpg/800px-Gilbert_Stuart_Williamstown_Portrait_of_George_Washington.jpg' },
+      'george-washington-carver': { initial: 'GC', portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/George_Washington_Carver_c1910_-_Restoration.jpg/800px-George_Washington_Carver_c1910_-_Restoration.jpg' },
+      'grover-cleveland':       { initial: 'GC', portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Grover_Cleveland_-_NARA_-_518139.jpg/800px-Grover_Cleveland_-_NARA_-_518139.jpg' },
+      'harriet-tubman':         { initial: 'HT', portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Harriet_Tubman_by_Squyer%2C_NPG%2C_c1885.jpg/800px-Harriet_Tubman_by_Squyer%2C_NPG%2C_c1885.jpg' },
+      'helen-keller':           { initial: 'HK', portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Helen_Keller_cph.3b07695.jpg/800px-Helen_Keller_cph.3b07695.jpg' },
+      'hl-mencken':             { initial: 'HM', portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/H._L._Mencken_at_typewriter_%28cropped%29.jpg/800px-H._L._Mencken_at_typewriter_%28cropped%29.jpg' },
+      'isaac-newton':           { initial: 'IN', portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/GodfreyKneller-IsaacNewton-1689.jpg/800px-GodfreyKneller-IsaacNewton-1689.jpg' },
+      'james-baldwin':          { initial: 'JB', portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/James_Baldwin_37_Allan_Warren_%28cropped%29.jpg/800px-James_Baldwin_37_Allan_Warren_%28cropped%29.jpg' },
+      'james-madison':          { initial: 'JM', portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/James_Madison.jpg/800px-James_Madison.jpg' },
+      'jane-jacobs':            { initial: 'JJ', portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Jane_Jacobs.jpg/800px-Jane_Jacobs.jpg' },
+      'john-maynard-keynes':    { initial: 'JK', portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/John_Maynard_Keynes.jpg/800px-John_Maynard_Keynes.jpg' },
+      'john-taylor-of-caroline':{ initial: 'JT', portrait: 'https://upload.wikimedia.org/wikipedia/commons/4/41/John_Taylor_ofCaroline.jpg' },
+      'karl-marx':              { initial: 'KM', portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Karl_Marx_001.jpg/800px-Karl_Marx_001.jpg' },
+      'katherine-johnson':      { initial: 'KJ', portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Katherine_Johnson_1983.jpg/800px-Katherine_Johnson_1983.jpg' },
+      'lewis-latimer':          { initial: 'LL', portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Lewis_Howard_Latimer.jpg/800px-Lewis_Howard_Latimer.jpg' },
+      'patricia-bath':          { initial: 'PB', portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Patricia_Bath%2C_ophthalmologist.jpg/800px-Patricia_Bath%2C_ophthalmologist.jpg' },
+      'percy-julian':           { initial: 'PJ', portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Percy_Julian.jpg/800px-Percy_Julian.jpg' },
+      'sherlock-holmes':        { initial: 'SH', portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Paget_holmes.jpg/800px-Paget_holmes.jpg' },
+      'susan-b-anthony':        { initial: 'SA', portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Susan_B_Anthony.jpg/800px-Susan_B_Anthony.jpg' },
+      'thomas-jefferson':       { initial: 'TJ', portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Thomas_Jefferson_by_Rembrandt_Peale%2C_1800.jpg/800px-Thomas_Jefferson_by_Rembrandt_Peale%2C_1800.jpg' },
+      'thomas-paine':           { initial: 'TP', portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Thomas_Paine.jpg/800px-Thomas_Paine.jpg' },
+      'web-du-bois':            { initial: 'WB', portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/WEB_Du_Bois_1918.jpg/800px-WEB_Du_Bois_1918.jpg' },
+      'werner-heisenberg':      { initial: 'WH', portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Heisenberg_10.jpg/800px-Heisenberg_10.jpg' },
+      'william-moultrie':       { initial: 'WM', portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/William_Moultrie.jpg/800px-William_Moultrie.jpg' },
     };
+
+    // PERSONAS is built dynamically from the /personas API endpoint
+    let PERSONAS = {};
+
+    async function fetchPersonas() {
+      try {
+        const resp = await fetch(`${API_URL}/personas`);
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+        const data = await resp.json();
+        const sorted = (data.personas || []).sort((a, b) => a.display_name.localeCompare(b.display_name));
+        PERSONAS = {};
+        const selectA = document.getElementById('figure-a');
+        const selectB = document.getElementById('figure-b');
+        while (selectA.options.length > 1) selectA.remove(1);
+        while (selectB.options.length > 1) selectB.remove(1);
+        sorted.forEach(p => {
+          const pm = PORTRAIT_MAP[p.id] || {};
+          const words = p.display_name.replace(/[^A-Za-z ]/g, ' ').trim().split(/\s+/).filter(Boolean);
+          const initial = pm.initial || (words.length >= 2 ? words[0][0] + words[words.length - 1][0] : (words[0] || 'X').slice(0, 2)).toUpperCase();
+          PERSONAS[p.id] = { name: p.display_name, years: p.years, initial, portrait: pm.portrait || null };
+          selectA.add(new Option(p.display_name, p.id));
+          selectB.add(new Option(p.display_name, p.id));
+        });
+      } catch (err) {
+        console.error('Failed to load personas:', err);
+      }
+    }
 
     // ── STATE ──
     let state = {
@@ -1062,8 +1016,7 @@
       audio.play().catch(err => console.warn('Audio playback blocked:', err));
     }
 
-    // API URL — update this to your Railway deployment
-    const API_URL = 'https://aware-sparkle-production-868c.up.railway.app';
+    const API_URL = 'https://museum-api-production-8ce6.up.railway.app';
 
     // ── SETUP VALIDATION ──
     document.getElementById('figure-a').addEventListener('change', validateSetup);
@@ -1170,7 +1123,7 @@
           ? state.history[state.history.length - 1]
           : null;
 
-        const steerNote = steer ? ` The moderator asks you to address: "${steer}".` : '';
+        const steerNote = steer || null;
 
         // Call debate endpoint (voice variant if enabled)
         const endpoint = state.voiceEnabled ? `${API_URL}/debate/voice` : `${API_URL}/debate`;
@@ -1380,7 +1333,7 @@
       try {
         await loadHtml2Pdf();
         const el = document.createElement('div');
-        el.style.cssText = 'position:fixed;top:-9999px;left:-9999px;width:750px;';
+        el.style.cssText = 'position:absolute;top:0;left:-10000px;width:750px;';
         el.innerHTML = html;
         document.body.appendChild(el);
         await window.html2pdf().set({
@@ -1400,6 +1353,9 @@
     function escapeHtml(str) {
       return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
     }
+
+    // Populate dropdowns from API on page load
+    fetchPersonas();
 
   </script>
 
