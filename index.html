@@ -24,8 +24,8 @@
       --ivory:       #EDE8D8;
       --ivory-dim:   #A09880;
       --steel:       #4A5568;
-      --text:        #D4CEB8;
-      --text-dim:    #BEB8B0;
+      --text:        #F0EDE4;
+      --text-dim:    #C8C4B8;
       --left-glow:   rgba(196,154,60,0.15);
       --right-glow:  rgba(196,154,60,0.15);
     }
@@ -58,7 +58,30 @@
       align-items: center;
       border-bottom: 1px solid rgba(196,154,60,0.2);
       animation: fadeDown 0.8s ease both;
+      position: relative;
+      z-index: 100;
     }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .back-link {
+      font-family: 'Cinzel', serif;
+      font-size: 0.52rem;
+      letter-spacing: 0.35em;
+      color: var(--ivory-dim);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+    }
+
+    .back-link:hover { color: var(--amber); }
 
     .header-label {
       font-family: 'Cinzel', serif;
@@ -71,20 +94,60 @@
 
     .header-nav {
       display: flex;
-      gap: 2rem;
+      gap: 1.5rem;
+      align-items: center;
+      position: relative;
     }
 
-    .header-nav a {
+    .personas-dropdown-wrap { position: relative; }
+
+    .personas-dropdown-btn {
       font-family: 'Cinzel', serif;
-      font-size: 0.55rem;
+      font-size: 0.52rem;
       letter-spacing: 0.3em;
       color: var(--text-dim);
-      text-decoration: none;
+      background: transparent;
+      border: 1px solid rgba(196,154,60,0.25);
+      padding: 0.45rem 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s;
       text-transform: uppercase;
-      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
     }
 
-    .header-nav a:hover { color: var(--amber); }
+    .personas-dropdown-btn:hover { border-color: var(--amber); color: var(--amber); }
+
+    .personas-dropdown-menu {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: calc(100% + 6px);
+      background: var(--deep);
+      border: 1px solid rgba(196,154,60,0.25);
+      min-width: 220px;
+      max-height: 360px;
+      overflow-y: auto;
+      z-index: 200;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(196,154,60,0.2) transparent;
+    }
+
+    .personas-dropdown-menu.open { display: block; }
+
+    .personas-dropdown-menu a {
+      display: block;
+      padding: 0.55rem 1rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.88rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+      border-bottom: 1px solid rgba(196,154,60,0.08);
+    }
+
+    .personas-dropdown-menu a:hover { background: rgba(196,154,60,0.07); color: var(--ivory); }
 
     /* ── HERO / SETUP SCREEN ── */
     #setup-screen {
@@ -98,7 +161,6 @@
       overflow: hidden;
     }
 
-    /* Background stage curtain effect */
     #setup-screen::before {
       content: '';
       position: absolute;
@@ -110,7 +172,6 @@
       pointer-events: none;
     }
 
-    /* Stage floor line */
     #setup-screen::after {
       content: '';
       position: absolute;
@@ -147,9 +208,7 @@
       line-height: 1;
     }
 
-    .arena-title h1 span {
-      color: var(--amber);
-    }
+    .arena-title h1 span { color: var(--amber); }
 
     .arena-title .subtitle {
       font-family: 'Cormorant Garamond', serif;
@@ -172,25 +231,66 @@
       animation: fadeIn 1s ease 0.4s both;
     }
 
-    .ornament::before,
-    .ornament::after {
+    .ornament::before, .ornament::after {
       content: '';
       flex: 1;
       height: 1px;
       background: linear-gradient(90deg, transparent, rgba(196,154,60,0.3), transparent);
     }
 
-    .ornament span {
-      font-size: 1rem;
-      color: var(--amber);
-      opacity: 0.4;
-    }
+    .ornament span { font-size: 1rem; color: var(--amber); opacity: 0.4; }
 
     /* ── SETUP PANEL ── */
     .setup-panel {
       width: 100%;
-      max-width: 860px;
+      max-width: 900px;
       animation: fadeIn 1s ease 0.5s both;
+    }
+
+    /* Settings row above figure selector */
+    .setup-settings-row {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+      align-items: center;
+    }
+
+    .setting-toggle-group {
+      display: flex;
+      border: 1px solid rgba(196,154,60,0.2);
+      overflow: hidden;
+    }
+
+    .setting-toggle-btn {
+      font-family: 'Cinzel', serif;
+      font-size: 0.48rem;
+      letter-spacing: 0.25em;
+      padding: 0.4rem 0.85rem;
+      background: transparent;
+      color: var(--text-dim);
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-transform: uppercase;
+      border-right: 1px solid rgba(196,154,60,0.2);
+    }
+
+    .setting-toggle-btn:last-child { border-right: none; }
+
+    .setting-toggle-btn.active {
+      background: rgba(196,154,60,0.12);
+      color: var(--amber-pale);
+    }
+
+    .setting-toggle-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.44rem;
+      letter-spacing: 0.3em;
+      color: var(--amber-dim);
+      text-transform: uppercase;
+      align-self: center;
+      margin-right: 0.25rem;
     }
 
     /* Figure selector */
@@ -198,7 +298,7 @@
       display: grid;
       grid-template-columns: 1fr auto 1fr;
       gap: 1.5rem;
-      align-items: center;
+      align-items: start;
       margin-bottom: 2.5rem;
     }
 
@@ -249,19 +349,93 @@
       appearance: none;
     }
 
-    .slot-select option {
-      background: var(--deep);
-      color: var(--ivory);
-      font-style: normal;
+    .slot-select option { background: var(--deep); color: var(--ivory); font-style: normal; }
+    .slot-select:focus { border-bottom-color: var(--amber); }
+
+    /* Figure preview inside slot */
+    .figure-preview {
+      display: none;
+      margin-top: 1.2rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid rgba(196,154,60,0.1);
+      gap: 0.9rem;
+      align-items: flex-start;
     }
 
-    .slot-select:focus {
-      border-bottom-color: var(--amber);
+    .figure-preview.visible {
+      display: flex;
     }
 
-    .vs-divider {
-      text-align: center;
+    .preview-portrait {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 1px solid rgba(196,154,60,0.3);
+      overflow: hidden;
+      flex-shrink: 0;
+      background: var(--surface-mid);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      color: var(--amber);
     }
+
+    .preview-portrait img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(90%) contrast(1.1); }
+
+    .preview-info { flex: 1; min-width: 0; }
+
+    .preview-years {
+      font-family: 'Cinzel', serif;
+      font-size: 0.5rem;
+      letter-spacing: 0.2em;
+      color: var(--amber);
+      opacity: 0.6;
+      margin-bottom: 0.35rem;
+    }
+
+    .preview-desc {
+      font-size: 0.82rem;
+      line-height: 1.55;
+      color: var(--text-dim);
+      font-style: italic;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .preview-trust {
+      margin-top: 0.45rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .trust-pip {
+      width: 28px;
+      height: 4px;
+      background: rgba(196,154,60,0.15);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .trust-pip-fill {
+      height: 100%;
+      border-radius: 2px;
+      background: var(--amber);
+      transition: width 0.4s ease;
+    }
+
+    .trust-score-text {
+      font-family: 'Cinzel', serif;
+      font-size: 0.44rem;
+      letter-spacing: 0.2em;
+      color: var(--amber-dim);
+    }
+
+    .vs-divider { text-align: center; padding-top: 1.8rem; }
 
     .vs-divider span {
       font-family: 'Cinzel', serif;
@@ -273,9 +447,7 @@
     }
 
     /* Topic section */
-    .topic-section {
-      margin-bottom: 2.5rem;
-    }
+    .topic-section { margin-bottom: 2.5rem; }
 
     .topic-label {
       font-family: 'Cinzel', serif;
@@ -307,17 +479,9 @@
       outline: none;
     }
 
-    .topic-input::placeholder {
-      color: var(--ivory-dim);
-      opacity: 0.85;
-    }
+    .topic-input::placeholder { color: var(--ivory-dim); opacity: 0.85; }
 
-    /* Suggested topics */
-    .suggested-topics {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-    }
+    .suggested-topics { display: flex; flex-wrap: wrap; gap: 0.6rem; }
 
     .topic-chip {
       font-family: 'Cormorant Garamond', serif;
@@ -331,8 +495,7 @@
       background: transparent;
     }
 
-    .topic-chip:hover,
-    .topic-chip.active {
+    .topic-chip:hover, .topic-chip.active {
       border-color: var(--amber);
       color: var(--amber-pale);
       background: rgba(196,154,60,0.05);
@@ -369,15 +532,10 @@
     .begin-btn:hover::before { transform: scaleX(1); }
     .begin-btn:hover { color: var(--void); }
     .begin-btn span { position: relative; z-index: 1; }
-
-    .begin-btn:disabled {
-      opacity: 0.55;
-      cursor: not-allowed;
-    }
-
+    .begin-btn:disabled { opacity: 0.55; cursor: not-allowed; }
     .begin-btn:disabled::before { display: none; }
 
-    /* ── DEBATE ARENA (hidden until started) ── */
+    /* ── DEBATE ARENA ── */
     #debate-screen {
       display: none;
       min-height: calc(100vh - 60px);
@@ -388,12 +546,14 @@
 
     /* Stage header */
     .stage-header {
-      padding: 1.5rem 3rem;
+      padding: 1.2rem 2rem;
       border-bottom: 1px solid rgba(196,154,60,0.15);
       display: flex;
       justify-content: space-between;
       align-items: center;
       background: var(--deep);
+      flex-wrap: wrap;
+      gap: 0.75rem;
     }
 
     .stage-topic {
@@ -403,16 +563,41 @@
       color: var(--text-dim);
     }
 
-    .stage-topic strong {
-      color: var(--ivory);
-      font-style: normal;
-      font-weight: 400;
-    }
+    .stage-topic strong { color: var(--ivory); font-style: normal; font-weight: 400; }
 
     .stage-controls {
       display: flex;
-      gap: 1rem;
+      gap: 0.75rem;
       align-items: center;
+      flex-wrap: wrap;
+    }
+
+    /* Inline settings toggles in stage header */
+    .stage-setting-group {
+      display: flex;
+      border: 1px solid rgba(196,154,60,0.18);
+      overflow: hidden;
+    }
+
+    .stage-setting-btn {
+      font-family: 'Cinzel', serif;
+      font-size: 0.44rem;
+      letter-spacing: 0.2em;
+      padding: 0.38rem 0.7rem;
+      background: transparent;
+      color: var(--text-dim);
+      border: none;
+      border-right: 1px solid rgba(196,154,60,0.18);
+      cursor: pointer;
+      transition: all 0.2s;
+      text-transform: uppercase;
+    }
+
+    .stage-setting-btn:last-child { border-right: none; }
+
+    .stage-setting-btn.active {
+      background: rgba(196,154,60,0.1);
+      color: var(--amber-pale);
     }
 
     .btn-small {
@@ -428,10 +613,7 @@
       text-transform: uppercase;
     }
 
-    .btn-small:hover {
-      border-color: var(--amber);
-      color: var(--amber);
-    }
+    .btn-small:hover { border-color: var(--amber); color: var(--amber); }
 
     .btn-voice {
       display: inline-flex;
@@ -458,7 +640,7 @@
     .podium {
       display: flex;
       flex-direction: column;
-      padding: 2.5rem 2rem;
+      padding: 2rem 1.8rem;
       border-right: 1px solid rgba(196,154,60,0.1);
       transition: background 0.5s ease, opacity 0.5s ease;
       position: relative;
@@ -467,10 +649,7 @@
 
     .podium:last-child { border-right: none; }
 
-    /* Active / inactive states */
-    .podium.speaking {
-      background: rgba(196,154,60,0.04);
-    }
+    .podium.speaking { background: rgba(196,154,60,0.04); }
 
     .podium.speaking::before {
       content: '';
@@ -483,9 +662,7 @@
       animation: scanline 2s ease infinite;
     }
 
-    .podium.dormant {
-      opacity: 0.45;
-    }
+    .podium.dormant { opacity: 0.45; }
 
     @keyframes scanline {
       0%   { opacity: 0; transform: scaleX(0); }
@@ -498,8 +675,8 @@
       display: flex;
       align-items: center;
       gap: 1.2rem;
-      margin-bottom: 2rem;
-      padding-bottom: 1.5rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.2rem;
       border-bottom: 1px solid rgba(196,154,60,0.12);
     }
 
@@ -527,7 +704,7 @@
       filter: grayscale(100%) contrast(1.1);
     }
 
-    .nameplate-text {}
+    .nameplate-text { flex: 1; min-width: 0; }
 
     .figure-name {
       font-family: 'Cinzel', serif;
@@ -543,7 +720,36 @@
       letter-spacing: 0.25em;
       color: var(--amber);
       opacity: 0.5;
-      margin-top: 0.2rem;
+      margin-top: 0.15rem;
+    }
+
+    /* Trust badge in nameplate */
+    .nameplate-trust {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      margin-top: 0.4rem;
+    }
+
+    .trust-bar {
+      width: 36px;
+      height: 3px;
+      background: rgba(196,154,60,0.15);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .trust-bar-fill {
+      height: 100%;
+      border-radius: 2px;
+      background: var(--amber);
+    }
+
+    .trust-text {
+      font-family: 'Cinzel', serif;
+      font-size: 0.42rem;
+      letter-spacing: 0.18em;
+      color: var(--amber-dim);
     }
 
     .speaking-indicator {
@@ -555,6 +761,7 @@
       opacity: 0;
       transition: opacity 0.3s;
       box-shadow: 0 0 8px var(--amber);
+      flex-shrink: 0;
     }
 
     .podium.speaking .speaking-indicator {
@@ -594,7 +801,6 @@
       margin-bottom: 0.6rem;
     }
 
-    /* Phase indicator */
     .phase-badge {
       font-family: 'Cinzel', serif;
       font-size: 0.52rem;
@@ -612,6 +818,90 @@
       line-height: 1.85;
       color: var(--text);
       font-weight: 300;
+    }
+
+    /* Source toggle */
+    .source-toggle-wrap {
+      margin-top: 0.7rem;
+    }
+
+    .source-toggle-btn {
+      font-family: 'Cinzel', serif;
+      font-size: 0.46rem;
+      letter-spacing: 0.2em;
+      color: var(--amber-dim);
+      background: transparent;
+      border: 1px solid rgba(196,154,60,0.18);
+      padding: 0.28rem 0.65rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4em;
+    }
+
+    .source-toggle-btn:hover { border-color: rgba(196,154,60,0.4); color: var(--amber); }
+
+    .source-list {
+      display: none;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-top: 0.5rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid rgba(196,154,60,0.1);
+    }
+
+    .source-list.open { display: flex; }
+
+    .source-item {
+      font-family: 'Cinzel', serif;
+      font-size: 0.46rem;
+      letter-spacing: 0.06em;
+      color: var(--amber-dim);
+      background: rgba(196,154,60,0.06);
+      border: 1px solid rgba(196,154,60,0.15);
+      border-radius: 2px;
+      padding: 0.2rem 0.45rem;
+      white-space: nowrap;
+    }
+
+    .source-badge {
+      font-size: 0.4rem;
+      color: var(--ivory-dim);
+      opacity: 0.6;
+      margin-left: 0.25rem;
+      font-style: italic;
+    }
+
+    /* Confidence row under exchange */
+    .confidence-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-top: 0.5rem;
+    }
+
+    .confidence-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.44rem;
+      letter-spacing: 0.2em;
+      color: var(--ivory-dim);
+      opacity: 0.55;
+      text-transform: uppercase;
+    }
+
+    .confidence-bar {
+      width: 48px;
+      height: 3px;
+      background: rgba(196,154,60,0.12);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .confidence-bar-fill {
+      height: 100%;
+      border-radius: 2px;
     }
 
     /* Typewriter cursor */
@@ -650,14 +940,8 @@
       transition: border-color 0.2s;
     }
 
-    .moderator-input::placeholder {
-      color: var(--text-dim);
-      opacity: 0.4;
-    }
-
-    .moderator-input:focus {
-      border-color: rgba(196,154,60,0.4);
-    }
+    .moderator-input::placeholder { color: var(--text-dim); opacity: 0.4; }
+    .moderator-input:focus { border-color: rgba(196,154,60,0.4); }
 
     .continue-btn {
       font-family: 'Cinzel', serif;
@@ -689,21 +973,11 @@
     .continue-btn:hover::before { transform: scaleX(1); }
     .continue-btn:hover { color: var(--void); }
     .continue-btn span { position: relative; z-index: 1; }
-
-    .continue-btn:disabled {
-      opacity: 0.3;
-      cursor: not-allowed;
-    }
-
+    .continue-btn:disabled { opacity: 0.3; cursor: not-allowed; }
     .continue-btn:disabled::before { display: none; }
 
     /* Loading state */
-    .loading-dots {
-      display: none;
-      gap: 4px;
-      align-items: center;
-    }
-
+    .loading-dots { display: none; gap: 4px; align-items: center; }
     .loading-dots.active { display: flex; }
 
     .loading-dots span {
@@ -722,13 +996,102 @@
       50% { opacity: 1; transform: scale(1.2); }
     }
 
-    /* ── EXCHANGE COUNT ── */
     .exchange-counter {
       font-family: 'Cinzel', serif;
       font-size: 0.52rem;
       letter-spacing: 0.2em;
       color: var(--text-dim);
       white-space: nowrap;
+    }
+
+    /* ── SUMMARY OVERLAY ── */
+    #summary-panel {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(10,9,12,0.88);
+      z-index: 500;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      backdrop-filter: blur(4px);
+    }
+
+    #summary-panel.open { display: flex; }
+
+    .summary-card {
+      background: var(--deep);
+      border: 1px solid rgba(196,154,60,0.3);
+      max-width: 720px;
+      width: 100%;
+      max-height: 80vh;
+      overflow-y: auto;
+      padding: 2.5rem;
+      animation: fadeIn 0.4s ease both;
+    }
+
+    .summary-card-title {
+      font-family: 'Cinzel', serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.4em;
+      color: var(--amber);
+      text-transform: uppercase;
+      margin-bottom: 1.8rem;
+      opacity: 0.8;
+    }
+
+    .summary-figures {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 1.8rem;
+    }
+
+    .summary-figure-col { border-top: 2px solid rgba(196,154,60,0.2); padding-top: 1rem; }
+
+    .summary-figure-name {
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--ivory);
+      letter-spacing: 0.06em;
+      margin-bottom: 0.8rem;
+    }
+
+    .summary-exchange {
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(196,154,60,0.08);
+    }
+
+    .summary-exchange:last-child { border-bottom: none; margin-bottom: 0; }
+
+    .summary-exchange-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.44rem;
+      letter-spacing: 0.25em;
+      color: var(--amber-dim);
+      text-transform: uppercase;
+      margin-bottom: 0.35rem;
+    }
+
+    .summary-exchange-text {
+      font-size: 0.88rem;
+      line-height: 1.65;
+      color: var(--text-dim);
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .summary-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-end;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(196,154,60,0.12);
     }
 
     /* ── ANIMATIONS ── */
@@ -753,6 +1116,7 @@
       .debate-footer { flex-wrap: wrap; }
       .moderator-input { min-width: 0; }
       .stage-header { flex-direction: column; gap: 1rem; padding: 1rem 1.2rem; }
+      .summary-figures { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -760,13 +1124,18 @@
 
   <!-- HEADER -->
   <header>
-    <span class="header-label">The Museum &nbsp;·&nbsp; Debate Arena</span>
+    <div class="header-left">
+      <a href="https://museumofminds.com/" class="back-link">← Museum</a>
+      <span class="header-label">The Arena &nbsp;·&nbsp; Debate Hall</span>
+    </div>
     <nav class="header-nav">
-      <a href="https://museumofminds.com/jane-jacobs/">Jane Jacobs</a>
-      <a href="https://museumofminds.com/carl-jung/">Carl Jung</a>
-      <a href="https://museumofminds.com/thomas-jefferson/">Thomas Jefferson</a>
-      <a href="https://museumofminds.com/alexander-hamilton/">Alexander Hamilton</a>
-      <a href="/founding-documents/" style="border-left:1px solid rgba(196,154,60,0.3);margin-left:.5rem;padding-left:1rem;">Founding Documents</a>
+      <div class="personas-dropdown-wrap">
+        <button class="personas-dropdown-btn" onclick="togglePersonasMenu(this)">
+          All Figures ▾
+        </button>
+        <div class="personas-dropdown-menu" id="personas-menu"></div>
+      </div>
+      <a href="/founding-documents/" style="font-family:'Cinzel',serif;font-size:0.52rem;letter-spacing:0.3em;color:var(--text-dim);text-decoration:none;text-transform:uppercase;transition:color 0.2s;" onmouseover="this.style.color='var(--amber)'" onmouseout="this.style.color='var(--text-dim)'">Documents</a>
     </nav>
   </header>
 
@@ -779,30 +1148,56 @@
       <p class="subtitle">Summon two minds. Choose the ground. Let them speak.</p>
     </div>
 
-    <div class="ornament">
-      <span>⚔</span>
-    </div>
+    <div class="ornament"><span>⚔</span></div>
 
     <div class="setup-panel">
+
+      <!-- Settings row -->
+      <div class="setup-settings-row">
+        <span class="setting-toggle-label">Voice</span>
+        <div class="setting-toggle-group">
+          <button class="setting-toggle-btn active" id="setup-mode-hist" onclick="setSettingMode('historical', this)">Historical</button>
+          <button class="setting-toggle-btn" id="setup-mode-mod" onclick="setSettingMode('modern', this)">Modern</button>
+        </div>
+        <span class="setting-toggle-label" style="margin-left:0.5rem;">Length</span>
+        <div class="setting-toggle-group">
+          <button class="setting-toggle-btn active" id="setup-len-std" onclick="setSettingLength('standard', this)">Standard</button>
+          <button class="setting-toggle-btn" id="setup-len-brief" onclick="setSettingLength('brief', this)">Brief</button>
+        </div>
+      </div>
 
       <!-- Figure Selector -->
       <div class="figure-selector">
         <div class="figure-slot">
           <span class="slot-label">First Mind</span>
-          <select class="slot-select" id="figure-a">
+          <select class="slot-select" id="figure-a" onchange="onFigureChange('a')">
             <option value="">— Select a figure —</option>
           </select>
+          <div class="figure-preview" id="preview-a">
+            <div class="preview-portrait" id="prev-portrait-a"></div>
+            <div class="preview-info">
+              <div class="preview-years" id="prev-years-a"></div>
+              <div class="preview-desc" id="prev-desc-a"></div>
+              <div class="preview-trust" id="prev-trust-a"></div>
+            </div>
+          </div>
         </div>
 
-        <div class="vs-divider">
-          <span>VS</span>
-        </div>
+        <div class="vs-divider"><span>VS</span></div>
 
         <div class="figure-slot">
           <span class="slot-label">Second Mind</span>
-          <select class="slot-select" id="figure-b">
+          <select class="slot-select" id="figure-b" onchange="onFigureChange('b')">
             <option value="">— Select a figure —</option>
           </select>
+          <div class="figure-preview" id="preview-b">
+            <div class="preview-portrait" id="prev-portrait-b"></div>
+            <div class="preview-info">
+              <div class="preview-years" id="prev-years-b"></div>
+              <div class="preview-desc" id="prev-desc-b"></div>
+              <div class="preview-trust" id="prev-trust-b"></div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -810,25 +1205,9 @@
       <div class="topic-section">
         <span class="topic-label">The Question Before Them</span>
         <div class="topic-input-wrap">
-          <input
-            type="text"
-            class="topic-input"
-            id="topic-input"
-            placeholder="Enter a topic or choose below..."
-          />
+          <input type="text" class="topic-input" id="topic-input" placeholder="Enter a topic or choose below..." />
         </div>
-        <div class="suggested-topics">
-          <button class="topic-chip" onclick="selectTopic(this, 'What does America keep getting wrong?')">What does America keep getting wrong?</button>
-          <button class="topic-chip" onclick="selectTopic(this, 'The role of the individual versus the collective')">The individual vs. the collective</button>
-          <button class="topic-chip" onclick="selectTopic(this, 'What makes a city truly livable?')">What makes a city livable?</button>
-          <button class="topic-chip" onclick="selectTopic(this, 'The nature of the unconscious mind')">The unconscious mind</button>
-          <button class="topic-chip" onclick="selectTopic(this, 'Democracy and its discontents in 2026')">Democracy in 2026</button>
-          <button class="topic-chip" onclick="selectTopic(this, 'The relationship between reason and intuition')">Reason vs. intuition</button>
-          <button class="topic-chip" onclick="selectTopic(this, 'The role of federal power in the economy')">Federal power and the economy</button>
-          <button class="topic-chip" onclick="selectTopic(this, 'What does a good society look like?')">What is a good society?</button>
-          <button class="topic-chip" onclick="selectTopic(this, 'Technology and its effect on human nature')">Technology and human nature</button>
-          <button class="topic-chip" onclick="selectTopic(this, 'The meaning of liberty')">The meaning of liberty</button>
-        </div>
+        <div class="suggested-topics" id="topic-chips"></div>
       </div>
 
       <!-- Begin -->
@@ -853,6 +1232,19 @@
         </div>
         <span class="phase-badge" id="phase-badge">Opening</span>
         <span class="exchange-counter" id="exchange-counter">Exchange 0</span>
+
+        <!-- Inline mode toggle -->
+        <div class="stage-setting-group">
+          <button class="stage-setting-btn active" id="stage-mode-hist" onclick="setStageMode('historical', this)">Hist.</button>
+          <button class="stage-setting-btn" id="stage-mode-mod" onclick="setStageMode('modern', this)">Modern</button>
+        </div>
+
+        <!-- Inline length toggle -->
+        <div class="stage-setting-group">
+          <button class="stage-setting-btn active" id="stage-len-std" onclick="setStageLength('standard', this)">Std</button>
+          <button class="stage-setting-btn" id="stage-len-brief" onclick="setStageLength('brief', this)">Brief</button>
+        </div>
+
         <button class="btn-small btn-voice" id="voice-toggle" onclick="toggleVoice()" title="Enable voice">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
@@ -868,6 +1260,7 @@
             <line x1="12" y1="15" x2="12" y2="3"></line>
           </svg>Transcript
         </button>
+        <button class="btn-small" onclick="showSummary()">Summary</button>
         <button class="btn-small" onclick="resetArena()">New Debate</button>
       </div>
     </div>
@@ -882,6 +1275,7 @@
           <div class="nameplate-text">
             <div class="figure-name" id="name-a">—</div>
             <div class="figure-years" id="years-a"></div>
+            <div class="nameplate-trust" id="trust-a"></div>
           </div>
           <div class="speaking-indicator"></div>
         </div>
@@ -895,6 +1289,7 @@
           <div class="nameplate-text">
             <div class="figure-name" id="name-b">—</div>
             <div class="figure-years" id="years-b"></div>
+            <div class="nameplate-trust" id="trust-b"></div>
           </div>
           <div class="speaking-indicator"></div>
         </div>
@@ -909,7 +1304,7 @@
         type="text"
         class="moderator-input"
         id="moderator-input"
-        placeholder="Steer the debate... (e.g. 'Challenge them on the role of religion' or leave blank to continue)"
+        placeholder="Steer the debate… or leave blank to continue"
       />
       <button class="continue-btn" id="continue-btn" onclick="continueDebate()">
         <span>Continue →</span>
@@ -918,8 +1313,21 @@
 
   </div>
 
+  <!-- ══ SUMMARY PANEL ══ -->
+  <div id="summary-panel">
+    <div class="summary-card">
+      <div class="summary-card-title">Debate Summary</div>
+      <div class="summary-figures" id="summary-figures"></div>
+      <div class="summary-actions">
+        <button class="btn-small" onclick="downloadTranscript()">Download PDF</button>
+        <button class="btn-small" onclick="closeSummary()">Return to Debate</button>
+        <button class="btn-small" onclick="resetArena()">New Debate</button>
+      </div>
+    </div>
+  </div>
+
   <script>
-    // ── PORTRAIT MAP — stable Wikipedia URLs, keyed by persona ID ──
+    // ── PORTRAIT MAP ──
     const PORTRAIT_MAP = {
       'abraham-lincoln':        { initial: 'AL', portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Abraham_Lincoln_O-77_matte_collodion_print.jpg/800px-Abraham_Lincoln_O-77_matte_collodion_print.jpg' },
       'ada-lovelace':           { initial: 'AL', portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Ada_Lovelace_portrait.jpg/800px-Ada_Lovelace_portrait.jpg' },
@@ -965,34 +1373,71 @@
       'william-moultrie':       { initial: 'WM', portrait: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/William_Moultrie.jpg/800px-William_Moultrie.jpg' },
     };
 
-    // PERSONAS is built dynamically from the /personas API endpoint
+    // Curated topic pairs — keyed by sorted persona pair
+    const PAIR_TOPICS = {
+      'alexander-hamilton|thomas-jefferson': [
+        'The proper scope of federal power', 'Should government promote manufacturing?',
+        'The national bank: necessity or tyranny?', 'Who does democracy actually serve?',
+      ],
+      'alexander-hamilton|james-madison': [
+        'Federal authority vs. state sovereignty', 'What makes a republic stable?',
+        'Faction and its remedies', 'The implied powers doctrine',
+      ],
+      'thomas-jefferson|james-madison': [
+        'Religious liberty and the state', 'The Bill of Rights was it necessary?',
+        'States as laboratories of democracy', 'The danger of standing armies',
+      ],
+      'adam-smith|karl-marx': [
+        'Who does capitalism ultimately serve?', 'The nature of labor and its value',
+        'Markets vs. collective ownership', 'Wealth, virtue, and the good society',
+      ],
+      'adam-smith|friedrich-hayek': [
+        'The invisible hand revisited', 'Knowledge, prices, and central planning',
+        'The moral foundations of markets', 'What would Adam Smith make of 2026?',
+      ],
+      'karl-marx|friedrich-hayek': [
+        'Central planning vs. market spontaneity', 'The road to serfdom or the road to equality?',
+        'Freedom: economic or political?', 'What history has proved',
+      ],
+      'jane-jacobs|frederick-law-olmsted': [
+        'Parks vs. density: what cities need', 'Top-down vs. bottom-up urban design',
+        'Who gets to shape public space?', 'Does nature belong in the city?',
+      ],
+      'carl-jung|helen-keller': [
+        'The nature of the inner life', 'Meaning-making in the face of limitation',
+        'Intuition and perception', 'What it means to know something',
+      ],
+      'abraham-lincoln|james-madison': [
+        'When must the Union override the states?', 'The Constitution in crisis',
+        'Slavery and the founding compact', 'Presidential war powers',
+      ],
+      'benjamin-franklin|thomas-jefferson': [
+        'Practical wisdom vs. philosophical principle', 'The American character',
+        'What the Revolution was really for', 'Diplomacy and national interest',
+      ],
+      'hl-mencken|jane-jacobs': [
+        'The American middle class: asset or liability?', 'Democracy and its discontents',
+        'Culture and the city', 'Who defines the common good?',
+      ],
+    };
+
+    const DEFAULT_TOPICS = [
+      { label: 'What does America keep getting wrong?', full: 'What does America keep getting wrong?' },
+      { label: 'The individual vs. the collective', full: 'The role of the individual versus the collective' },
+      { label: 'What makes a city livable?', full: 'What makes a city truly livable?' },
+      { label: 'The unconscious mind', full: 'The nature of the unconscious mind' },
+      { label: 'Democracy in 2026', full: 'Democracy and its discontents in 2026' },
+      { label: 'Reason vs. intuition', full: 'The relationship between reason and intuition' },
+      { label: 'Federal power and the economy', full: 'The role of federal power in the economy' },
+      { label: 'What is a good society?', full: 'What does a good society look like?' },
+      { label: 'Technology and human nature', full: 'Technology and its effect on human nature' },
+      { label: 'The meaning of liberty', full: 'The meaning of liberty' },
+    ];
+
+    // ── GLOBAL STATE ──
     let PERSONAS = {};
+    let settings = { mode: 'historical', length: 'standard' };
 
-    async function fetchPersonas() {
-      try {
-        const resp = await fetch(`${API_URL}/personas`);
-        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-        const data = await resp.json();
-        const sorted = (data.personas || []).sort((a, b) => a.display_name.localeCompare(b.display_name));
-        PERSONAS = {};
-        const selectA = document.getElementById('figure-a');
-        const selectB = document.getElementById('figure-b');
-        while (selectA.options.length > 1) selectA.remove(1);
-        while (selectB.options.length > 1) selectB.remove(1);
-        sorted.forEach(p => {
-          const pm = PORTRAIT_MAP[p.id] || {};
-          const words = p.display_name.replace(/[^A-Za-z ]/g, ' ').trim().split(/\s+/).filter(Boolean);
-          const initial = pm.initial || (words.length >= 2 ? words[0][0] + words[words.length - 1][0] : (words[0] || 'X').slice(0, 2)).toUpperCase();
-          PERSONAS[p.id] = { name: p.display_name, years: p.years, initial, portrait: pm.portrait || null };
-          selectA.add(new Option(p.display_name, p.id));
-          selectB.add(new Option(p.display_name, p.id));
-        });
-      } catch (err) {
-        console.error('Failed to load personas:', err);
-      }
-    }
-
-    // ── STATE ──
     let state = {
       figureA: null,
       figureB: null,
@@ -1000,23 +1445,250 @@
       history: [],
       exchangeCount: 0,
       isLoading: false,
-      voiceEnabled: false
+      voiceEnabled: false,
+      seenChunkIds: [],
     };
 
-    function toggleVoice() {
-      state.voiceEnabled = !state.voiceEnabled;
-      const btn = document.getElementById('voice-toggle');
-      btn.classList.toggle('active', state.voiceEnabled);
-      btn.title = state.voiceEnabled ? 'Voice on — click to mute' : 'Enable voice';
-    }
-
-    function playAudio(base64) {
-      if (!base64) return;
-      const audio = new Audio(`data:audio/mpeg;base64,${base64}`);
-      audio.play().catch(err => console.warn('Audio playback blocked:', err));
-    }
-
     const API_URL = 'https://museum-api-production-8ce6.up.railway.app';
+
+    // ── FETCH PERSONAS ──
+    async function fetchPersonas() {
+      try {
+        const resp = await fetch(`${API_URL}/personas`);
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+        const data = await resp.json();
+        const sorted = (data.personas || []).sort((a, b) => a.display_name.localeCompare(b.display_name));
+        PERSONAS = {};
+
+        const selectA = document.getElementById('figure-a');
+        const selectB = document.getElementById('figure-b');
+        const menu    = document.getElementById('personas-menu');
+
+        while (selectA.options.length > 1) selectA.remove(1);
+        while (selectB.options.length > 1) selectB.remove(1);
+        menu.innerHTML = '';
+
+        sorted.forEach(p => {
+          const pm = PORTRAIT_MAP[p.id] || {};
+          const words = p.display_name.replace(/[^A-Za-z ]/g, ' ').trim().split(/\s+/).filter(Boolean);
+          const initial = pm.initial || (words.length >= 2 ? words[0][0] + words[words.length - 1][0] : (words[0] || 'X').slice(0, 2)).toUpperCase();
+          PERSONAS[p.id] = {
+            name: p.display_name,
+            years: p.years,
+            initial,
+            portrait: pm.portrait || null,
+            trust_score: p.trust_score || 0,
+            trust_label: p.trust_label || '',
+            description: p.description || '',
+            voice_enabled: p.voice_enabled || false,
+          };
+
+          selectA.add(new Option(p.display_name, p.id));
+          selectB.add(new Option(p.display_name, p.id));
+
+          const a = document.createElement('a');
+          a.href = `https://museumofminds.com/${p.id}/`;
+          a.textContent = p.display_name;
+          a.target = '_blank';
+          menu.appendChild(a);
+        });
+
+        // Pre-fill from URL params
+        loadURLParams();
+      } catch (err) {
+        console.error('Failed to load personas:', err);
+      }
+    }
+
+    // ── PERSONAS DROPDOWN ──
+    function togglePersonasMenu(btn) {
+      const menu = document.getElementById('personas-menu');
+      menu.classList.toggle('open');
+      document.addEventListener('click', function handler(e) {
+        if (!btn.contains(e.target) && !menu.contains(e.target)) {
+          menu.classList.remove('open');
+          document.removeEventListener('click', handler);
+        }
+      });
+    }
+
+    // ── FIGURE PREVIEW ──
+    function onFigureChange(slot) {
+      const id = document.getElementById(`figure-${slot}`).value;
+      updateFigurePreview(slot, id);
+      updateDynamicTopics();
+      validateSetup();
+    }
+
+    function updateFigurePreview(slot, id) {
+      const preview = document.getElementById(`preview-${slot}`);
+      if (!id || !PERSONAS[id]) {
+        preview.classList.remove('visible');
+        return;
+      }
+      const p = PERSONAS[id];
+      const pm = PORTRAIT_MAP[id] || {};
+
+      // Portrait
+      const portraitEl = document.getElementById(`prev-portrait-${slot}`);
+      if (pm.portrait) {
+        portraitEl.innerHTML = `<img src="${pm.portrait}" alt="${p.name}" onerror="this.parentNode.textContent='${p.initial}'" />`;
+      } else {
+        portraitEl.textContent = p.initial;
+      }
+
+      document.getElementById(`prev-years-${slot}`).textContent = p.years;
+      document.getElementById(`prev-desc-${slot}`).textContent = p.description || '';
+
+      // Trust bar
+      const trustEl = document.getElementById(`prev-trust-${slot}`);
+      if (p.trust_score > 0) {
+        const color = p.trust_score >= 80 ? '#C49A3C' : p.trust_score >= 40 ? '#8B9E6B' : '#7A8A9E';
+        trustEl.innerHTML = `
+          <div class="trust-pip"><div class="trust-pip-fill" style="width:${p.trust_score}%;background:${color};"></div></div>
+          <span class="trust-score-text">${p.trust_score}/100</span>
+        `;
+      } else {
+        trustEl.innerHTML = '';
+      }
+
+      preview.classList.add('visible');
+    }
+
+    // ── DYNAMIC TOPIC CHIPS ──
+    function updateDynamicTopics() {
+      const a = document.getElementById('figure-a').value;
+      const b = document.getElementById('figure-b').value;
+      const container = document.getElementById('topic-chips');
+      container.innerHTML = '';
+
+      let topics = DEFAULT_TOPICS.map(t => ({ label: t.label, full: t.full }));
+
+      if (a && b) {
+        const pairKey = [a, b].sort().join('|');
+        const pairTopics = PAIR_TOPICS[pairKey];
+        if (pairTopics) {
+          topics = pairTopics.map(t => ({ label: t, full: t }))
+                             .concat(topics.slice(0, 4));
+        }
+      }
+
+      topics.forEach(t => {
+        const btn = document.createElement('button');
+        btn.className = 'topic-chip';
+        btn.textContent = t.label;
+        btn.onclick = () => selectTopic(btn, t.full);
+        container.appendChild(btn);
+      });
+    }
+
+    function selectTopic(el, topic) {
+      document.querySelectorAll('.topic-chip').forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+      document.getElementById('topic-input').value = topic;
+      validateSetup();
+    }
+
+    // ── SETTINGS ──
+    function setSettingMode(mode, btn) {
+      settings.mode = mode;
+      ['setup-mode-hist', 'setup-mode-mod'].forEach(id => document.getElementById(id)?.classList.remove('active'));
+      btn.classList.add('active');
+      syncStageSettings();
+    }
+
+    function setSettingLength(length, btn) {
+      settings.length = length;
+      ['setup-len-std', 'setup-len-brief'].forEach(id => document.getElementById(id)?.classList.remove('active'));
+      btn.classList.add('active');
+      syncStageSettings();
+    }
+
+    function setStageMode(mode, btn) {
+      settings.mode = mode;
+      ['stage-mode-hist', 'stage-mode-mod'].forEach(id => document.getElementById(id)?.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    function setStageLength(length, btn) {
+      settings.length = length;
+      ['stage-len-std', 'stage-len-brief'].forEach(id => document.getElementById(id)?.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    function syncStageSettings() {
+      const modeHist = document.getElementById('stage-mode-hist');
+      const stageMod = document.getElementById('stage-mode-mod');
+      if (settings.mode === 'historical') {
+        modeHist?.classList.add('active');
+        stageMod?.classList.remove('active');
+      } else {
+        modeHist?.classList.remove('active');
+        stageMod?.classList.add('active');
+      }
+      const stageStd   = document.getElementById('stage-len-std');
+      const stageBrief = document.getElementById('stage-len-brief');
+      if (settings.length === 'standard') {
+        stageStd?.classList.add('active');
+        stageBrief?.classList.remove('active');
+      } else {
+        stageStd?.classList.remove('active');
+        stageBrief?.classList.add('active');
+      }
+    }
+
+    // ── URL PARAMS ──
+    function updateURL() {
+      const params = new URLSearchParams({
+        a: state.figureA,
+        b: state.figureB,
+        t: state.topic,
+        mode: settings.mode,
+        length: settings.length,
+      });
+      window.history.replaceState({}, '', `?${params.toString()}`);
+    }
+
+    function loadURLParams() {
+      const params = new URLSearchParams(window.location.search);
+      const a = params.get('a');
+      const b = params.get('b');
+      const t = params.get('t');
+      const mode   = params.get('mode');
+      const length = params.get('length');
+
+      if (mode && (mode === 'historical' || mode === 'modern')) {
+        settings.mode = mode;
+        const histBtn = document.getElementById('setup-mode-hist');
+        const modBtn  = document.getElementById('setup-mode-mod');
+        if (mode === 'historical') { histBtn?.classList.add('active'); modBtn?.classList.remove('active'); }
+        else { histBtn?.classList.remove('active'); modBtn?.classList.add('active'); }
+      }
+
+      if (length && (length === 'standard' || length === 'brief')) {
+        settings.length = length;
+        const stdBtn   = document.getElementById('setup-len-std');
+        const briefBtn = document.getElementById('setup-len-brief');
+        if (length === 'standard') { stdBtn?.classList.add('active'); briefBtn?.classList.remove('active'); }
+        else { stdBtn?.classList.remove('active'); briefBtn?.classList.add('active'); }
+      }
+
+      if (a && PERSONAS[a]) {
+        document.getElementById('figure-a').value = a;
+        updateFigurePreview('a', a);
+      }
+      if (b && PERSONAS[b]) {
+        document.getElementById('figure-b').value = b;
+        updateFigurePreview('b', b);
+      }
+      if (t) {
+        document.getElementById('topic-input').value = t;
+      }
+      if ((a || b) && t) {
+        updateDynamicTopics();
+        validateSetup();
+      }
+    }
 
     // ── SETUP VALIDATION ──
     document.getElementById('figure-a').addEventListener('change', validateSetup);
@@ -1027,15 +1699,25 @@
       const a = document.getElementById('figure-a').value;
       const b = document.getElementById('figure-b').value;
       const t = document.getElementById('topic-input').value.trim();
-      const btn = document.getElementById('begin-btn');
-      btn.disabled = !(a && b && a !== b && t);
+      document.getElementById('begin-btn').disabled = !(a && b && a !== b && t);
     }
 
-    function selectTopic(el, topic) {
-      document.querySelectorAll('.topic-chip').forEach(c => c.classList.remove('active'));
-      el.classList.add('active');
-      document.getElementById('topic-input').value = topic;
-      validateSetup();
+    // ── VOICE ──
+    function toggleVoice() {
+      state.voiceEnabled = !state.voiceEnabled;
+      const btn = document.getElementById('voice-toggle');
+      btn.classList.toggle('active', state.voiceEnabled);
+      btn.title = state.voiceEnabled ? 'Voice on — click to mute' : 'Enable voice';
+    }
+
+    function playAudio(base64) {
+      if (!base64) return Promise.resolve();
+      return new Promise(resolve => {
+        const audio = new Audio(`data:audio/mpeg;base64,${base64}`);
+        audio.onended  = resolve;
+        audio.onerror  = resolve;
+        audio.play().catch(err => { console.warn('Audio blocked:', err); resolve(); });
+      });
     }
 
     // ── BEGIN DEBATE ──
@@ -1045,8 +1727,8 @@
       state.topic   = document.getElementById('topic-input').value.trim();
       state.history = [];
       state.exchangeCount = 0;
+      state.seenChunkIds  = [];
 
-      // Populate stage
       const pA = PERSONAS[state.figureA];
       const pB = PERSONAS[state.figureB];
 
@@ -1056,19 +1738,20 @@
       document.getElementById('name-b').textContent  = pB.name;
       document.getElementById('years-b').textContent = pB.years;
 
-      // Set portraits
       setPortrait('portrait-a', pA);
       setPortrait('portrait-b', pB);
+      setNameplateTrust('trust-a', pA);
+      setNameplateTrust('trust-b', pB);
 
-      // Clear responses
       document.getElementById('responses-a').innerHTML = '';
       document.getElementById('responses-b').innerHTML = '';
 
-      // Switch screens
+      syncStageSettings();
+      updateURL();
+
       document.getElementById('setup-screen').style.display = 'none';
       document.getElementById('debate-screen').classList.add('active');
 
-      // Fire first exchange
       runExchange();
     }
 
@@ -1082,6 +1765,20 @@
         el.appendChild(img);
       } else {
         el.textContent = persona.initial;
+      }
+    }
+
+    function setNameplateTrust(id, persona) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      if (persona.trust_score > 0) {
+        const color = persona.trust_score >= 80 ? '#C49A3C' : persona.trust_score >= 40 ? '#8B9E6B' : '#7A8A9E';
+        el.innerHTML = `
+          <div class="trust-bar"><div class="trust-bar-fill" style="width:${persona.trust_score}%;background:${color};"></div></div>
+          <span class="trust-text">${persona.trust_score}/100 corpus</span>
+        `;
+      } else {
+        el.innerHTML = '';
       }
     }
 
@@ -1114,99 +1811,85 @@
       document.getElementById('exchange-counter').textContent = `Exchange ${state.exchangeCount}`;
       document.getElementById('phase-badge').textContent = getPhaseLabel(state.exchangeCount);
 
-      // Set Figure A speaking
       setSpeaking('a');
 
       try {
-        // Build the prompt for this exchange
-        const lastStatement = state.history.length > 0
-          ? state.history[state.history.length - 1]
-          : null;
-
-        const steerNote = steer || null;
-
-        // Call debate endpoint (voice variant if enabled)
         const endpoint = state.voiceEnabled ? `${API_URL}/debate/voice` : `${API_URL}/debate`;
         const response = await fetch(endpoint, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            persona_a:    state.figureA,
-            persona_b:    state.figureB,
-            topic:        state.topic,
-            history:      state.history,
-            steer:        steerNote,
-            exchange_num: state.exchangeCount
+            persona_a:      state.figureA,
+            persona_b:      state.figureB,
+            topic:          state.topic,
+            history:        state.history,
+            steer:          steer || null,
+            exchange_num:   state.exchangeCount,
+            seen_chunk_ids: state.seenChunkIds,
+            mode:           settings.mode,
+            length:         settings.length,
           })
         });
 
         if (!response.ok) throw new Error('Debate API error');
-
         const data = await response.json();
 
-        // Render Figure A response (play audio simultaneously if voice enabled)
-        playAudio(data.audio_a);
-        await typeResponse('responses-a', data.response_a, state.exchangeCount);
+        if (data.chunk_ids?.length) {
+          state.seenChunkIds = [...new Set([...state.seenChunkIds, ...data.chunk_ids])];
+        }
 
-        // Switch to Figure B speaking
+        // Figure A — typewriter + audio run in parallel; wait for both to finish before B starts
+        await Promise.all([
+          typeResponse('responses-a', data.response_a, state.exchangeCount),
+          state.voiceEnabled ? playAudio(data.audio_a) : Promise.resolve(),
+        ]);
+        if (data.sources_a?.length) renderSources('responses-a', data.sources_a, state.figureA);
+
         setSpeaking('b');
         await sleep(600);
 
-        // Render Figure B response (play audio simultaneously if voice enabled)
-        playAudio(data.audio_b);
-        await typeResponse('responses-b', data.response_b, state.exchangeCount);
+        // Figure B — same pattern
+        await Promise.all([
+          typeResponse('responses-b', data.response_b, state.exchangeCount),
+          state.voiceEnabled ? playAudio(data.audio_b) : Promise.resolve(),
+        ]);
+        if (data.sources_b?.length) renderSources('responses-b', data.sources_b, state.figureB);
 
-        // Update history
         state.history.push({
           exchange: state.exchangeCount,
           figure_a: data.response_a,
-          figure_b: data.response_b
+          figure_b: data.response_b,
         });
-        enableTranscriptBtn();
 
-        // Clear steer input
+        enableTranscriptBtn();
         modInput.value = '';
 
       } catch (err) {
         console.error(err);
-        // Show error gracefully
         appendError('responses-a', 'The connection to the archive was lost. Please try again.');
       }
 
-      // Reset state
       setSpeaking(null);
       continueBtn.disabled = false;
       loadingDots.classList.remove('active');
       state.isLoading = false;
     }
 
-    function continueDebate() {
-      runExchange();
-    }
+    function continueDebate() { runExchange(); }
 
     // ── UI HELPERS ──
     function setSpeaking(side) {
       const podA = document.getElementById('podium-a');
       const podB = document.getElementById('podium-b');
-
       podA.classList.remove('speaking', 'dormant');
       podB.classList.remove('speaking', 'dormant');
-
-      if (side === 'a') {
-        podA.classList.add('speaking');
-        podB.classList.add('dormant');
-      } else if (side === 'b') {
-        podB.classList.add('speaking');
-        podA.classList.add('dormant');
-      } else {
-        podA.classList.add('dormant');
-        podB.classList.add('dormant');
-      }
+      if (side === 'a') { podA.classList.add('speaking'); podB.classList.add('dormant'); }
+      else if (side === 'b') { podB.classList.add('speaking'); podA.classList.add('dormant'); }
+      else { podA.classList.add('dormant'); podB.classList.add('dormant'); }
     }
 
     async function typeResponse(containerId, text, exchangeNum) {
       const container = document.getElementById(containerId);
-
       const exchangeEl = document.createElement('div');
       exchangeEl.className = 'exchange';
 
@@ -1221,10 +1904,8 @@
       exchangeEl.appendChild(textEl);
       container.appendChild(exchangeEl);
 
-      // Typewriter effect
       const words = text.split(' ');
       let rendered = '';
-
       for (let i = 0; i < words.length; i++) {
         rendered += (i === 0 ? '' : ' ') + words[i];
         textEl.textContent = rendered;
@@ -1243,19 +1924,107 @@
       container.appendChild(el);
     }
 
-    function sleep(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
-    }
+    function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
 
     function enableTranscriptBtn() {
       const btn = document.getElementById('download-transcript-btn');
       if (btn) { btn.style.display = ''; btn.disabled = false; }
     }
 
+    function renderSources(containerId, sources, personaId) {
+      const container = document.getElementById(containerId);
+      if (!container || !sources.length) return;
+
+      const seen = new Set();
+      const unique = sources.filter(s => {
+        const key = `${s.title}|${s.year}`;
+        if (seen.has(key) || !s.title) return false;
+        seen.add(key);
+        return true;
+      });
+      if (!unique.length) return;
+
+      const persona = PERSONAS[personaId] || {};
+      const score   = persona.trust_score || 0;
+      const color   = score >= 80 ? '#C49A3C' : score >= 40 ? '#8B9E6B' : '#7A8A9E';
+
+      const wrap = document.createElement('div');
+      wrap.className = 'source-toggle-wrap';
+
+      const toggleId = `src-${containerId}-${Date.now()}`;
+
+      // Confidence row + toggle button
+      const confRow = document.createElement('div');
+      confRow.className = 'confidence-row';
+      if (score > 0) {
+        confRow.innerHTML = `
+          <span class="confidence-label">Corpus</span>
+          <div class="confidence-bar"><div class="confidence-bar-fill" style="width:${score}%;background:${color};"></div></div>
+          <span class="confidence-label">${score}/100</span>
+        `;
+      }
+
+      const btn = document.createElement('button');
+      btn.className = 'source-toggle-btn';
+      btn.innerHTML = `▸ Sources (${unique.length})`;
+      btn.onclick = () => {
+        const list = document.getElementById(toggleId);
+        const open = list.classList.toggle('open');
+        btn.innerHTML = open ? `▾ Sources (${unique.length})` : `▸ Sources (${unique.length})`;
+      };
+
+      const list = document.createElement('div');
+      list.className = 'source-list';
+      list.id = toggleId;
+      list.innerHTML = unique.map(s => {
+        const label = s.year ? `${s.title} (${s.year})` : s.title;
+        const badge = s.type === 'discourse' ? ' <span class="source-badge">discourse</span>' : '';
+        return `<span class="source-item">${label}${badge}</span>`;
+      }).join('');
+
+      confRow.appendChild(btn);
+      wrap.appendChild(confRow);
+      wrap.appendChild(list);
+      container.appendChild(wrap);
+    }
+
+    // ── SUMMARY ──
+    function showSummary() {
+      if (!state.history.length) return;
+      const nameA = PERSONAS[state.figureA]?.name || state.figureA;
+      const nameB = PERSONAS[state.figureB]?.name || state.figureB;
+
+      let colA = `<div class="summary-figure-name">${nameA}</div>`;
+      let colB = `<div class="summary-figure-name">${nameB}</div>`;
+
+      state.history.forEach((entry, i) => {
+        const label = i === 0 ? 'Opening Statement' : `Exchange ${i + 1}`;
+        colA += `<div class="summary-exchange">
+          <div class="summary-exchange-label">${label}</div>
+          <div class="summary-exchange-text">${escapeHtml(entry.figure_a)}</div>
+        </div>`;
+        colB += `<div class="summary-exchange">
+          <div class="summary-exchange-label">${label}</div>
+          <div class="summary-exchange-text">${escapeHtml(entry.figure_b)}</div>
+        </div>`;
+      });
+
+      document.getElementById('summary-figures').innerHTML = `
+        <div class="summary-figure-col">${colA}</div>
+        <div class="summary-figure-col">${colB}</div>
+      `;
+      document.getElementById('summary-panel').classList.add('open');
+    }
+
+    function closeSummary() {
+      document.getElementById('summary-panel').classList.remove('open');
+    }
+
     function resetArena() {
+      closeSummary();
       const dlBtn = document.getElementById('download-transcript-btn');
       if (dlBtn) { dlBtn.style.display = 'none'; dlBtn.disabled = true; }
-      state = { figureA: null, figureB: null, topic: '', history: [], exchangeCount: 0, isLoading: false, voiceEnabled: false };
+      state = { figureA: null, figureB: null, topic: '', history: [], exchangeCount: 0, isLoading: false, voiceEnabled: false, seenChunkIds: [] };
       document.getElementById('debate-screen').classList.remove('active');
       document.getElementById('setup-screen').style.display = 'flex';
       document.querySelectorAll('.topic-chip').forEach(c => c.classList.remove('active'));
@@ -1266,10 +2035,13 @@
       document.getElementById('phase-badge').textContent = 'Opening';
       document.getElementById('exchange-counter').textContent = 'Exchange 0';
       document.getElementById('voice-toggle').classList.remove('active');
+      document.getElementById('preview-a').classList.remove('visible');
+      document.getElementById('preview-b').classList.remove('visible');
+      state.voiceEnabled = false;
+      window.history.replaceState({}, '', window.location.pathname);
     }
 
-    // ── PDF Transcript Export ──────────────────────────────────────────────
-
+    // ── PDF TRANSCRIPT ──
     let _html2pdfLoaded = false;
     function loadHtml2Pdf() {
       if (_html2pdfLoaded || window.html2pdf) { _html2pdfLoaded = true; return Promise.resolve(); }
@@ -1287,7 +2059,7 @@
       const nameA = PERSONAS[state.figureA]?.name || state.figureA;
       const nameB = PERSONAS[state.figureB]?.name || state.figureB;
       const topic = state.topic;
-      const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+      const date  = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
       const styles = `
         body { font-family: Georgia, serif; color: #1a1a1a; margin: 0; padding: 0; font-size: 13px; line-height: 1.65; }
@@ -1310,11 +2082,11 @@
         <div class="pdf-title">Debate Transcript</div>
         <div class="pdf-sub">${nameA} vs. ${nameB}</div>
         <div class="pdf-sub" style="font-style:italic;color:#555;">"${topic}"</div>
-        <div class="pdf-meta">Museum of Minds · ${date}</div>
+        <div class="pdf-meta">Museum of Minds · ${date} · ${settings.mode === 'historical' ? 'Historical Voice' : 'Modern Awareness'} · ${settings.length === 'brief' ? 'Brief' : 'Standard'} length</div>
       </div>`;
 
       state.history.forEach((entry, i) => {
-        const label = i === 0 ? 'Opening Statement' : `Exchange ${i}`;
+        const label = i === 0 ? 'Opening Statement' : `Exchange ${i + 1}`;
         html += `<div class="pdf-exchange">
           <div class="pdf-exchange-label">${label}</div>
           <div class="pdf-speaker pdf-speaker-a">
@@ -1351,12 +2123,12 @@
     }
 
     function escapeHtml(str) {
-      return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      return (str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
 
-    // Populate dropdowns from API on page load
+    // ── INIT ──
+    updateDynamicTopics();
     fetchPersonas();
-
   </script>
 
 </body>
