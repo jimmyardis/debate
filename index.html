@@ -1152,7 +1152,7 @@
 
       <!-- Settings row -->
       <div class="setup-settings-row">
-        <span class="setting-toggle-label">Voice</span>
+        <span class="setting-toggle-label">Mode</span>
         <div class="setting-toggle-group">
           <button class="setting-toggle-btn active" id="setup-mode-hist" onclick="setSettingMode('historical', this)">Historical</button>
           <button class="setting-toggle-btn" id="setup-mode-mod" onclick="setSettingMode('modern', this)">Modern</button>
@@ -1161,6 +1161,11 @@
         <div class="setting-toggle-group">
           <button class="setting-toggle-btn active" id="setup-len-std" onclick="setSettingLength('standard', this)">Standard</button>
           <button class="setting-toggle-btn" id="setup-len-brief" onclick="setSettingLength('brief', this)">Brief</button>
+        </div>
+        <span class="setting-toggle-label" style="margin-left:0.5rem;">Voice</span>
+        <div class="setting-toggle-group">
+          <button class="setting-toggle-btn active" id="setup-voice-off" onclick="setVoiceEnabled(false, this)">Off</button>
+          <button class="setting-toggle-btn" id="setup-voice-on" onclick="setVoiceEnabled(true, this)">On</button>
         </div>
       </div>
 
@@ -1701,11 +1706,22 @@
     }
 
     // ── VOICE ──
+    function setVoiceEnabled(on, btn) {
+      state.voiceEnabled = on;
+      ['setup-voice-off', 'setup-voice-on'].forEach(id => document.getElementById(id)?.classList.remove('active'));
+      btn.classList.add('active');
+      const stageBtn = document.getElementById('voice-toggle');
+      stageBtn.classList.toggle('active', on);
+      stageBtn.title = on ? 'Voice on — click to mute' : 'Enable voice';
+    }
+
     function toggleVoice() {
       state.voiceEnabled = !state.voiceEnabled;
       const btn = document.getElementById('voice-toggle');
       btn.classList.toggle('active', state.voiceEnabled);
       btn.title = state.voiceEnabled ? 'Voice on — click to mute' : 'Enable voice';
+      document.getElementById('setup-voice-off')?.classList.toggle('active', !state.voiceEnabled);
+      document.getElementById('setup-voice-on')?.classList.toggle('active', state.voiceEnabled);
     }
 
     function playAudio(base64) {
@@ -2033,6 +2049,8 @@
       document.getElementById('phase-badge').textContent = 'Opening';
       document.getElementById('exchange-counter').textContent = 'Exchange 0';
       document.getElementById('voice-toggle').classList.remove('active');
+      document.getElementById('setup-voice-off')?.classList.add('active');
+      document.getElementById('setup-voice-on')?.classList.remove('active');
       document.getElementById('preview-a').classList.remove('visible');
       document.getElementById('preview-b').classList.remove('visible');
       state.voiceEnabled = false;
