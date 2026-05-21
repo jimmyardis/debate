@@ -329,6 +329,133 @@
       background: var(--gold);
     }
 
+    /* ── IN RESIDENCE ── */
+    .in-residence {
+      padding: 4rem 3rem;
+      background: var(--slate-mid);
+      border-top: 2px solid var(--gold-dim);
+      border-bottom: 2px solid var(--gold-dim);
+    }
+
+    .in-residence-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .in-residence-seal {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .in-residence-seal svg {
+      width: 140px;
+      height: 140px;
+      opacity: 0.92;
+    }
+
+    .in-residence-seal-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.58rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-align: center;
+    }
+
+    .in-residence-content {}
+
+    .in-residence-eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+    }
+
+    .in-residence-title {
+      font-family: 'Libre Caslon Text', serif;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 700;
+      color: var(--parchment);
+      letter-spacing: 0.04em;
+      margin-bottom: 0.4rem;
+      line-height: 1.2;
+    }
+
+    .in-residence-subtitle {
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      font-size: 1rem;
+      color: var(--parchment);
+      opacity: 0.65;
+      margin-bottom: 1rem;
+    }
+
+    .in-residence-desc {
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.92rem;
+      color: var(--parchment);
+      opacity: 0.7;
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
+    }
+
+    .in-residence-stats {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 1.75rem;
+      flex-wrap: wrap;
+    }
+
+    .in-res-stat {}
+
+    .in-res-stat-num {
+      font-family: 'Libre Caslon Text', serif;
+      font-size: 1.4rem;
+      color: var(--gold-pale);
+      display: block;
+      line-height: 1;
+    }
+
+    .in-res-stat-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--parchment);
+      opacity: 0.5;
+    }
+
+    .in-residence-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--slate);
+      background: var(--gold-pale);
+      padding: 0.65rem 1.4rem;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .in-residence-cta:hover { background: var(--gold); }
+
+    @media (max-width: 640px) {
+      .in-residence-inner { grid-template-columns: 1fr; }
+      .in-residence-seal { display: none; }
+    }
+
     /* ── ABOUT SECTION ── */
     .about-section {
       background: var(--slate);
@@ -412,6 +539,57 @@
   <div class="hero-rule"></div>
   <p class="hero-subtitle">Documents that quote themselves</p>
   <p class="hero-desc">Primary sources that speak in their own voice — quoting their own text, surfacing the debates that shaped them, citing how courts and history have read them.</p>
+</section>
+
+<!-- ── IN RESIDENCE ── -->
+<section class="in-residence">
+  <div class="in-residence-inner">
+    <div class="in-residence-seal">
+      <svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="70" cy="70" r="62" stroke="#A88425" stroke-width="1.5" fill="none"/>
+        <circle cx="70" cy="70" r="55" stroke="#A88425" stroke-width="0.6" fill="rgba(168,132,37,0.05)"/>
+        <circle cx="70" cy="70" r="46" stroke="#A88425" stroke-width="0.4" fill="none" stroke-dasharray="4 3"/>
+        <!-- Quill -->
+        <line x1="70" y1="38" x2="70" y2="102" stroke="#A88425" stroke-width="1.2"/>
+        <path d="M70 38 C58 50 54 62 70 70 C86 62 82 50 70 38Z" fill="rgba(168,132,37,0.15)" stroke="#A88425" stroke-width="0.8"/>
+        <!-- Stars -->
+        <text x="70" y="120" text-anchor="middle" font-family="serif" font-size="9" fill="#A88425" letter-spacing="6">★ ★ ★</text>
+        <!-- We the People -->
+        <text x="70" y="32" text-anchor="middle" font-family="serif" font-size="7.5" fill="#A88425" letter-spacing="1.5">WE THE PEOPLE</text>
+      </svg>
+      <span class="in-residence-seal-label">Document in Residence</span>
+    </div>
+    <div class="in-residence-content">
+      <p class="in-residence-eyebrow">Now available · Documents Hall</p>
+      <h2 class="in-residence-title">The Constitution of the United States</h2>
+      <p class="in-residence-subtitle">Ratified 1788 · Articles I–VII + 27 Amendments</p>
+      <p class="in-residence-desc">The supreme law of the land speaks in its own voice. Ask about any article, clause, or amendment — it quotes itself verbatim, surfaces the Federalist and Anti-Federalist debates behind each provision, and cites fifteen landmark Supreme Court cases that defined its meaning. It takes no political position. It holds the competing interpretations in tension and presents them honestly.</p>
+      <div class="in-residence-stats">
+        <div class="in-res-stat">
+          <span class="in-res-stat-num">27</span>
+          <span class="in-res-stat-label">Amendments</span>
+        </div>
+        <div class="in-res-stat">
+          <span class="in-res-stat-num">1,640+</span>
+          <span class="in-res-stat-label">Indexed passages</span>
+        </div>
+        <div class="in-res-stat">
+          <span class="in-res-stat-num">15</span>
+          <span class="in-res-stat-label">Landmark SCOTUS cases</span>
+        </div>
+        <div class="in-res-stat">
+          <span class="in-res-stat-num">99/100</span>
+          <span class="in-res-stat-label">Primary source score</span>
+        </div>
+      </div>
+      <a href="/founding-documents/the-constitution/" class="in-residence-cta">
+        Open document
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M3 8h10M9 4l4 4-4 4"/>
+        </svg>
+      </a>
+    </div>
+  </div>
 </section>
 
 <!-- ── DOCUMENTS GRID ── -->
@@ -521,6 +699,43 @@
         <h2 class="doc-card-title">The Fourteenth Amendment</h2>
         <p class="doc-card-subtitle">Ratified July 9, 1868</p>
         <p class="doc-card-desc">Equal protection. Due process. Citizenship for the formerly enslaved. The most litigated amendment in American history, presented as a standalone document with the full arc of its interpretation.</p>
+      </div>
+    </div>
+
+    <!-- COMING SOON: Bill of Rights -->
+    <div class="doc-card coming-soon">
+      <div class="doc-card-seal">
+        <svg class="doc-card-seal-icon" viewBox="0 0 44 44" fill="none">
+          <circle cx="22" cy="22" r="18" stroke="#A88425" stroke-width="1.5" fill="none" stroke-dasharray="3 2"/>
+          <text x="22" y="24" text-anchor="middle" font-family="serif" font-size="7.5" fill="#A88425">Amend</text>
+          <text x="22" y="33" text-anchor="middle" font-family="serif" font-size="7.5" fill="#A88425">I – X</text>
+        </svg>
+        <span class="coming-soon-badge">Coming Soon</span>
+      </div>
+      <div class="doc-card-body">
+        <h2 class="doc-card-title">The Bill of Rights</h2>
+        <p class="doc-card-subtitle">Ratified December 15, 1791</p>
+        <p class="doc-card-desc">The first ten amendments as a standalone document — speech, religion, the press, arms, search and seizure, self-incrimination, jury trial, cruel punishment, reserved powers. Two and a quarter centuries of contested application.</p>
+      </div>
+    </div>
+
+    <!-- COMING SOON: Supreme Court Landmark Cases -->
+    <div class="doc-card coming-soon">
+      <div class="doc-card-seal">
+        <svg class="doc-card-seal-icon" viewBox="0 0 44 44" fill="none">
+          <circle cx="22" cy="22" r="18" stroke="#A88425" stroke-width="1.5" fill="none" stroke-dasharray="3 2"/>
+          <!-- Scales of justice simplified -->
+          <line x1="22" y1="13" x2="22" y2="31" stroke="#A88425" stroke-width="1"/>
+          <line x1="14" y1="17" x2="30" y2="17" stroke="#A88425" stroke-width="1"/>
+          <path d="M14 17 L11 23 L17 23 Z" stroke="#A88425" stroke-width="0.8" fill="none"/>
+          <path d="M30 17 L27 23 L33 23 Z" stroke="#A88425" stroke-width="0.8" fill="none"/>
+        </svg>
+        <span class="coming-soon-badge">Coming Soon</span>
+      </div>
+      <div class="doc-card-body">
+        <h2 class="doc-card-title">Supreme Court Landmark Cases</h2>
+        <p class="doc-card-subtitle">Marbury to Dobbs · 1803 – 2022</p>
+        <p class="doc-card-desc">The cases that remade America — judicial review, segregation, Miranda rights, abortion, marriage equality, gun rights. Majority and dissent in dialogue, with each decision situated in the constitutional text it interpreted.</p>
       </div>
     </div>
 
