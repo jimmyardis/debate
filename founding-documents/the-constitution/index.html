@@ -1057,7 +1057,7 @@
 </div>
 
 <script>
-  const API_URL = 'https://the-constitution-production.up.railway.app';
+  const API_URL = 'https://museum-api-production-8ce6.up.railway.app';
   const PERSONA_ID = 'the-constitution';
 
   let conversationId = null;
@@ -1314,7 +1314,7 @@
 
     try {
       const lengthMap = { brief: 'brief', detailed: 'conversational', extended: 'detailed' };
-      const resp = await fetch(`${API_URL}/chat`, {
+      const resp = await fetch(`${API_URL}/persona/the-constitution/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
